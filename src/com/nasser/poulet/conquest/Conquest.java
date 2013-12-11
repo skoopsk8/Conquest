@@ -15,7 +15,7 @@ public class Conquest {
     public Conquest(){
         try {
             System.out.println("Launching ...");
-            Display.setDisplayMode(new DisplayMode(900, 600));
+            Display.setDisplayMode(new DisplayMode(800, 600));
             Display.setTitle("Conquest");
             Display.create();
         } catch (LWJGLException e) {
@@ -29,8 +29,6 @@ public class Conquest {
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
 
         Board mainBoard = new Board();
-        //mainBoard.addState(new State(0,0));
-       // mainBoard.addState(new State(5,4));
         RenderBoard renderer = new RenderBoard(mainBoard);
 
         while(!Display.isCloseRequested()){
