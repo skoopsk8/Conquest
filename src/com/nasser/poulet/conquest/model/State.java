@@ -5,12 +5,14 @@ package com.nasser.poulet.conquest.model;
  */
 public class State {
     private int posX, posY;
-    public int val = 0;
+    public double productivity = 0;
     public Loyalty loyalty;
 
     public State( int x, int y){
         this.posX = x;
         this.posY = y;
+
+        this.productivity = Math.random()*6;
     }
 
     public int getPosX(){
