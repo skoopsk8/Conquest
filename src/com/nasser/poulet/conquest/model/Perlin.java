@@ -104,10 +104,10 @@ public class Perlin {
         return ret;
     }
     
-    public static int[][] generateMap(int width, int height) {
-    	boolean[][] bool_map = new boolean[width][height];
+    public static int[][] generateMap(int width, int height, float roughness) {
+    	boolean[][] bool_map;
     	int[][] int_map = new int[width][height];
-        Perlin n = new Perlin(null, 1.0f, width, height);
+        Perlin n = new Perlin(null, roughness, width, height);
         int cpt = 0;
         boolean finished = false;
         
@@ -134,16 +134,4 @@ public class Perlin {
        
 		return int_map;
     }
-    
-    public static void main(String[] args) {
-    	int[][] int_map = new int[20][15];
-    	int_map = generateMap(20, 15);
-    	for(int j = 0; j < 15; j++) {
-    		for(int i = 0; i < 20; i++) {
-    			System.out.print(int_map[i][j]);
-    		}
-    		System.out.println();
-    	}
-    }
-    
 }

@@ -43,23 +43,25 @@ public class Turn {
     }
 
     public long update(){
-        if (this.timer.duration(this.turnSnapshot, this.currentSnapshot)>=TURN_DURATION) this.startTurn();  // If more than 1s has elapsed
+        if(!pause){
+            // TODO : Add the pause in the duration calculation
+            if (this.timer.duration(this.turnSnapshot, this.currentSnapshot)>=TURN_DURATION) this.startTurn();  // If more than 1s has elapsed
 
-        this.timer.updateSnapshot(this.currentSnapshot);
+            this.timer.updateSnapshot(this.currentSnapshot);
 
-//       for(Event ev: eventList){
-        for(int i=0; i < this.eventList.size(); i++){
-           if(eventList.get(i).call()) {
-               this.eventList.remove(eventList.get(i));
-               i--;
+    //       for(Event ev: eventList){
+            for(int i=0; i < this.eventList.size(); i++){
+               if(eventList.get(i).call()) {
+                   this.eventList.remove(eventList.get(i));
+                   i--;
+               }
            }
-       }
-
-        return this.timer.duration(this.turnSnapshot, this.currentSnapshot);
+        }
+            return this.timer.duration(this.turnSnapshot, this.currentSnapshot);
     }
 
     public void addEvent( ){
-        this.eventList.add(new Event(4, new Callback() {
+        this.eventList.add(new Event(1, new Callback() {
             public void methodCallback() {                   // Context loss
                 System.out.println("Callbacked!");
             }
@@ -73,6 +75,7 @@ public class Turn {
     public void setPause(boolean pause) {
         this.pause = pause;
         this.timer.updateSnapshot(this.pauseSnapshot);
+        System.out.println("Pause : " + pause);
     }
 
     public int getTurnNumber() {
