@@ -2,114 +2,148 @@ package com.nasser.poulet.conquest.model;
 
 import java.util.Random;
 
-/**
- * Created by Lord on 10/12/13.
- */
 public class Perlin {
+    /** Source of entropy */
+    private Random rand_;
 
-    public static float[][] GenerateWhiteNoise(int width,int height){
+    /** Amount of roughness */
+    float roughness_;
 
-        Random random = new Random((long) (Math.round(Math.random() * 100 * Math.random() * 10))); //Seed to 0 for testing
-        float[][] noise = new float[width][height];
+    /** Plasma fractal grid */
+    private float[][] grid_;
 
-        for (int i = 0; i < width; i++)
-        {
-            for (int j = 0; j < height; j++){
-                noise[i][j] = (float)(Math.random() % 1);
-            }
-        }
 
-        return noise;
+    /** Generate a noise source based upon the midpoint displacement fractal.
+     * 
+     * @param rand The random number generator
+     * @param roughness a roughness parameter
+     * @param width the width of the grid  17
+     * @param height the height of the grid 12
+     */
+    public Perlin(Random rand, float roughness, int width, int height) {
+        roughness_ = roughness / width;
+        grid_ = new float[width][height];
+        rand_ = (rand == null) ? new Random() : rand;
     }
 
-    float[][] GenerateSmoothNoise(float[][] baseNoise, int octave)
-    {
-        int width = baseNoise.length;
-        int height = baseNoise.length;
 
-        float[][] smoothNoise = new float[width][height];
+    public void initialise() {
+        int xh = grid_.length - 1;
+        int yh = grid_[0].length - 1;
 
-        int samplePeriod = 1 << octave; // calculates 2 ^ k
-        float sampleFrequency = 1.0f / samplePeriod;
+        // set the corner points
+        grid_[0][0] = rand_.nextFloat() - 0.5f;
+        grid_[0][yh] = rand_.nextFloat() - 0.5f;
+        grid_[xh][0] = rand_.nextFloat() - 0.5f;
+        grid_[xh][yh] = rand_.nextFloat() - 0.5f;
 
-        for (int i = 0; i < width; i++)
-        {
-            //calculate the horizontal sampling indices
-            int sample_i0 = (i / samplePeriod) * samplePeriod;
-            int sample_i1 = (sample_i0 + samplePeriod) % width; //wrap around
-            float horizontal_blend = (i - sample_i0) * sampleFrequency;
-
-            for (int j = 0; j < height; j++)
-            {
-                //calculate the vertical sampling indices
-                int sample_j0 = (j / samplePeriod) * samplePeriod;
-                int sample_j1 = (sample_j0 + samplePeriod) % height; //wrap around
-                float vertical_blend = (j - sample_j0) * sampleFrequency;
-
-                //blend the top two corners
-                float top = Interpolate(baseNoise[sample_i0][sample_j0],
-                        baseNoise[sample_i1][sample_j0], horizontal_blend);
-
-                //blend the bottom two corners
-                float bottom = Interpolate(baseNoise[sample_i0][sample_j1],
-                        baseNoise[sample_i1][sample_j1], horizontal_blend);
-
-                //final blend
-                smoothNoise[i][j] = Interpolate(top, bottom, vertical_blend);
-            }
-        }
-
-        return smoothNoise;
+        // generate the fractal
+        generate(0, 0, xh, yh);
     }
 
-    float Interpolate(float x0, float x1, float alpha)
-    {
-        return x0 * (1 - alpha) + alpha * x1;
+
+    // Add a suitable amount of random displacement to a point
+    private float roughen(float v, int l, int h) {
+        return v + roughness_ * (float) (rand_.nextGaussian() * (h - l));
     }
 
-    public float[][] GeneratePerlinNoise(float[][] baseNoise, int octaveCount)
-    {
-        int width = baseNoise.length;
-        int height = baseNoise[0].length;
 
-        float[][][] smoothNoise = new float[octaveCount][][]; //an array of 2D arrays containing
+    // generate the fractal
+    private void generate(int xl, int yl, int xh, int yh) {
+        int xm = (xl + xh) / 2;
+        int ym = (yl + yh) / 2;
+        if ((xl == xm) && (yl == ym)) return;
 
-        float persistance = 0.5f;
+        grid_[xm][yl] = 0.5f * (grid_[xl][yl] + grid_[xh][yl]);
+        grid_[xm][yh] = 0.5f * (grid_[xl][yh] + grid_[xh][yh]);
+        grid_[xl][ym] = 0.5f * (grid_[xl][yl] + grid_[xl][yh]);
+        grid_[xh][ym] = 0.5f * (grid_[xh][yl] + grid_[xh][yh]);
 
-        //generate smooth noise
-        for (int i = 0; i < octaveCount; i++)
-        {
-            smoothNoise[i] = GenerateSmoothNoise(baseNoise, i);
-        }
+        float v = roughen(0.5f * (grid_[xm][yl] + grid_[xm][yh]), xl + yl, yh
+                + xh);
+        grid_[xm][ym] = v;
+        grid_[xm][yl] = roughen(grid_[xm][yl], xl, xh);
+        grid_[xm][yh] = roughen(grid_[xm][yh], xl, xh);
+        grid_[xl][ym] = roughen(grid_[xl][ym], yl, yh);
+        grid_[xh][ym] = roughen(grid_[xh][ym], yl, yh);
 
-        float[][] perlinNoise = new float[width][height];
-        float amplitude = 1.0f;
-        float totalAmplitude = 0.0f;
-
-        //blend noise together
-        for (int octave = octaveCount - 1; octave >= 0; octave--)
-        {
-            amplitude *= persistance;
-            totalAmplitude += amplitude;
-
-            for (int i = 0; i < width; i++)
-            {
-                for (int j = 0; j < height; j++)
-                {
-                    perlinNoise[i][j] += smoothNoise[octave][i][j] * amplitude;
-                }
-            }
-        }
-
-        //normalisation
-        for (int i = 0; i < width; i++)
-        {
-            for (int j = 0; j < height; j++)
-            {
-                perlinNoise[i][j] /= totalAmplitude;
-            }
-        }
-
-        return perlinNoise;
+        generate(xl, yl, xm, ym);
+        generate(xm, yl, xh, ym);
+        generate(xl, ym, xm, yh);
+        generate(xm, ym, xh, yh);
     }
+
+
+    /**
+     * Dump out as a CSV
+     */
+    public void printAsCSV() {
+        for(int i = 0;i < grid_.length;i++) {
+            for(int j = 0;j < grid_[0].length;j++) {
+                System.out.print(grid_[i][j]);
+                System.out.print(",");
+            }
+            System.out.println();
+        }
+    }
+
+
+    /**
+     * Convert to a Boolean array
+     * @return the boolean array
+     */
+    public boolean[][] toBooleans() {
+        int w = grid_.length;
+        int h = grid_[0].length;
+        boolean[][] ret = new boolean[w][h];
+        for(int i = 0;i < w;i++) {
+            for(int j = 0;j < h;j++) {
+                ret[i][j] = grid_[i][j] < 0;
+            }
+        }
+        return ret;
+    }
+    
+    public static int[][] generateMap(int width, int height) {
+    	boolean[][] bool_map = new boolean[width][height];
+    	int[][] int_map = new int[width][height];
+        Perlin n = new Perlin(null, 1.0f, width, height);
+        int cpt = 0;
+        boolean finished = false;
+        
+        do {
+            n.initialise();
+            bool_map = n.toBooleans();
+            cpt = 0;
+            
+             for(int i = 0; i < width; i++) {
+             	for(int j = 0; j < height; j++) {
+             		if(bool_map[i][j]) {
+             			int_map[i][j] = 1;
+             			cpt++;
+             		}
+             		else {
+             			int_map[i][j] = 0;
+             		}
+             	}
+             }
+             if (cpt > (width*height/2)) {
+            	 finished = true;
+             }
+        }while (!finished);
+       
+		return int_map;
+    }
+    
+    public static void main(String[] args) {
+    	int[][] int_map = new int[20][15];
+    	int_map = generateMap(20, 15);
+    	for(int j = 0; j < 15; j++) {
+    		for(int i = 0; i < 20; i++) {
+    			System.out.print(int_map[i][j]);
+    		}
+    		System.out.println();
+    	}
+    }
+    
 }
