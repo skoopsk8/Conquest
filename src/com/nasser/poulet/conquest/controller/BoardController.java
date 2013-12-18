@@ -1,6 +1,7 @@
 package com.nasser.poulet.conquest.controller;
 
 import com.nasser.poulet.conquest.model.Board;
+import com.nasser.poulet.conquest.model.Loyalty;
 import com.nasser.poulet.conquest.model.Unit;
 
 /**
@@ -27,6 +28,12 @@ public class BoardController {
         else{
             selectedUnit.setPosX(clickX);
             selectedUnit.setPosY(clickY);
+
+            // Capture
+            if(selectedUnit.getLoyalty()!=board.stateArray[clickX][clickY].getLoyalty() && board.stateArray[clickX][clickY].getLoyalty()!= Loyalty.NONE){
+                board.stateArray[clickX][clickY].setLoyalty(selectedUnit.getLoyalty());
+            }
+
             selectedUnit=null;
         }
     }
