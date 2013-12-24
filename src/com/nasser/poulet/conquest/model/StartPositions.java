@@ -4,7 +4,7 @@ import java.lang.Math;
 import java.util.Random;
 
 public class StartPositions {
-	public static int[][] place(int[][] map, int width, int height) {
+	public static int[][] place(State[][] map, int width, int height) {
 		
 		int _i = width / 2;
 		int _j = height / 2;
@@ -28,18 +28,18 @@ public class StartPositions {
 			do {				
 				_1strandi = rand.nextInt((_i-1) - 0 + 1) + 0;
 				_1strandj = rand.nextInt((_j-1) - 0 + 1) +0;
-			} while(map[_1strandi][_1strandj] != 1);
+			} while(map[_1strandi][_1strandj].getLoyalty().ordinal() != 1);
 			
 			
 			do {
 				_2ndrandi = rand.nextInt((_i-1) - 0 + 1) + 0;
 				_2ndrandj = rand.nextInt((height-1) - (_j) + 1) + (_j);
-			} while(map[_2ndrandi][_2ndrandj] != 1);
+			} while(map[_2ndrandi][_2ndrandj].getLoyalty().ordinal() != 1);
 			
 			do {
 				_3rdrandi = rand.nextInt((width-1) - (_i) + 1) + (_i);
 				_3rdrandj = rand.nextInt((height-1) - (_j) + 1) + (_j);
-			} while(map[_3rdrandi][_3rdrandj] != 1);
+			} while(map[_3rdrandi][_3rdrandj].getLoyalty().ordinal() != 1);
 			
 			//test de distance
 			d12 = Math.abs(_2ndrandi-_1strandi) + Math.abs(_2ndrandj-_1strandj);

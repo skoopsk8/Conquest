@@ -22,12 +22,12 @@ public class Board {
             }
         }
 
+        int[][] playerPos = StartPositions.place(stateArray, 20, 15);
+
         // Let's add player start
-        stateArray[4][2].setLoyalty(Loyalty.BLUE);
-        // Enemy?
-        stateArray[9][11].setLoyalty(Loyalty.GREEN);
-        stateArray[0][0].setLoyalty(Loyalty.BARBARIAN);
-        stateArray[4][0].setLoyalty(Loyalty.BARBARIAN);
+        stateArray[playerPos[0][0]][playerPos[0][1]].setLoyalty(Loyalty.BLUE);
+        stateArray[playerPos[1][0]][playerPos[1][1]].setLoyalty(Loyalty.YELLOW);
+        stateArray[playerPos[2][0]][playerPos[2][1]].setLoyalty(Loyalty.GREEN);
 
         unitVector.add(new Unit(4,2,Loyalty.BLUE));
     }
