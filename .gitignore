@@ -10,3 +10,8 @@
 *.iml
 *.iws
 native/
+/bin
+
+# Eclipse
+.classpath
+.project
