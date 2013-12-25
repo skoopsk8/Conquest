@@ -1,14 +1,15 @@
 package com.nasser.poulet.conquest.model;
 
+import com.nasser.poulet.conquest.controller.Turn;
+
 import java.util.Vector;
 
 /**
  * Created by Lord on 10/12/13.
  */
 public class Board {
-    public Vector<State> stateVector = new Vector<State>();
     public State[][] stateArray = new State[20][15];
-    public Vector<Unit> unitVector = new Vector<Unit>();
+    static public Vector<Unit> unitVector = new Vector<Unit>();
 
     public Board(){
         System.out.println("Board created");
@@ -29,10 +30,12 @@ public class Board {
         stateArray[playerPos[1][0]][playerPos[1][1]].setLoyalty(Loyalty.YELLOW);
         stateArray[playerPos[2][0]][playerPos[2][1]].setLoyalty(Loyalty.GREEN);
 
-        unitVector.add(new Unit(4,2,Loyalty.BLUE));
-    }
-
-    public void addState( State state ){
-        this.stateVector.add(state);
+        for(int i=0; i<3; i++){
+            Turn.addEvent(new Event(2, stateArray[playerPos[i][0]][playerPos[i][1]].productivity, stateArray[playerPos[i][0]][playerPos[i][1]], new Callback<State>() {
+                public void methodCallback(State state) {
+                    unitVector.add(new Unit(state.getPosX(), state.getPosY(), state.getLoyalty()));
+                }
+            }));
+        }
     }
 }

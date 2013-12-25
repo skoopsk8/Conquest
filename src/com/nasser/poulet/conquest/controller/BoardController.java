@@ -1,8 +1,6 @@
 package com.nasser.poulet.conquest.controller;
 
-import com.nasser.poulet.conquest.model.Board;
-import com.nasser.poulet.conquest.model.Loyalty;
-import com.nasser.poulet.conquest.model.Unit;
+import com.nasser.poulet.conquest.model.*;
 
 /**
  * Created by Lord on 14/12/13.
@@ -31,7 +29,17 @@ public class BoardController {
 
             // Capture
             if(selectedUnit.getLoyalty()!=board.stateArray[clickX][clickY].getLoyalty() && board.stateArray[clickX][clickY].getLoyalty()!= Loyalty.NONE){
-                board.stateArray[clickX][clickY].setLoyalty(selectedUnit.getLoyalty());
+                board.stateArray[clickX][clickY].setProvLoyalty(selectedUnit.getLoyalty());
+                Turn.addEvent(new com.nasser.poulet.conquest.model.Event(1, board.stateArray[clickX][clickY].productivity , board.stateArray[clickX][clickY], new Callback<State>(){
+                    public void methodCallback(State state) {
+                        state.setLoyalty(state.getProvLoyalty());
+                        Turn.addEvent(new Event(2, state.productivity, state, new Callback<State>() {
+                            public void methodCallback(State state) {
+                                Board.unitVector.add(new Unit(state.getPosX(), state.getPosY(), state.getLoyalty()));
+                            }
+                        }));
+                    }
+                }));
             }
 
             selectedUnit=null;

@@ -5,8 +5,7 @@ package com.nasser.poulet.conquest;
 
 import com.nasser.poulet.conquest.controller.BoardController;
 import com.nasser.poulet.conquest.controller.Turn;
-import com.nasser.poulet.conquest.model.Board;
-import com.nasser.poulet.conquest.model.State;
+import com.nasser.poulet.conquest.model.*;
 import com.nasser.poulet.conquest.view.RenderBoard;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
@@ -56,7 +55,12 @@ public class Conquest {
 
         turn = new Turn();
 
-        turn.addEvent();
+        turn.addEvent(new com.nasser.poulet.conquest.model.Event(-1, 1500 , mainBoard.stateArray[0][0], new Callback<State>(){
+            public void methodCallback(State state) {                   // Context loss
+                System.out.println("Callbacked!");
+                System.out.println(state.loyalty);
+            }
+        }));
 
         // Have to stay just before the while
         turn.startTurn();
