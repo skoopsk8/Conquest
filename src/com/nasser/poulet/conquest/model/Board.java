@@ -9,6 +9,7 @@ import java.util.Vector;
  */
 public class Board {
     public State[][] stateArray = new State[20][15];
+   // private UnitContainer unitContainer = new UnitContainer();
     static public Vector<Unit> unitVector = new Vector<Unit>();
 
     public Board(){
@@ -17,8 +18,6 @@ public class Board {
         for(int i=0;i<20;i++){
             for(int j=0;j<15;j++){
                 stateArray[i][j] = new State(i,j);
-//                stateArray[i][j].val = (int)(Math.random()*4);
-//                stateArray[i][j].setLoyalty(Loyalty.values()[(int)(Math.random()*2)]);
                 stateArray[i][j].setLoyalty(Loyalty.values()[map[i][j]]);
             }
         }
@@ -31,9 +30,9 @@ public class Board {
         stateArray[playerPos[2][0]][playerPos[2][1]].setLoyalty(Loyalty.GREEN);
 
         for(int i=0; i<3; i++){
-            Turn.addEvent(new Event(2, stateArray[playerPos[i][0]][playerPos[i][1]].productivity, stateArray[playerPos[i][0]][playerPos[i][1]], new Callback<State>() {
+            Turn.addEvent(new Event(-1, stateArray[playerPos[i][0]][playerPos[i][1]].productivity, stateArray[playerPos[i][0]][playerPos[i][1]], new Callback<State>() {
                 public void methodCallback(State state) {
-                    unitVector.add(new Unit(state.getPosX(), state.getPosY(), state.getLoyalty()));
+                    UnitContainer.addUnit(new Unit(state.getPosX(), state.getPosY(), state.getLoyalty()));
                 }
             }));
         }

@@ -18,14 +18,14 @@ public class BoardController {
         int clickY = (int)Math.floor(y/40);
         System.out.println("Click on loyalty " + board.stateArray[clickX][clickY].loyalty.ordinal());
         if(selectedUnit==null){
-            for(Unit unit: board.unitVector){
-                if(unit.isUnit(clickX, clickY))
-                    selectedUnit = unit;
+            for(int k=0;k<1;k++){
+                if(UnitContainer.unitBoard[clickX][clickY][k]!=null){
+                    selectedUnit = UnitContainer.unitBoard[clickX][clickY][k];
+                }
             }
         }
         else{
-            selectedUnit.setPosX(clickX);
-            selectedUnit.setPosY(clickY);
+            UnitContainer.move(selectedUnit,clickX,clickY);
 
             // Capture
             if(selectedUnit.getLoyalty()!=board.stateArray[clickX][clickY].getLoyalty() && board.stateArray[clickX][clickY].getLoyalty()!= Loyalty.NONE){
@@ -33,9 +33,9 @@ public class BoardController {
                 Turn.addEvent(new com.nasser.poulet.conquest.model.Event(1, board.stateArray[clickX][clickY].productivity , board.stateArray[clickX][clickY], new Callback<State>(){
                     public void methodCallback(State state) {
                         state.setLoyalty(state.getProvLoyalty());
-                        Turn.addEvent(new Event(2, state.productivity, state, new Callback<State>() {
+                        Turn.addEvent(new Event(-1, state.productivity, state, new Callback<State>() {
                             public void methodCallback(State state) {
-                                Board.unitVector.add(new Unit(state.getPosX(), state.getPosY(), state.getLoyalty()));
+                                UnitContainer.addUnit(new Unit(state.getPosX(), state.getPosY(), state.getLoyalty()));
                             }
                         }));
                     }
