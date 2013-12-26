@@ -5,15 +5,20 @@ package com.nasser.poulet.conquest.model;
  */
 public class UnitContainer {
     public static Unit[][][] unitBoard = new Unit[20][15][2];
+    private static final int MAX = 10;
+    private static int [] max = new int[3];
 
     public static void addUnit(Unit unit){
-        if(unitBoard[unit.getPosX()][unit.getPosY()][0]==null){
-            unitBoard[unit.getPosX()][unit.getPosY()][0]=unit;
+        if(max[unit.getLoyalty().ordinal()-2]<MAX){
+            if(unitBoard[unit.getPosX()][unit.getPosY()][0]==null){
+                unitBoard[unit.getPosX()][unit.getPosY()][0]=unit;
+            }
+            else if(unitBoard[unit.getPosX()][unit.getPosY()][1]==null){
+                unitBoard[unit.getPosX()][unit.getPosY()][1]=unit;
+            }
+            else return;
+            max[unit.getLoyalty().ordinal()-2]++;
         }
-        else if(unitBoard[unit.getPosX()][unit.getPosY()][1]==null){
-            unitBoard[unit.getPosX()][unit.getPosY()][1]=unit;
-        }
-        else return;
     }
 
     public static boolean move( Unit unit, int posX, int posY){

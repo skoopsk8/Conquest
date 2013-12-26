@@ -7,6 +7,15 @@ public class State {
     private int posX, posY;
     public int productivity = 0;
     public Loyalty loyalty;
+    private boolean inCapture;
+
+    public boolean isInCapture() {
+        return inCapture;
+    }
+
+    public void setInCapture(boolean inCapture) {
+        this.inCapture = inCapture;
+    }
 
     public Loyalty getProvLoyalty() {
         return provLoyalty;

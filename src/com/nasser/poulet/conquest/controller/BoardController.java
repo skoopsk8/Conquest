@@ -14,8 +14,9 @@ public class BoardController {
     }
 
     public void click( int x, int y ){
+
         int clickX = (int)Math.floor(x/40);
-        int clickY = (int)Math.floor(y/40);
+        int clickY = (int)Math.floor(y/40);        System.out.println("IA play in "+clickX+";"+clickY);
         System.out.println("Click on loyalty " + board.stateArray[clickX][clickY].loyalty.ordinal());
         if(selectedUnit==null){
             for(int k=0;k<1;k++){
@@ -25,19 +26,30 @@ public class BoardController {
             }
         }
         else{
+            board.stateArray[selectedUnit.getPosX()][selectedUnit.getPosY()].setInCapture(false);   // Abort capture
+
             UnitContainer.move(selectedUnit,clickX,clickY);
+
+            // Combat
+            if(UnitContainer.unitBoard[clickX][clickY][0].getLoyalty()!=selectedUnit.getLoyalty()){
+                System.out.println("Combat");
+            }
 
             // Capture
             if(selectedUnit.getLoyalty()!=board.stateArray[clickX][clickY].getLoyalty() && board.stateArray[clickX][clickY].getLoyalty()!= Loyalty.NONE){
                 board.stateArray[clickX][clickY].setProvLoyalty(selectedUnit.getLoyalty());
+                board.stateArray[clickX][clickY].setInCapture(true);
                 Turn.addEvent(new com.nasser.poulet.conquest.model.Event(1, board.stateArray[clickX][clickY].productivity , board.stateArray[clickX][clickY], new Callback<State>(){
                     public void methodCallback(State state) {
-                        state.setLoyalty(state.getProvLoyalty());
-                        Turn.addEvent(new Event(-1, state.productivity, state, new Callback<State>() {
-                            public void methodCallback(State state) {
-                                UnitContainer.addUnit(new Unit(state.getPosX(), state.getPosY(), state.getLoyalty()));
-                            }
-                        }));
+                        if(state.isInCapture()){
+                            state.setInCapture(false);
+                            state.setLoyalty(state.getProvLoyalty());
+                            Turn.addEvent(new Event(-1, state.productivity, state, new Callback<State>() {
+                                public void methodCallback(State state) {
+                                    UnitContainer.addUnit(new Unit(state.getPosX(), state.getPosY(), state.getLoyalty()));
+                                }
+                            }));
+                        }
                     }
                 }));
             }

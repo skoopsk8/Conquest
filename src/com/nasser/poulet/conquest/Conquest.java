@@ -4,6 +4,7 @@ package com.nasser.poulet.conquest;
  */
 
 import com.nasser.poulet.conquest.controller.BoardController;
+import com.nasser.poulet.conquest.controller.IA;
 import com.nasser.poulet.conquest.controller.Turn;
 import com.nasser.poulet.conquest.model.*;
 import com.nasser.poulet.conquest.view.RenderBoard;
@@ -55,15 +56,11 @@ public class Conquest {
 
         turn = new Turn();
 
-        turn.addEvent(new com.nasser.poulet.conquest.model.Event(-1, 1500 , mainBoard.stateArray[0][0], new Callback<State>(){
-            public void methodCallback(State state) {                   // Context loss
-                System.out.println("Callbacked!");
-                System.out.println(state.loyalty);
-            }
-        }));
+        IA IAGreen = new IA(Loyalty.GREEN, boardController);
 
         // Have to stay just before the while
         turn.startTurn();
+        // IAGreen.start();
         while(!Display.isCloseRequested()){
             this.pollInput();
             turn.update();
