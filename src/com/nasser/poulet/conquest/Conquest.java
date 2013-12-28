@@ -50,9 +50,9 @@ public class Conquest {
         GL11.glOrtho(0, 800, 0, 600, 1, -1);
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
 
-        Board mainBoard = new Board();
+        Board mainBoard = new Board(20, 15);
         boardController = new BoardController(mainBoard);
-        RenderBoard renderer = new RenderBoard(mainBoard);
+        RenderBoard renderer = new RenderBoard();
 
         turn = new Turn();
 
@@ -64,7 +64,7 @@ public class Conquest {
         while(!Display.isCloseRequested()){
             this.pollInput();
             turn.update();
-            renderer.render();
+            renderer.render(mainBoard);
             Display.update();
         }
 

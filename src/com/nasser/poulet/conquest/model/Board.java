@@ -2,39 +2,88 @@ package com.nasser.poulet.conquest.model;
 
 import com.nasser.poulet.conquest.controller.Turn;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  * Created by Lord on 10/12/13.
  */
+
 public class Board {
-    public State[][] stateArray = new State[20][15];
-   // private UnitContainer unitContainer = new UnitContainer();
-    static public Vector<Unit> unitVector = new Vector<Unit>();
+    // Board representation
+    private State[][] stateArray;    // For easy pathfinding and generation
+    private ArrayList<State> stateArrayList[] = new ArrayList[3];    // For easy gamelogic
 
-    public Board(){
-        System.out.println("Board created");
-        int[][] map = Perlin.generateMap(20,15,0.5f);
-        for(int i=0;i<20;i++){
-            for(int j=0;j<15;j++){
-                stateArray[i][j] = new State(i,j);
-                stateArray[i][j].setLoyalty(Loyalty.values()[map[i][j]]);
-            }
-        }
+    private int boardWidth, boardHeight;
 
-        int[][] playerPos = StartPositions.place(stateArray, 20, 15);
+    public Board( int width, int height ){
+        this.boardWidth = width;
+        this.boardHeight = height;
+
+        // Init Board Array
+        stateArray = new State[this.boardWidth][this.boardHeight];
+
+        // Init Array List
+        stateArrayList[0] = new ArrayList<State>(); // Blue
+        stateArrayList[1] = new ArrayList<State>(); // Yellow
+        stateArrayList[2] = new ArrayList<State>(); // Green
+
+        // Generate Board
+        generateBoard(boardWidth, boardHeight);
+
+        // Generate Player start
+        generateStartState();
+    }
+
+    private void generateBoard( int width, int height ){
+        int[][] map = Perlin.generateMap(width,height,0.5f);
+        for(int i=0;i<width;i++) for (int j = 0; j < height; j++) stateArray[i][j] = new State(i, j, Loyalty.values()[map[i][j]]);
+    }
+
+    private void generateStartState(){
+        int[][] playerPos = StartPositions.place(stateArray, this.boardWidth, this.boardHeight);   // Generation
 
         // Let's add player start
-        stateArray[playerPos[0][0]][playerPos[0][1]].setLoyalty(Loyalty.BLUE);
-        stateArray[playerPos[1][0]][playerPos[1][1]].setLoyalty(Loyalty.YELLOW);
-        stateArray[playerPos[2][0]][playerPos[2][1]].setLoyalty(Loyalty.GREEN);
+        this.addState(Loyalty.BLUE, playerPos[0][0], playerPos[0][1]);
+        this.addState(Loyalty.YELLOW, playerPos[1][0], playerPos[1][1]);
+        this.addState(Loyalty.GREEN, playerPos[2][0], playerPos[2][1]);
+    }
 
-        for(int i=0; i<3; i++){
-            Turn.addEvent(new Event(-1, stateArray[playerPos[i][0]][playerPos[i][1]].productivity, stateArray[playerPos[i][0]][playerPos[i][1]], new Callback<State>() {
-                public void methodCallback(State state) {
-                    UnitContainer.addUnit(new Unit(state.getPosX(), state.getPosY(), state.getLoyalty()));
-                }
-            }));
-        }
+    public void generateUnitSpawnCallback( State state ){
+        if(state.getEventUnitCallback()!=-1)Turn.removeEvent(state.getEventUnitCallback());   // Clear actual Callback
+        state.setEventUnitCallback(Turn.addEvent(new Event(-1, state.getProductivity(), state, new Callback<State>() {
+            public void methodCallback(State state) {
+                state.addUnit(new Unit(state.getLoyalty()));
+            }
+        })));
+    }
+
+    public State addState( Loyalty loyalty, int posX, int posY ){
+        stateArray[posX][posY] = new State(posX, posY, loyalty);
+        stateArrayList[loyalty.ordinal()-2].add(stateArray[posX][posY]);
+        generateUnitSpawnCallback(stateArray[posX][posY]);
+        return stateArray[posX][posY];
+    }
+
+    public State replaceState( Loyalty loyalty, int posX, int posY ){
+        stateArrayList[stateArray[posX][posY].getLoyalty().ordinal()-2].remove(stateArray[posX][posY]);
+        return stateArray[posX][posY];
+    }
+
+    public float getCivilizationPower( Loyalty loyalty ){
+        float power = 0;
+        for(State state :  stateArrayList[loyalty.ordinal()-2]) power += state.getProductivity();
+        return power;
+    }
+
+    public int getBoardWidth() {
+        return boardWidth;
+    }
+
+    public int getBoardHeight() {
+        return boardHeight;
+    }
+
+    public State getState( int posX, int posY) {
+        return stateArray[posX][posY];
     }
 }

@@ -26,13 +26,13 @@ public class IA {
         System.out.println("IA "+this.loyalty+" play");
         for(int i=0;i<20;i++){
             for(int j=0;j<15;j++){
-                if(UnitContainer.unitBoard[i][j][0] != null){
+                /*if(UnitContainer.unitBoard[i][j][0] != null){
                     if(UnitContainer.unitBoard[i][j][0].getLoyalty() == this.loyalty){
                         boardC.click(i*40,j*40);
                         boardC.click(i*40,(j+1)*40);
                         return;
                     }
-                }
+                }*/
             }
         }
     }

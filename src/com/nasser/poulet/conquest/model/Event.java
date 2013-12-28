@@ -1,9 +1,6 @@
 package com.nasser.poulet.conquest.model;
 
 import com.nasser.poulet.conquest.controller.Timer;
-import com.nasser.poulet.conquest.controller.Turn;
-
-import java.util.Objects;
 
 /**
  * Created by Lord on 15/12/13.
@@ -11,11 +8,10 @@ import java.util.Objects;
 
 public class Event {
     private int occurrence;     // Occurrence before auto-destroy MI style
-    private String name;
     private Callback callback;
-    int lastCall;   // Last call snapshot id
-    int interval;   // Interval between two successive call
-    Object context; // For callback re context
+    private int lastCall;   // Last call snapshot id
+    private int interval;   // Interval between two successive call
+    private Object context; // For callback re context
 
     public Event( int occurrence, int interval, Object context, Callback callback ){
         this.occurrence = occurrence;
@@ -23,14 +19,6 @@ public class Event {
         this.interval = interval;
         this.lastCall = Timer.addSnapshot();
         this.context = context;
-    }
-
-    public int getLastCall() {
-        return lastCall;
-    }
-
-    public int getInterval() {
-        return interval;
     }
 
     public boolean call(){
@@ -43,5 +31,13 @@ public class Event {
             if(this.occurrence <= 0) return true;  // Auto destroy
         }
         return false;
+    }
+
+    public int getLastCall() {
+        return lastCall;
+    }
+
+    public int getInterval() {
+        return interval;
     }
 }

@@ -3,43 +3,35 @@ package com.nasser.poulet.conquest.view;
 import com.nasser.poulet.conquest.model.Board;
 import com.nasser.poulet.conquest.model.State;
 import com.nasser.poulet.conquest.model.Unit;
-import com.nasser.poulet.conquest.model.UnitContainer;
 import org.lwjgl.opengl.GL11;
 
 /**
  * Created by Lord on 10/12/13.
  */
 public class RenderBoard implements Render {
-    private Board board;
+    private final int TILE_SIZE = 32;
+    private final int BORDER_SIZE = 8;
 
-    private int tileSize = 32;
-    private int borderSize = 8;
-
-    public RenderBoard( Board board ){
-        this.board = board;
+    public RenderBoard() {
     }
 
-    @Override
-    public void render() {
+    public void render(){
+    }
+
+    public void render( Board board ) {
         // Clear the display
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
         // Render the Board
-        for(int i=0;i<20;i++) for(int j=0;j<15;j++) renderState(i, j);
-
-        for(int i=0;i<20;i++){
-            for(int j=0;j<15;j++){
-                for(int k=0;k<2;k++){
-                    if(UnitContainer.unitBoard[i][j][k] != null){
-                        renderUnit(UnitContainer.unitBoard[i][j][k], k);
-                    }
-                }
+        for(int i=0;i<board.getBoardWidth();i++) {
+            for (int j = 0; j < board.getBoardHeight(); j++) {
+                renderState(board.getState(i, j));
             }
         }
     }
 
-    private void renderState( int i, int j ){
-        switch (board.stateArray[i][j].getLoyalty()){
+    private void renderState( State state ){
+        switch (state.getLoyalty()){
             case NONE:
                 GL11.glColor3f(0.1f, 0.1f, 0.1f);
                 break;
@@ -61,14 +53,20 @@ public class RenderBoard implements Render {
         }
 
         GL11.glBegin(GL11.GL_QUADS);
-        GL11.glVertex2f((board.stateArray[i][j].getPosX()*(tileSize+borderSize))+(borderSize/2),(board.stateArray[i][j].getPosY()*(tileSize+borderSize))+(borderSize/2));
-        GL11.glVertex2f((board.stateArray[i][j].getPosX()*(tileSize+borderSize))+tileSize+(borderSize/2),(board.stateArray[i][j].getPosY()*(tileSize+borderSize))+(borderSize/2));
-        GL11.glVertex2f((board.stateArray[i][j].getPosX()*(tileSize+borderSize))+tileSize+(borderSize/2),(board.stateArray[i][j].getPosY()*(tileSize+borderSize))+tileSize+(borderSize/2));
-        GL11.glVertex2f((board.stateArray[i][j].getPosX()*(tileSize+borderSize))+(borderSize/2),(board.stateArray[i][j].getPosY()*(tileSize+borderSize))+tileSize+(borderSize/2));
+            GL11.glVertex2f((state.getPosX()*(TILE_SIZE+BORDER_SIZE))+(BORDER_SIZE/2),(state.getPosY()*(TILE_SIZE+BORDER_SIZE))+(BORDER_SIZE/2));
+            GL11.glVertex2f((state.getPosX()*(TILE_SIZE+BORDER_SIZE))+TILE_SIZE+(BORDER_SIZE/2),(state.getPosY()*(TILE_SIZE+BORDER_SIZE))+(BORDER_SIZE/2));
+            GL11.glVertex2f((state.getPosX()*(TILE_SIZE+BORDER_SIZE))+TILE_SIZE+(BORDER_SIZE/2),(state.getPosY()*(TILE_SIZE+BORDER_SIZE))+TILE_SIZE+(BORDER_SIZE/2));
+            GL11.glVertex2f((state.getPosX()*(TILE_SIZE+BORDER_SIZE))+(BORDER_SIZE/2),(state.getPosY()*(TILE_SIZE+BORDER_SIZE))+TILE_SIZE+(BORDER_SIZE/2));
         GL11.glEnd();
+
+        // Render units
+        for(int i=0; i<2; i++){
+            if(state.getUnit(i) != null)
+                this.renderUnit(state.getUnit(i), state.getPosX(), state.getPosY(), i);
+        }
     }
 
-    private void renderUnit( Unit unit, int level ){
+    private void renderUnit( Unit unit, int posX, int posY, int level ){
         switch (unit.getLoyalty()){
             case BLUE:
                 GL11.glColor3f(0.068f, 0.568f, 0.836f);
@@ -84,18 +82,10 @@ public class RenderBoard implements Render {
                 break;
         }
         GL11.glBegin(GL11.GL_QUADS);
-        if(level == 0){
-            GL11.glVertex2f((unit.getPosX()*(tileSize+borderSize))+(borderSize/2),(unit.getPosY()*(tileSize+borderSize))+(borderSize/2));
-            GL11.glVertex2f((unit.getPosX()*(tileSize+borderSize))+tileSize+(borderSize/2),(unit.getPosY()*(tileSize+borderSize))+(borderSize/2));
-            GL11.glVertex2f((unit.getPosX()*(tileSize+borderSize))+tileSize+(borderSize/2),(unit.getPosY()*(tileSize+borderSize))+tileSize/5+(borderSize/2));
-            GL11.glVertex2f((unit.getPosX()*(tileSize+borderSize))+(borderSize/2),(unit.getPosY()*(tileSize+borderSize))+tileSize/5+(borderSize/2));
-        }
-        if(level == 1){
-            GL11.glVertex2f((unit.getPosX()*(tileSize+borderSize))+(borderSize/2),(unit.getPosY()*(tileSize+borderSize))+(borderSize/2)+tileSize);
-            GL11.glVertex2f((unit.getPosX()*(tileSize+borderSize))+tileSize+(borderSize/2),(unit.getPosY()*(tileSize+borderSize))+(borderSize/2)+tileSize);
-            GL11.glVertex2f((unit.getPosX()*(tileSize+borderSize))+tileSize+(borderSize/2),(unit.getPosY()*(tileSize+borderSize))-tileSize/5+(borderSize/2)+tileSize);
-            GL11.glVertex2f((unit.getPosX()*(tileSize+borderSize))+(borderSize/2),(unit.getPosY()*(tileSize+borderSize))-tileSize/5+(borderSize/2)+tileSize);
-        }
+            GL11.glVertex2f((posX*(TILE_SIZE+BORDER_SIZE))+(BORDER_SIZE/2),(posY*(TILE_SIZE+BORDER_SIZE))+(BORDER_SIZE/2)+(TILE_SIZE*level));
+            GL11.glVertex2f((posX*(TILE_SIZE+BORDER_SIZE))+TILE_SIZE+(BORDER_SIZE/2),(posY*(TILE_SIZE+BORDER_SIZE))+(BORDER_SIZE/2)+(TILE_SIZE*level));
+            GL11.glVertex2f((posX * (TILE_SIZE + BORDER_SIZE)) + TILE_SIZE + (BORDER_SIZE / 2), (posY * (TILE_SIZE + BORDER_SIZE)) - TILE_SIZE / 5 + (BORDER_SIZE / 2) + (TILE_SIZE * level));
+            GL11.glVertex2f((posX*(TILE_SIZE+BORDER_SIZE))+(BORDER_SIZE/2),(posY*(TILE_SIZE+BORDER_SIZE))-TILE_SIZE/5+(BORDER_SIZE/2)+(TILE_SIZE*level));
         GL11.glEnd();
     }
 }

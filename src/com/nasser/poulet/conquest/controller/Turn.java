@@ -9,20 +9,15 @@ import java.util.*;
  * Created by Lord on 12/12/13.
  */
 public class Turn{
-    private int TURN_DURATION = 1500;
+    private final int TURN_DURATION = 1500;
 
     private boolean pause;
     private int turnNumber;
 
-    private int gameSnapshot;
-    private int turnSnapshot;
-    private int pauseSnapshot;
-    private int currentSnapshot;
-
+    private int gameSnapshot, turnSnapshot, pauseSnapshot, currentSnapshot;
     static private Vector<Event> eventList = new Vector<Event>();
 
     public Turn(){
-
         this.gameSnapshot = Timer.addSnapshot();
         this.turnSnapshot = Timer.addSnapshot();
         this.pauseSnapshot = Timer.addSnapshot();
@@ -58,8 +53,14 @@ public class Turn{
             return Timer.duration(this.turnSnapshot, this.currentSnapshot);
     }
 
-    static public void addEvent(Event event){
+    static public int addEvent(Event event){
         eventList.add(event);
+        return eventList.size()-1;
+    }
+
+    static public void removeEvent( int index ){
+        System.out.println("Remove event: "+index);
+        eventList.remove(index);
     }
 
     public boolean isPause() {
