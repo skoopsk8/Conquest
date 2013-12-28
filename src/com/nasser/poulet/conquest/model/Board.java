@@ -49,12 +49,7 @@ public class Board {
     }
 
     public void generateUnitSpawnCallback( State state ){
-        if(state.getEventUnitCallback()!=-1)Turn.removeEvent(state.getEventUnitCallback());   // Clear actual Callback
-        state.setEventUnitCallback(Turn.addEvent(new Event(-1, state.getProductivity(), state, new Callback<State>() {
-            public void methodCallback(State state) {
-                state.addUnit(new Unit(state.getLoyalty()));
-            }
-        })));
+        state.generateUnitSpawnCallback();
     }
 
     public State addState( Loyalty loyalty, int posX, int posY ){

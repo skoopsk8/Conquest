@@ -4,7 +4,7 @@ package com.nasser.poulet.conquest;
  */
 
 import com.nasser.poulet.conquest.controller.BoardController;
-import com.nasser.poulet.conquest.controller.IA;
+import com.nasser.poulet.conquest.model.IA;
 import com.nasser.poulet.conquest.controller.Turn;
 import com.nasser.poulet.conquest.model.*;
 import com.nasser.poulet.conquest.view.RenderBoard;
@@ -15,14 +15,10 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 
-import java.awt.*;
-import java.awt.event.KeyEvent;
-
 public class Conquest {
     private boolean fullscreen;
     private Turn turn;
     private boolean debug;
-    private BoardController boardController;
     private boolean noClick;
 
     public Conquest(String[] args){
@@ -51,18 +47,24 @@ public class Conquest {
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
 
         Board mainBoard = new Board(20, 15);
-        boardController = new BoardController(mainBoard);
         RenderBoard renderer = new RenderBoard();
 
         turn = new Turn();
 
-        IA IAGreen = new IA(Loyalty.GREEN, boardController);
+        IA IAGreen = new IA(Loyalty.GREEN, mainBoard);
+        Human human = new Human(Loyalty.BLUE, mainBoard);
+
+        Action inputAction;
 
         // Have to stay just before the while
         turn.startTurn();
-        // IAGreen.start();
+        IAGreen.start();
         while(!Display.isCloseRequested()){
-            this.pollInput();
+            inputAction = this.pollInput();
+            if(inputAction == Action.MOUSE)
+                human.click(Mouse.getX(), Mouse.getY());
+            else if(inputAction == Action.ECHAP)
+                human.abort();
             turn.update();
             renderer.render(mainBoard);
             Display.update();
@@ -76,7 +78,7 @@ public class Conquest {
         new Conquest(args);
     }
 
-    public void pollInput(){
+    public Action pollInput(){
         while(Keyboard.next()){
             if(Keyboard.getEventKeyState()) {   // Only pressed keys
                 if(Keyboard.getEventKey() == Keyboard.KEY_SPACE){
@@ -86,10 +88,18 @@ public class Conquest {
         }
         if(Mouse.isButtonDown(0) && noClick){
             noClick = false;
-            boardController.click(Mouse.getX(), Mouse.getY());
+            return Action.MOUSE;
         }
         if(!Mouse.isButtonDown(0)){
             noClick = true;
         }
+        return Action.NONE;
+    }
+
+    private enum Action{
+        NONE,
+        KEYBOARD,
+        ECHAP,
+        MOUSE
     }
 }

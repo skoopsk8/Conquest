@@ -7,58 +7,74 @@ import com.nasser.poulet.conquest.model.*;
  */
 public class BoardController {
     private Board board;
-    //private Unit selectedUnit;
-    private State selectedState;
-
 
     public BoardController( Board board ){
         this.board = board;
     }
 
-    public void click( int x, int y ){
-
-        int clickX = (int)Math.floor(x/40);
-        int clickY = (int)Math.floor(y/40);
-        System.out.println("Click on loyalty " + board.getState(clickX, clickY).getLoyalty().ordinal());
-        if(selectedState==null){
-            if(board.getState(clickX, clickY).getUnit()!=null){
-                selectedState = board.getState(clickX, clickY);
-            }
-        }
-        else{
-            if(board.getState(clickX, clickY).canHostUnit()){   // Unit action only if we can move the unit
-                // Combat
-                if(board.getState(clickX, clickY).getUnit()!=null){
-                    if(board.getState(clickX, clickY).getUnit().getLoyalty()!=selectedState.getUnit().getLoyalty()){
-                        System.out.println("Combat");
-                    }
-                }
-
-                // Capture
-                if(selectedState.getUnit().getLoyalty()!=board.getState(clickX, clickY).getLoyalty() && board.getState(clickX, clickY).getLoyalty()!= Loyalty.NONE){
-                    board.getState(clickX, clickY).setProvLoyalty(selectedState.getUnit().getLoyalty());
-                    board.getState(clickX, clickY).setInCapture(true);
-                    Turn.addEvent(new com.nasser.poulet.conquest.model.Event(1, board.getState(clickX, clickY).getProductivity() , board.getState(clickX, clickY), new Callback<State>(){
-                        public void methodCallback(State state) {
-                            if(state.isInCapture()){
-                                state.setInCapture(false);
-                                state.setLoyalty(state.getProvLoyalty());
-                                state.getEventUnitCallback();
-                            }
-                        }
-                    }));
-                }
-
-                // Finally move the unit
-                selectedState.setInCapture(false);   // Abort capture
-                board.getState(clickX, clickY).addUnit(selectedState.moveUnit());
-            }
-
-            selectedState=null;
-        }
+    public State select(int posX, int posY) {
+        return board.getState(posX, posY);
     }
 
-    public void pause(){
+    public boolean action( State selectedState, int posX, int posY ){
+        if(board.getState(posX, posY).canHostUnit()){
+            Unit actionUnit = this.move(selectedState, posX, posY);
 
+            // Combat
+            if(board.getState(posX, posY).getUnit()!=null){
+                if(board.getState(posX, posY).getUnit().getLoyalty() != actionUnit.getLoyalty()){
+                    this.combat(actionUnit, board.getState(posX, posY));
+                }
+            }
+
+            // Capture
+            if(board.getState(posX, posY).getLoyalty() != Loyalty.NONE && board.getState(posX, posY).getLoyalty() != actionUnit.getLoyalty() && board.getState(posX, posY).getUnit() == actionUnit){
+                this.capture(actionUnit, board.getState(posX, posY));
+            }
+
+            return true;
+        }
+        return false;
+    }
+
+    private Unit move( State state, int posX, int posY ){
+        state.setInCapture(false);   // Abort capture
+        Unit unit = state.moveUnit();
+        board.getState(posX, posY).addUnit(unit);
+        return unit;
+    }
+
+    private void capture( Unit unit, State state ){
+        state.setProvLoyalty(unit.getLoyalty());
+        state.setInCapture(true);
+        Turn.addEvent(new com.nasser.poulet.conquest.model.Event(1, state.getProductivity() , state, new Callback<State>(){
+            public void methodCallback(State state) {
+            if(state.isInCapture()){
+                state.setInCapture(false);
+                state.setLoyalty(state.getProvLoyalty());
+                state.generateUnitSpawnCallback();
+            }
+            }
+        }));
+    }
+
+    private void combat( Unit unit, State state){
+        System.out.println("Fight : " + board.getCivilizationPower(unit.getLoyalty()) + " vs " +board.getCivilizationPower(state.getUnit().getLoyalty()));
+
+        // Neutral
+        if(state.getLoyalty() == Loyalty.EMPTY){
+            if(board.getCivilizationPower(unit.getLoyalty())>board.getCivilizationPower(state.getUnit().getLoyalty()))
+                state.removeUnit(0);
+            else
+               state.removeUnit(1);
+        }
+
+        // Attack
+        else{
+            if(board.getCivilizationPower(unit.getLoyalty())>board.getCivilizationPower(state.getUnit().getLoyalty())*1.2)
+                state.removeUnit(0);
+            else
+                state.removeUnit(1);
+        }
     }
 }

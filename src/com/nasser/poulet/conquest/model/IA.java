@@ -1,17 +1,14 @@
-package com.nasser.poulet.conquest.controller;
+package com.nasser.poulet.conquest.model;
 
-import com.nasser.poulet.conquest.model.*;
+import com.nasser.poulet.conquest.controller.BoardController;
+import com.nasser.poulet.conquest.controller.Turn;
 
 /**
  * Created by Thomas on 12/26/13.
  */
-public class IA {
-    private Loyalty loyalty;
-    private BoardController boardC;
-
-    public IA( Loyalty loyalty, BoardController boardC ){
-        this.loyalty = loyalty;
-        this.boardC = boardC;
+public class IA extends Player {
+    public IA( Loyalty loyalty, Board board ){
+        super(loyalty, board);
     }
 
     public void start(){

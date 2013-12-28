@@ -1,5 +1,7 @@
 package com.nasser.poulet.conquest.model;
 
+import com.nasser.poulet.conquest.controller.Turn;
+
 /**
  * Created by Lord on 10/12/13.
  */
@@ -75,6 +77,14 @@ public class State {
         return true;
     }
 
+    public void removeUnit( int level ){
+        this.units[level] = null;
+        if(level == 0 && units[1] != null){
+            units[0] = units[1];
+            units[1] = null;
+        }
+    }
+
     public Unit moveUnit(){
         Unit prov = this.units[0];
         if(this.units[1] != null){
@@ -97,5 +107,14 @@ public class State {
 
     public boolean canHostUnit(){
         return this.units[1]==null;
+    }
+
+    public void generateUnitSpawnCallback(){
+        if(eventUnitCallback!=-1) Turn.removeEvent(eventUnitCallback);   // Clear actual Callback
+        this.setEventUnitCallback(Turn.addEvent(new Event(-1, productivity, this, new Callback<State>() {
+            public void methodCallback(State state) {
+                state.addUnit(new Unit(state.getLoyalty()));
+            }
+        })));
     }
 }
