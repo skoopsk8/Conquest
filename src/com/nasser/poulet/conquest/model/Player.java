@@ -41,6 +41,10 @@ public abstract class Player {
             this.abort();
     }
 
+    protected void select( State state ){
+        this.selected = state;
+    }
+
     protected void action( int posX, int posY ){
         if(this.boardController.action(selected, posX, posY))
             this.abort();

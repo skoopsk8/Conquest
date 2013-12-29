@@ -78,7 +78,11 @@ public class Board {
         return boardHeight;
     }
 
-    public State getState( int posX, int posY) {
+    public State getState( int posX, int posY ) {
         return stateArray[posX][posY];
+    }
+
+    public State getState( Loyalty loyalty, int index ){
+        return stateArrayList[loyalty.ordinal()-2].get(index);
     }
 }
