@@ -1,4 +1,7 @@
 <menu>
+    <properties>
+        <wait>3500</wait>
+    </properties>
     <objects>
         <label id="0">
             <name>Title</name>

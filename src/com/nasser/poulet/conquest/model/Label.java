@@ -14,4 +14,14 @@ public class Label extends UIElement{
     public void render(){
         font.drawString(posX, posY, text, Color.white);
     }
+
+    @Override
+    public String click(int posX, int posY) {
+        return null;
+    }
+
+    @Override
+    public String hover(int posX, int posY) {
+        return null;
+    }
 }

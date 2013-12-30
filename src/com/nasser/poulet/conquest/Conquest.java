@@ -16,7 +16,7 @@ import org.lwjgl.opengl.GL11;
 
 public class Conquest {
     private boolean fullscreen;
-    private boolean noSplash;
+    private boolean noSplash = false;
     private Turn turn;
     private boolean debug;
     private boolean noClick;
@@ -24,9 +24,12 @@ public class Conquest {
     public Conquest(String[] args){
         // Check arguments
         for (String s: args) {
-            if(s == "-dev") this.debug = true;                  // Not working
-            if(s == "-fullscreen") this.fullscreen = true;      // Not working
-            if(s == "-noSplash") this.noSplash = true;      // Not working
+            if(s == "-dev")
+                this.debug = true;      // Not Working
+            else if(s == "-fullscreen")
+                this.fullscreen = true; // Not Working
+            else if(s == "-noSplash")
+                this.noSplash = true;   // Not Working
         }
 
         noClick = true;
@@ -44,12 +47,13 @@ public class Conquest {
 
         this.initializeOpenGL(800, 600);    // Launch OpenGL
 
-        this.startMenu("splash");   // Splash Screen
-
-        this.startMenu("mainMenu"); // Main Menu
-
-        this.startGame();   // Start the Game
-
+        String s = this.startMenu("splash");
+        if (s.equals("continue")){
+            s = this.startMenu("mainMenu");
+            if (s.equals("play")){
+                this.startGame();
+            }
+        }
 
         Display.destroy();
     }
@@ -84,8 +88,9 @@ public class Conquest {
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
     }
 
-    private void startMenu( String filename ){
+    private String startMenu( String filename ){
         Menu menu = new Menu(filename);
+        return menu.render();
     }
 
     private void startGame(){

@@ -1,8 +1,9 @@
 package com.nasser.poulet.conquest;
 
-import com.nasser.poulet.conquest.model.Button;
-import com.nasser.poulet.conquest.model.Label;
-import com.nasser.poulet.conquest.model.UIElement;
+import com.nasser.poulet.conquest.controller.Timer;
+import com.nasser.poulet.conquest.controller.Turn;
+import com.nasser.poulet.conquest.model.*;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.xml.sax.*;
@@ -26,30 +27,59 @@ public class Menu extends DefaultHandler{
     private Label label;
     private Button button;
 
+    private int wait=0;
+    String action = null;
+
     public Menu(String filename){
         this.filename = filename;
 
         // Parse the menu file
         this.start();
-
-        // Render the board and the menu
-        this.render();
     }
 
-    private void render(){
-        // prepare the display
+    public String render(){
+        // Optimize the display for text
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
-        while(!Display.isCloseRequested()){
+        // Event for "wait" escape
+        Event event = null;
+        if(wait!=0){
+            event = new Event(1, wait, this, new Callback<Menu>() {
+                public void methodCallback(Menu menu) {
+                    menu.action = "continue";
+                }
+            });
+        }
+
+        int currentSnapshot = Timer.addSnapshot();
+
+        while(action==null){
+            Timer.updateSnapshot(currentSnapshot);
+
+            if(Display.isCloseRequested())
+                action = "quit";
+
             GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
+
             for(UIElement uiElement : uiElements){
                 uiElement.render();
             }
+
+            if(Mouse.isButtonDown(0)){
+                for(int i=0; i<uiElements.size() && action==null ; i++){
+                    action = uiElements.get(i).click(Mouse.getX(), (-Mouse.getY()+600));
+                }
+            }
+
+            if(wait!=0)if(Timer.duration(event.getLastCall(), currentSnapshot)>event.getInterval())event.call(); // Call wait event update
+
             Display.update();
         }
 
-        GL11.glDisable(GL11.GL_BLEND);  // Disable Blend otherwise game won't work
+        GL11.glDisable(GL11.GL_BLEND);  // Disable Blending otherwise the game won't work
+
+        return action;
     }
 
     private void start(){
@@ -80,7 +110,8 @@ public class Menu extends DefaultHandler{
             element = new Label();
         }
         else if(qName.equals("button")){
-            element = new Button();
+            button = new Button();
+            element = button;
         }
         else {
             buffer = new StringBuffer();
@@ -110,6 +141,22 @@ public class Menu extends DefaultHandler{
         }
         else if(qName.equals("posY")){
             element.setPosY(Integer.parseInt(buffer.toString()));
+            buffer = null;
+        }
+        else if(qName.equals("width")){
+            button.setWidth(Integer.parseInt(buffer.toString()));
+            buffer = null;
+        }
+        else if(qName.equals("height")){
+            button.setHeight(Integer.parseInt(buffer.toString()));
+            buffer = null;
+        }
+        else if(qName.equals("action")){
+            button.setAction(buffer.toString());
+            buffer = null;
+        }
+        else if(qName.equals("wait")){
+            this.wait = Integer.parseInt(buffer.toString());
             buffer = null;
         }
     }

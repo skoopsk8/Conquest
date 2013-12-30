@@ -10,6 +10,10 @@ public abstract class UIElement {
 
     public abstract void render();
 
+    public abstract String click( int posX, int posY );
+
+    public abstract String hover( int posX, int posY );
+
     public String getName() {
         return name;
     }
