@@ -66,6 +66,12 @@ public class Menu extends DefaultHandler{
                 uiElement.render();
             }
 
+            // Hover action
+            for(UIElement uiElement : uiElements){
+                uiElement.hover(Mouse.getX(), Mouse.getY());
+            }
+
+            //Click action
             if(Mouse.isButtonDown(0)){
                 for(int i=0; i<uiElements.size() && action==null ; i++){
                     action = uiElements.get(i).click(Mouse.getX(), (-Mouse.getY()+600));

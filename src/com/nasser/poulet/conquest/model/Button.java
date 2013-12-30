@@ -1,10 +1,14 @@
 package com.nasser.poulet.conquest.model;
 
 import com.sun.swing.internal.plaf.synth.resources.synth_sv;
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.input.Cursor;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;
 
 import java.awt.*;
+import java.beans.Customizer;
 
 /**
  * Created by Thomas on 12/29/13.
@@ -28,6 +32,10 @@ public class Button extends UIElement {
 
     @Override
     public String hover(int posX, int posY) {
+        if(inside(posX, posY)){
+            // TODO : add cursor change when hover
+            return null;
+        }
         return null;
     }
 

@@ -110,7 +110,7 @@ public class Conquest {
         while(!Display.isCloseRequested()){
             inputAction = this.pollInput();
             if(inputAction == Action.MOUSE)
-                human.click(Mouse.getX(), Mouse.getY());
+                human.click(Mouse.getX(), (-Mouse.getY()+600));
             else if(inputAction == Action.ECHAP)
                 human.abort();
             turn.update();
