@@ -3,7 +3,6 @@ package com.nasser.poulet.conquest;
  * Created by Lord on 10/12/13.
  */
 
-import com.nasser.poulet.conquest.controller.BoardController;
 import com.nasser.poulet.conquest.model.IA;
 import com.nasser.poulet.conquest.controller.Turn;
 import com.nasser.poulet.conquest.model.*;
@@ -17,6 +16,7 @@ import org.lwjgl.opengl.GL11;
 
 public class Conquest {
     private boolean fullscreen;
+    private boolean noSplash;
     private Turn turn;
     private boolean debug;
     private boolean noClick;
@@ -26,6 +26,7 @@ public class Conquest {
         for (String s: args) {
             if(s == "-dev") this.debug = true;                  // Not working
             if(s == "-fullscreen") this.fullscreen = true;      // Not working
+            if(s == "-noSplash") this.noSplash = true;      // Not working
         }
 
         noClick = true;
@@ -41,11 +42,53 @@ public class Conquest {
             System.exit(0);
         }
 
+        this.initializeOpenGL(800, 600);    // Launch OpenGL
+
+        this.startMenu("splash");   // Splash Screen
+
+        this.startMenu("mainMenu"); // Main Menu
+
+        this.startGame();   // Start the Game
+
+
+        Display.destroy();
+    }
+
+    public static void main(String[] args){
+        new Conquest(args);
+    }
+
+    public Action pollInput(){
+        while(Keyboard.next()){
+            if(Keyboard.getEventKeyState()) {   // Only pressed keys
+                if(Keyboard.getEventKey() == Keyboard.KEY_SPACE){
+                   this.turn.setPause(!this.turn.isPause());
+                }
+            }
+        }
+        if(Mouse.isButtonDown(0) && noClick){
+            noClick = false;
+            return Action.MOUSE;
+        }
+        if(!Mouse.isButtonDown(0)){
+            noClick = true;
+        }
+        return Action.NONE;
+    }
+
+    private void initializeOpenGL( int width, int height ){
+        GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glMatrixMode(GL11.GL_PROJECTION);
         GL11.glLoadIdentity();
-        GL11.glOrtho(0, 800, 0, 600, 1, -1);
+        GL11.glOrtho(0, width, height, 0, 1, -1);
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
+    }
 
+    private void startMenu( String filename ){
+        Menu menu = new Menu(filename);
+    }
+
+    private void startGame(){
         Board mainBoard = new Board(20, 15);
         RenderBoard renderer = new RenderBoard();
 
@@ -71,29 +114,6 @@ public class Conquest {
         }
 
         turn.stop();
-        Display.destroy();
-    }
-
-    public static void main(String[] args){
-        new Conquest(args);
-    }
-
-    public Action pollInput(){
-        while(Keyboard.next()){
-            if(Keyboard.getEventKeyState()) {   // Only pressed keys
-                if(Keyboard.getEventKey() == Keyboard.KEY_SPACE){
-                   this.turn.setPause(!this.turn.isPause());
-                }
-            }
-        }
-        if(Mouse.isButtonDown(0) && noClick){
-            noClick = false;
-            return Action.MOUSE;
-        }
-        if(!Mouse.isButtonDown(0)){
-            noClick = true;
-        }
-        return Action.NONE;
     }
 
     private enum Action{

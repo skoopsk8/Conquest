@@ -1,0 +1,28 @@
+<menu>
+    <objects>
+        <label id="0">
+            <name>Title</name>
+            <text>Conquest</text>
+            <posX>100</posX>
+            <posY>50</posY>
+        </label>
+        <button id="1">
+            <name>Button1</name>
+            <text>Play</text>
+            <posX>100</posX>
+            <posY>150</posY>
+        </button>
+        <button id="2">
+            <name>Button2</name>
+            <text>Multiplayer</text>
+            <posX>100</posX>
+            <posY>250</posY>
+        </button>
+        <button id="3">
+            <name>Button3</name>
+            <text>Quit</text>
+            <posX>100</posX>
+            <posY>350</posY>
+        </button>
+    </objects>
+</menu>

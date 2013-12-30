@@ -1,0 +1,10 @@
+<menu>
+    <objects>
+        <label id="0">
+            <name>Title</name>
+            <text>Conquest</text>
+            <posX>100</posX>
+            <posY>50</posY>
+        </label>
+    </objects>
+</menu>
