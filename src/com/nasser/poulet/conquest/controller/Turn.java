@@ -79,5 +79,6 @@ public class Turn{
 
     public void stop(){
         Timer.duration(this.gameSnapshot, this.currentSnapshot);   // Game duration
+        eventList.clear();
     }
 }

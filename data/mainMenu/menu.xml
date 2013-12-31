@@ -1,0 +1,43 @@
+<menu>
+    <objects>
+        <label id="0">
+            <name>Title</name>
+            <text>Conquest</text>
+            <posX>300</posX>
+            <posY>50</posY>
+            <font>
+                <fontName>Arial</fontName>
+                <size>40</size>
+                <color>white</color>
+                <strengh>BOLD</strengh>
+            </font>
+        </label>
+        <button id="1">
+            <name>Button1</name>
+            <text>Play</text>
+            <posX>100</posX>
+            <posY>150</posY>
+            <width>100</width>
+            <height>50</height>
+            <action>play</action>
+        </button>
+        <button id="2">
+            <name>Button2</name>
+            <text>Multiplayer</text>
+            <posX>100</posX>
+            <posY>250</posY>
+            <width>100</width>
+            <height>50</height>
+            <action>multiplayer</action>
+        </button>
+        <button id="3">
+            <name>Button3</name>
+            <text>Quit</text>
+            <posX>100</posX>
+            <posY>350</posY>
+            <width>100</width>
+            <height>50</height>
+            <action>quit</action>
+        </button>
+    </objects>
+</menu>
