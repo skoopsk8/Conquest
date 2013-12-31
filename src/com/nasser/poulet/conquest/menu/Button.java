@@ -1,14 +1,9 @@
-package com.nasser.poulet.conquest.model;
+package com.nasser.poulet.conquest.menu;
 
-import com.sun.swing.internal.plaf.synth.resources.synth_sv;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.Display;
-import org.lwjgl.input.Cursor;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;
 
 import java.awt.*;
-import java.beans.Customizer;
 
 /**
  * Created by Thomas on 12/29/13.
@@ -16,11 +11,11 @@ import java.beans.Customizer;
 public class Button extends UIElement {
     private int width, height;
     private String action;
-    private TrueTypeFont font = new TrueTypeFont(new Font("Impact", Font.BOLD, 24), true);
+    private Color color = Color.white;
 
     @Override
     public void render() {
-        font.drawString(posX, posY, text, Color.white);
+        font.getFont().drawString(posX, posY, text, color);
     }
 
     public String click( int posX, int posY){
@@ -33,9 +28,10 @@ public class Button extends UIElement {
     @Override
     public String hover(int posX, int posY) {
         if(inside(posX, posY)){
-            // TODO : add cursor change when hover
+            color = Color.gray;
             return null;
         }
+        color = Color.white;
         return null;
     }
 

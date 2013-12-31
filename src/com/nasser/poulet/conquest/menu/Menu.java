@@ -1,8 +1,8 @@
-package com.nasser.poulet.conquest;
+package com.nasser.poulet.conquest.menu;
 
 import com.nasser.poulet.conquest.controller.Timer;
-import com.nasser.poulet.conquest.controller.Turn;
 import com.nasser.poulet.conquest.model.*;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
@@ -17,18 +17,21 @@ import java.util.List;
  * Created by Thomas on 12/29/13.
  */
 public class Menu extends DefaultHandler{
-    private String filename;
+    private String filename;    // folder name
 
-    private List<UIElement> uiElements;
+    private List<UIElement> uiElements; // Contains all the active elements of the menu
 
-    private StringBuffer buffer;
+    private StringBuffer buffer;    // String buffer for parsing
 
     private UIElement element;
-    private Label label;
     private Button button;
+    private Input input;
+    private Input selectedInput = null;
 
-    private int wait=0;
-    String action = null;
+    private boolean keyboard = false;   // Require keyboard listening
+
+    private int wait=0;     // Timer for auto skip
+    String action = null;   // Return value
 
     public Menu(String filename){
         this.filename = filename;
@@ -37,7 +40,7 @@ public class Menu extends DefaultHandler{
         this.start();
     }
 
-    public String render(){
+    public String[] render(){
         // Optimize the display for text
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -68,13 +71,36 @@ public class Menu extends DefaultHandler{
 
             // Hover action
             for(UIElement uiElement : uiElements){
-                uiElement.hover(Mouse.getX(), Mouse.getY());
+                uiElement.hover(Mouse.getX(), (-Mouse.getY()+600));
             }
 
-            //Click action
+            // Click action
             if(Mouse.isButtonDown(0)){
                 for(int i=0; i<uiElements.size() && action==null ; i++){
                     action = uiElements.get(i).click(Mouse.getX(), (-Mouse.getY()+600));
+                }
+            }
+
+            // Get selected input
+            if(action!=null){
+                for(UIElement uiElement : uiElements){
+                    if(uiElement.getType().equals("input")){
+                        if(uiElement.getAction().equals(action)){
+                            selectedInput = (Input)uiElement;
+                            action = null;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // Get keyboard input
+            if(keyboard){
+                while(Keyboard.next()){
+                    if(Keyboard.getEventKeyState()) {   // Only pressed keys
+                        if(selectedInput!=null)
+                            selectedInput.keyboard(Keyboard.getEventKey());
+                    }
                 }
             }
 
@@ -85,7 +111,14 @@ public class Menu extends DefaultHandler{
 
         GL11.glDisable(GL11.GL_BLEND);  // Disable Blending otherwise the game won't work
 
-        return action;
+        String[] returnValue = new String[2];
+        returnValue[0] = action;
+
+        if(action.equals("join")){
+            returnValue[1] = selectedInput.getText();
+        }
+
+        return returnValue;
     }
 
     private void start(){
@@ -114,10 +147,18 @@ public class Menu extends DefaultHandler{
         }
         else if(qName.equals("label")){
             element = new Label();
+            element.setType("label");
         }
         else if(qName.equals("button")){
             button = new Button();
             element = button;
+            element.setType("button");
+        }
+        else if(qName.equals("input")){
+            input = new Input();
+            button = input;
+            element = button;
+            element.setType("input");
         }
         else {
             buffer = new StringBuffer();
@@ -131,6 +172,11 @@ public class Menu extends DefaultHandler{
         }
         else if(qName.equals("button")){
             uiElements.add(element);
+            element = null;
+        }
+        else if(qName.equals("input")){
+            uiElements.add(element);
+            selectedInput = input;
             element = null;
         }
         else if(qName.equals("name")){
@@ -163,6 +209,18 @@ public class Menu extends DefaultHandler{
         }
         else if(qName.equals("wait")){
             this.wait = Integer.parseInt(buffer.toString());
+            buffer = null;
+        }
+        else if(qName.equals("fontName")){
+            element.getFont().setFontName(buffer.toString());
+            buffer = null;
+        }
+        else if(qName.equals("size")){
+            element.getFont().setSize(Integer.parseInt(buffer.toString()));
+            buffer = null;
+        }
+        else if(qName.equals("keyboard")){
+            this.keyboard = true;
             buffer = null;
         }
     }

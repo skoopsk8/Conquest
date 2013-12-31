@@ -1,4 +1,4 @@
-package com.nasser.poulet.conquest.model;
+package com.nasser.poulet.conquest.menu;
 
 /**
  * Created by Thomas on 12/30/13.
@@ -7,6 +7,8 @@ public abstract class UIElement {
     protected String name;
     protected String text;
     protected int posX, posY;
+    protected Font font = new Font();
+    protected String type;
 
     public abstract void render();
 
@@ -44,5 +46,23 @@ public abstract class UIElement {
 
     public void setPosY(int posY) {
         this.posY = posY;
+    }
+
+    public Font getFont() {
+        return font;
+    }
+
+    public void setFont(Font font) {
+        this.font = font;
+    }
+
+    public abstract String getAction();
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

@@ -2,8 +2,8 @@
     <objects>
         <label id="0">
             <name>Title</name>
-            <text>Conquest</text>
-            <posX>300</posX>
+            <text>Choose your loyalty</text>
+            <posX>200</posX>
             <posY>50</posY>
             <font>
                 <fontName>Arial</fontName>
@@ -14,30 +14,30 @@
         </label>
         <button id="1">
             <name>Button1</name>
-            <text>Play</text>
-            <posX>100</posX>
+            <text>Blue</text>
+            <posX>340</posX>
             <posY>150</posY>
             <width>100</width>
             <height>50</height>
-            <action>play</action>
+            <action>blue</action>
         </button>
         <button id="2">
             <name>Button2</name>
-            <text>Multiplayer</text>
-            <posX>100</posX>
+            <text>Yellow</text>
+            <posX>330</posX>
             <posY>250</posY>
             <width>100</width>
             <height>50</height>
-            <action>multiplayer</action>
+            <action>yellow</action>
         </button>
         <button id="3">
             <name>Button3</name>
-            <text>Quit</text>
-            <posX>100</posX>
+            <text>Green</text>
+            <posX>335</posX>
             <posY>350</posY>
             <width>100</width>
             <height>50</height>
-            <action>quit</action>
+            <action>green</action>
         </button>
     </objects>
 </menu>

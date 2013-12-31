@@ -1,13 +1,19 @@
 <menu>
     <properties>
-        <wait>3500</wait>
+        <wait>2500</wait>
     </properties>
     <objects>
         <label id="0">
             <name>Title</name>
             <text>Conquest</text>
-            <posX>100</posX>
-            <posY>50</posY>
+            <posX>270</posX>
+            <posY>220</posY>
+            <font>
+                <fontName>Arial</fontName>
+                <size>50</size>
+                <color>white</color>
+                <strengh>BOLD</strengh>
+            </font>
         </label>
     </objects>
 </menu>

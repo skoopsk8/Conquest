@@ -3,6 +3,7 @@ package com.nasser.poulet.conquest;
  * Created by Lord on 10/12/13.
  */
 
+import com.nasser.poulet.conquest.menu.Menu;
 import com.nasser.poulet.conquest.model.IA;
 import com.nasser.poulet.conquest.controller.Turn;
 import com.nasser.poulet.conquest.model.*;
@@ -17,18 +18,17 @@ import org.lwjgl.opengl.GL11;
 public class Conquest {
     private boolean fullscreen;
     private boolean noSplash = false;
-    private Turn turn;
     private boolean debug;
     private boolean noClick;
 
     public Conquest(String[] args){
         // Check arguments
         for (String s: args) {
-            if(s == "-dev")
+            if(s.equals("-dev"))
                 this.debug = true;      // Not Working
-            else if(s == "-fullscreen")
+            else if(s.equals("-fullscreen"))
                 this.fullscreen = true; // Not Working
-            else if(s == "-noSplash")
+            else if(s.equals("-noSplash"))
                 this.noSplash = true;   // Not Working
         }
 
@@ -47,12 +47,28 @@ public class Conquest {
 
         this.initializeOpenGL(800, 600);    // Launch OpenGL
 
-        String s = this.startMenu("splash");
-        if (s.equals("continue")){
-            s = this.startMenu("mainMenu");
-            if (s.equals("play")){
-                this.startGame();
-            }
+        String[] s = new String[2];
+        if(!noSplash)s=this.startMenu("splash");
+        else s[0]="continue";
+        if (s[0].equals("continue")){
+            do {
+                s = this.startMenu("mainMenu");
+                if (s[0].equals("play")){
+                    s = this.startMenu("play");
+                    System.out.println(s);
+                    if(!s[0].equals("quit"))
+                        this.startGame(s[0]);
+                }
+                else if (s[0].equals("multiplayer")){
+                    s = this.startMenu("multiplayer");
+                    if(s[0].equals("host")){
+                        // Launch server
+                    }
+                    else if(s[0].equals("join")){
+                        // Launch multiplayer session
+                    }
+                }
+            }while (!s[0].equals("quit"));
         }
 
         Display.destroy();
@@ -66,7 +82,7 @@ public class Conquest {
         while(Keyboard.next()){
             if(Keyboard.getEventKeyState()) {   // Only pressed keys
                 if(Keyboard.getEventKey() == Keyboard.KEY_SPACE){
-                   this.turn.setPause(!this.turn.isPause());
+                   //this.turn.setPause(!this.turn.isPause());
                 }
             }
         }
@@ -88,16 +104,16 @@ public class Conquest {
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
     }
 
-    private String startMenu( String filename ){
+    private String[] startMenu( String filename ){
         Menu menu = new Menu(filename);
         return menu.render();
     }
 
-    private void startGame(){
+    private void startGame( String playerLoyalty ){
         Board mainBoard = new Board(20, 15);
         RenderBoard renderer = new RenderBoard();
 
-        turn = new Turn();
+        Turn turn = new Turn();
 
         IA IAGreen = new IA(Loyalty.GREEN, mainBoard);
         Human human = new Human(Loyalty.BLUE, mainBoard);
@@ -110,7 +126,7 @@ public class Conquest {
         while(!Display.isCloseRequested()){
             inputAction = this.pollInput();
             if(inputAction == Action.MOUSE)
-                human.click(Mouse.getX(), (-Mouse.getY()+600));
+                human.click(Mouse.getX(), (-Mouse.getY() + 600));
             else if(inputAction == Action.ECHAP)
                 human.abort();
             turn.update();
