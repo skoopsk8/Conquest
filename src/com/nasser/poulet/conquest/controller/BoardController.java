@@ -1,5 +1,8 @@
 package com.nasser.poulet.conquest.controller;
 
+import java.util.ArrayList;
+
+import com.nasser.poulet.conquest.astar.AStar;
 import com.nasser.poulet.conquest.model.*;
 
 /**
@@ -41,6 +44,8 @@ public class BoardController {
         state.setInCapture(false);   // Abort capture
         Unit unit = state.moveUnit();
         board.getState(posX, posY).addUnit(unit);
+        ArrayList<State> resultastar = new ArrayList<State>();
+        resultastar = AStar.getPath(board, state, board.getState(posX, posY));
         return unit;
     }
 
