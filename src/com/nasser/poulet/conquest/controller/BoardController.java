@@ -15,8 +15,14 @@ public class BoardController {
     public State select(int posX, int posY) {
         return board.getState(posX, posY);
     }
+    
+    
 
-    public boolean action( State selectedState, int posX, int posY ){
+    public Board getBoard() {
+		return board;
+	}
+
+	public boolean action( State selectedState, int posX, int posY ){
         if(board.getState(posX, posY).canHostUnit()){
             Unit actionUnit = this.move(selectedState, posX, posY);
 

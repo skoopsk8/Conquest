@@ -21,8 +21,22 @@ public class State {
 
         this.productivity = 2000 + (int)(Math.random()*4000);
     }
+    
+    
 
-    public int getPosX(){
+    @Override
+	public boolean equals(Object arg) {
+    	if (this.getPosX() == ((State) arg).getPosX() && this.getPosY() == ((State) arg).getPosY()) {
+    		return true;
+    	}
+    	else {
+    		return false;
+    	}
+	}
+
+
+
+	public int getPosX(){
         return this.posX;
     }
 
