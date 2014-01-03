@@ -31,7 +31,7 @@ public class Menu extends DefaultHandler{
     private boolean keyboard = false;   // Require keyboard listening
 
     private int wait=0;     // Timer for auto skip
-    String action = null;   // Return value
+    public String action = null;   // Return value
 
     public Menu(String filename){
         this.filename = filename;

@@ -77,4 +77,8 @@ public class BoardController {
                 state.removeUnit(1);
         }
     }
+
+    public Board getBoard() {
+        return board;
+    }
 }

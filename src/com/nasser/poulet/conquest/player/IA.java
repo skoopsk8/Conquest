@@ -1,7 +1,10 @@
-package com.nasser.poulet.conquest.model;
+package com.nasser.poulet.conquest.player;
 
-import com.nasser.poulet.conquest.controller.BoardController;
 import com.nasser.poulet.conquest.controller.Turn;
+import com.nasser.poulet.conquest.model.Board;
+import com.nasser.poulet.conquest.model.Callback;
+import com.nasser.poulet.conquest.model.Event;
+import com.nasser.poulet.conquest.model.Loyalty;
 
 /**
  * Created by Thomas on 12/26/13.

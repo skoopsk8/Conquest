@@ -15,7 +15,7 @@ public class Board {
 
     private int boardWidth, boardHeight;
 
-    public Board( int width, int height ){
+    public Board( int width, int height, boolean generate ){
         this.boardWidth = width;
         this.boardHeight = height;
 
@@ -27,11 +27,13 @@ public class Board {
         stateArrayList[1] = new ArrayList<State>(); // Yellow
         stateArrayList[2] = new ArrayList<State>(); // Green
 
-        // Generate Board
-        generateBoard(boardWidth, boardHeight);
+        if(generate){
+            // Generate Board
+            generateBoard(boardWidth, boardHeight);
 
-        // Generate Player start
-        generateStartState();
+            // Generate Player start
+            generateStartState();
+        }
     }
 
     private void generateBoard( int width, int height ){
@@ -59,6 +61,13 @@ public class Board {
         return stateArray[posX][posY];
     }
 
+    public State addState( Loyalty loyalty, int posX, int posY, int productivity){
+        stateArray[posX][posY] = new State(posX, posY, loyalty, productivity);
+        stateArrayList[loyalty.ordinal()-2].add(stateArray[posX][posY]);
+        generateUnitSpawnCallback(stateArray[posX][posY]);
+        return stateArray[posX][posY];
+    }
+
     public State replaceState( Loyalty loyalty, int posX, int posY ){
         stateArrayList[stateArray[posX][posY].getLoyalty().ordinal()-2].remove(stateArray[posX][posY]);
         return stateArray[posX][posY];
@@ -80,5 +89,30 @@ public class Board {
 
     public State getState( int posX, int posY) {
         return stateArray[posX][posY];
+    }
+
+    public int[][] explodeBoard(){
+        int[][] returnValue = new int[boardWidth][boardHeight];
+
+        for(int i=0;i<boardWidth;i++) for (int j = 0; j < boardHeight; j++) returnValue[i][j] = stateArray[i][j].getLoyalty().ordinal();
+
+        return returnValue;
+    }
+    public int[][] explodeProductivity(){
+        int[][] returnValue = new int[boardWidth][boardHeight];
+
+        for(int i=0;i<boardWidth;i++) for (int j = 0; j < boardHeight; j++) returnValue[i][j] = stateArray[i][j].getProductivity();
+
+        return returnValue;
+    }
+
+    public void format(int width, int height, int[][] board, int[][] prod){
+        for(int i=0;i<width;i++) for (int j = 0; j < height; j++){
+            stateArray[i][j] = new State(i, j, Loyalty.values()[board[i][j]]);
+            if(board[i][j]>=2){
+                this.addState(Loyalty.values()[board[i][j]], i, j, prod[i][j]);
+            }
+            stateArray[i][j].setProductivity(prod[i][j]);
+        }
     }
 }
