@@ -1,8 +1,5 @@
 package com.nasser.poulet.conquest.controller;
 
-import java.util.ArrayList;
-
-import com.nasser.poulet.conquest.astar.AStar;
 import com.nasser.poulet.conquest.model.*;
 
 /**

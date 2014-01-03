@@ -3,7 +3,7 @@ package com.nasser.poulet.conquest.astar;
 import com.nasser.poulet.conquest.model.State;
 import com.nasser.poulet.conquest.model.Loyalty;
 
-public class Node {
+public class Node implements Comparable<Node> {
 	State state;
 	double weight;
 	double G;
@@ -34,8 +34,11 @@ public class Node {
 		else if (this.state.getLoyalty() == Loyalty.NONE){
 			this.weight = 8;
 		}
-		else {
+		else if((this.state.getLoyalty() != Loyalty.BLUE)) {
 			this.weight = 10;
+		}
+		else {
+			this.weight = 1;
 		}
 		G = Integer.MAX_VALUE;
 	
@@ -49,8 +52,11 @@ public class Node {
 		else if (this.state.getLoyalty() == Loyalty.NONE){
 			this.weight = 8;
 		}
-		else {
+		else if((this.state.getLoyalty() != Loyalty.BLUE)) {
 			this.weight = 10;
+		}
+		else {
+			this.weight = 1;
 		}
 		this.G = G;
 		
@@ -58,14 +64,17 @@ public class Node {
 	
 	public Node(State state, int G, Node parent){
 		this.state = state;
-		if(this.state.getLoyalty() == Loyalty.EMPTY) {
+		if(this.state.getLoyalty() == Loyalty.EMPTY) { // normalement le test de loyalty
 			this.weight = 1;
 		}
 		else if (this.state.getLoyalty() == Loyalty.NONE){
 			this.weight = 8;
 		}
-		else {
+		else if((this.state.getLoyalty() != Loyalty.BLUE)) {
 			this.weight = 10;
+		}
+		else {
+			this.weight = 1;
 		}
 		this.G = G;
 		this.parent = parent;
@@ -112,4 +121,22 @@ public class Node {
 	public void setParent(Node parent) {
 		this.parent = parent;
 	}
+
+
+
+	public int compareTo(Node otherNode) {
+	    double thisTotalDistanceFromGoal = F + G;
+	    double otherTotalDistanceFromGoal = otherNode.getF() + otherNode.getG();
+	    
+	    if (thisTotalDistanceFromGoal < otherTotalDistanceFromGoal) {
+	            return -1;
+	    } else if (thisTotalDistanceFromGoal > otherTotalDistanceFromGoal) {
+	            return 1;
+	    } else {
+	            return 0;
+	    }
+	}
+
 }
+
+

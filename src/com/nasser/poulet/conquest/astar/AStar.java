@@ -20,7 +20,6 @@ public class AStar {
 		ArrayList<Node> openlist = new ArrayList<Node>();
 		ArrayList<Node> closedlist = new ArrayList<Node>();
 		
-		boolean found = false;
 		int i = 0;
 		
 		Node currentNode = new Node();
@@ -30,15 +29,14 @@ public class AStar {
 		closedlist.clear();
 		openlist.clear();
 		openlist.add(startNode);
+		Collections.sort(openlist);
+		
 		ArrayList<Node> neighbourANode = new ArrayList<Node>();
 		
 		while (openlist.size() != 0)  {
-			// consider the best node in the open list (the node with the lowest f value)
-			
 			currentNode = openlist.get(0);
 			
 			if(currentNode.getState().getPosX() == goal.getPosX() && currentNode.getState().getPosY() == goal.getPosY()) {
-				found = true;
 				System.out.println("On a trouvvé le bon chemin");
 				//return the good path
 				ArrayList<State> retour = new ArrayList<State>(); 
@@ -150,10 +148,11 @@ public class AStar {
 						
 					if(!openlist.contains(neighbourANode.get(i))) {
 						openlist.add(neighbourANode.get(i));
+						Collections.sort(openlist);
 						neighborIsBetter = true;
 					}
 					
-					else if (neighbourDistanceFromStart*neighbourANode.get(i).getWeight() < currentNode.getG()) {
+					else if (neighbourDistanceFromStart * neighbourANode.get(i).getWeight() < currentNode.getG()) {
 						//System.out.println(currentNode.getState().getPosX() + " " + currentNode.getState().getPosY());
 						//System.out.println(neighbourANode.get(i).getState().getPosX() + " " + neighbourANode.get(i).getState().getPosY());
 						//System.out.println(neighbourDistanceFromStart + " " + currentNode.getG());
@@ -165,7 +164,7 @@ public class AStar {
 					
 					if(neighborIsBetter) {
 						neighbourANode.get(i).setParent(currentNode);
-						neighbourANode.get(i).setG(neighbourDistanceFromStart);
+						neighbourANode.get(i).setG(neighbourDistanceFromStart*neighbourANode.get(i).getWeight());
 						neighbourANode.get(i).setF(Math.sqrt(Math.pow((neighbourANode.get(i).getState().getPosX() - goal.getPosX()), 2) + Math.pow((neighbourANode.get(i).getState().getPosY() - goal.getPosY()), 2)));
 					}
 				}
