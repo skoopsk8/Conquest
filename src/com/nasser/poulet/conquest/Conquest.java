@@ -115,14 +115,15 @@ public class Conquest {
 
         Turn turn = new Turn();
 
-        IA IAGreen = new IA(Loyalty.GREEN, mainBoard);
+       // IA IAGreen = new IA(Loyalty.GREEN, mainBoard);
         Human human = new Human(Loyalty.BLUE, mainBoard);
 
+        int currentTurn = 1;
         Action inputAction;
 
         // Have to stay just before the while
         turn.startTurn();
-        IAGreen.start();
+       // IAGreen.start();
         while(!Display.isCloseRequested()){
             inputAction = this.pollInput();
             if(inputAction == Action.MOUSE)
@@ -130,6 +131,11 @@ public class Conquest {
             else if(inputAction == Action.ECHAP)
                 human.abort();
             turn.update();
+            if(turn.getTurnNumber() != currentTurn) {
+            	human.update();
+            	currentTurn = turn.getTurnNumber();
+            }
+            
             renderer.render(mainBoard);
             Display.update();
         }

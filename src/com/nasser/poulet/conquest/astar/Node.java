@@ -5,42 +5,67 @@ import com.nasser.poulet.conquest.model.Loyalty;
 
 public class Node {
 	State state;
-	int weight;
-	int G;
-	Node parent;
+	double weight;
+	double G;
+	double F;
+	
+	public double getF() {
+		return F;
+	}
+
+	public void setF(double f) {
+		F = f;
+	}
+
+	Node parent = null;
 	
 	public Node(){
 		state = null;
-		weight = 0;
+		weight = 1;
 		G = Integer.MAX_VALUE;
-		parent = null;
+		
+	}
+	
+	public Node(State state){
+		this.state = state;
+		if(this.state.getLoyalty() == Loyalty.EMPTY) { // normalement le test de loyalty
+			this.weight = 1;
+		}
+		else if (this.state.getLoyalty() == Loyalty.NONE){
+			this.weight = 8;
+		}
+		else {
+			this.weight = 10;
+		}
+		G = Integer.MAX_VALUE;
+	
 	}
 
 	public Node(State state, int G){
 		this.state = state;
-		if(true) { // normalement le test de loyalty
+		if(this.state.getLoyalty() == Loyalty.EMPTY) { // normalement le test de loyalty
 			this.weight = 1;
 		}
-		else if (false){
-			this.weight = 10;
+		else if (this.state.getLoyalty() == Loyalty.NONE){
+			this.weight = 8;
 		}
 		else {
-			this.weight = Integer.MAX_VALUE;
+			this.weight = 10;
 		}
 		this.G = G;
-		this.parent = null;
+		
 	}
 	
 	public Node(State state, int G, Node parent){
 		this.state = state;
-		if(true) {
+		if(this.state.getLoyalty() == Loyalty.EMPTY) {
 			this.weight = 1;
 		}
-		else if (false){
-			this.weight = 10;
+		else if (this.state.getLoyalty() == Loyalty.NONE){
+			this.weight = 8;
 		}
 		else {
-			this.weight = Integer.MAX_VALUE;
+			this.weight = 10;
 		}
 		this.G = G;
 		this.parent = parent;
@@ -50,23 +75,33 @@ public class Node {
 		return state;
 	}
 
+	@Override
+	public boolean equals(Object arg) {
+		if (this.getState().getPosX() == ((Node) arg).getState().getPosX() && this.getState().getPosY() == ((Node) arg).getState().getPosY()) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	public void setState(State state) {
 		this.state = state;
 	}
 
-	public int getWeight() {
+	public double getWeight() {
 		return weight;
 	}
 
-	public void setWeight(int weight) {
+	public void setWeight(double weight) {
 		this.weight = weight;
 	}
 
-	public int getG() {
+	public double getG() {
 		return G;
 	}
 
-	public void setG(int g) {
+	public void setG(double g) {
 		G = g;
 	}
 

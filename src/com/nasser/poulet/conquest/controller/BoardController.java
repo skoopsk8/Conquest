@@ -18,8 +18,15 @@ public class BoardController {
     public State select(int posX, int posY) {
         return board.getState(posX, posY);
     }
+    
+    
 
-    public boolean action( State selectedState, int posX, int posY ){
+    public Board getBoard() {
+		return board;
+	}
+
+	public boolean action( State selectedState, int posX, int posY ){
+		System.out.println("Je suis dans action de bnoard contreotzleree");
         if(board.getState(posX, posY).canHostUnit()){
             Unit actionUnit = this.move(selectedState, posX, posY);
 
@@ -44,8 +51,7 @@ public class BoardController {
         state.setInCapture(false);   // Abort capture
         Unit unit = state.moveUnit();
         board.getState(posX, posY).addUnit(unit);
-        ArrayList<State> resultastar = new ArrayList<State>();
-        resultastar = AStar.getPath(board, state, board.getState(posX, posY));
+       
         return unit;
     }
 
