@@ -46,10 +46,9 @@ public abstract class Player {
     }
 
     protected void action( int posX, int posY ){
-       	System.out.println("Je rentre dans action de player");
     	ArrayList<State> resultastar = new ArrayList<State>();
         resultastar = AStar.getPath(this.boardController.getBoard(), selected, this.boardController.getBoard().getState(posX, posY));
-        if(resultastar != null) addMove(resultastar);
+        if(resultastar != null) addMove(resultastar); // If impossible path, dont move
         this.abort();
     }
     
@@ -63,15 +62,12 @@ public abstract class Player {
     		i++;
     	}	
     	moves.add(newmove);
-		System.out.println("Je rentre dans action de player");
     }
     
     public void update() {
-    	System.out.println("Je rentre dans player.update");
     	for(int j = 0; j < moves.size(); j++) {
     		if(moves.get(j).size() > 1) {
     			this.boardController.action(moves.get(j).get(0), moves.get(j).get(1).getPosX(), moves.get(j).get(1).getPosY());
-    			System.out.println("J'ai fait le mouvv");
         		moves.get(j).remove(0);
     		}
     		else {

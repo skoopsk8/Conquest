@@ -23,7 +23,6 @@ public class BoardController {
 	}
 
 	public boolean action( State selectedState, int posX, int posY ){
-		System.out.println("Je suis dans action de bnoard contreotzleree");
         if(board.getState(posX, posY).canHostUnit()){
             Unit actionUnit = this.move(selectedState, posX, posY);
 
@@ -48,7 +47,6 @@ public class BoardController {
         state.setInCapture(false);   // Abort capture
         Unit unit = state.moveUnit();
         board.getState(posX, posY).addUnit(unit);
-       
         return unit;
     }
 

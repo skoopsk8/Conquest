@@ -5,9 +5,9 @@ import com.nasser.poulet.conquest.model.Loyalty;
 
 public class Node implements Comparable<Node> {
 	State state;
-	double weight;
-	double G;
-	double F;
+	double weight; // 1 if normal, 3 if water, 10 if ennemy
+	double G; // Distance from start node
+	double F; // Heuristic distance to the goal
 	
 	public double getF() {
 		return F;
@@ -32,7 +32,7 @@ public class Node implements Comparable<Node> {
 			this.weight = 1;
 		}
 		else if (this.state.getLoyalty() == Loyalty.NONE){
-			this.weight = 8;
+			this.weight = 3;
 		}
 		else if((this.state.getLoyalty() != Loyalty.BLUE)) {
 			this.weight = 10;
@@ -50,7 +50,7 @@ public class Node implements Comparable<Node> {
 			this.weight = 1;
 		}
 		else if (this.state.getLoyalty() == Loyalty.NONE){
-			this.weight = 8;
+			this.weight = 3;
 		}
 		else if((this.state.getLoyalty() != Loyalty.BLUE)) {
 			this.weight = 10;
@@ -68,7 +68,7 @@ public class Node implements Comparable<Node> {
 			this.weight = 1;
 		}
 		else if (this.state.getLoyalty() == Loyalty.NONE){
-			this.weight = 8;
+			this.weight = 3;
 		}
 		else if((this.state.getLoyalty() != Loyalty.BLUE)) {
 			this.weight = 10;
