@@ -68,22 +68,20 @@ public class Conquest {
                 s = this.startMenu("mainMenu");
                 if (s[0].equals("play")){
                     s = this.startMenu("play");
-                    System.out.println(s);
-                    //if(!s[0].equals("quit"))
-                        //this.startGame(s[0]);
                 }
                 else if (s[0].equals("multiplayer")){
                     s = this.startMenu("multiplayer");
                     if(s[0].equals("host")){
                         // Create the server and connect the user client
-                        this.initServer("127.0.0.1", Integer.toString(Network.port));
-                        this.initClient("127.0.0.1", Integer.toString(Network.port));
+                        this.initServer();
+                        this.initClient("127.0.0.1");
                         this.startMultiplayerGame();
                     }
                     else if(s[0].equals("join")){
                         String[] str = s[1].split(":");
                         // Launch multiplayer session
-                        this.initClient(str[0], str[1]);
+                        Network.port = Integer.parseInt(str[1]);
+                        this.initClient(str[0]);
                         this.startMultiplayerGame();
                     }
                 }
@@ -252,11 +250,11 @@ public class Conquest {
         MOUSE
     }
 
-    private void initServer( String address, String port ){
-        server =  new ServerConquest(address, port);
+    private void initServer(){
+        server =  new ServerConquest();
     }
 
-    private void initClient( String address, String port ){
-        client = new ClientConquest(address, port);
+    private void initClient( String address ){
+        client = new ClientConquest(address);
     }
 }

@@ -13,12 +13,10 @@ import java.io.IOException;
  */
 public class ClientConquest{
     private Client client;
-    public ClientConquest( String address, String port ){
+    public ClientConquest( String address ){
         client = new Client();
         client.start();
 
-        // For consistency, the classes to be sent over the network are
-        // registered by the same method for both the client and server.
         Network.register(client);
 
         client.addListener(new Listener() {
@@ -31,7 +29,7 @@ public class ClientConquest{
             }
         });
         try {
-            client.connect(5000,"127.0.0.1",Network.port);
+            client.connect(5000,address,Network.port);
         } catch (IOException e) {
             e.printStackTrace();
         }

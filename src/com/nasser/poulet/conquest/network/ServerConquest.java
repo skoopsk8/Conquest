@@ -18,7 +18,7 @@ public class ServerConquest{
 
     private boolean[] ready ={false,false};
 
-    public ServerConquest( String address, String port ){
+    public ServerConquest(){
         //Generate the board
         board = new Board(20,15, true);
 
