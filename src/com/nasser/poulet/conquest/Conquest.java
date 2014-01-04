@@ -225,6 +225,7 @@ public class Conquest {
             }
         }
 
+        int currentTurn = 1;
         Action inputAction;
 
         // Have to stay just before the while
@@ -236,6 +237,11 @@ public class Conquest {
             else if(inputAction == Action.ECHAP)
                 human.abort();
             turn.update();
+            if(turn.getTurnNumber() != currentTurn) {
+            	human.update();
+            	currentTurn = turn.getTurnNumber();
+            }
+            
             renderer.render(mainBoard);
             Display.update();
         }
