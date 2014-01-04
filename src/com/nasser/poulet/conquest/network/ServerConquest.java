@@ -36,6 +36,7 @@ public class ServerConquest{
                     Network.SelectMessageClient selectMessage = new Network.SelectMessageClient();
                     selectMessage.setPosX(((Network.SelectMessage) object).getPosX());
                     selectMessage.setPosY(((Network.SelectMessage) object).getPosY());
+                    selectMessage.setSenderLoyalty(connection.getID()-1);
                     System.out.println("We have a selection in "+selectMessage.getPosX()+";"+selectMessage.getPosY());
                     server.sendToAllExceptTCP(connection.getID(),selectMessage);
                     return;
@@ -44,6 +45,7 @@ public class ServerConquest{
                     Network.ActionMessageClient actionMessage = new Network.ActionMessageClient();
                     actionMessage.setPosX(((Network.ActionMessage) object).getPosX());
                     actionMessage.setPosY(((Network.ActionMessage) object).getPosY());
+                    actionMessage.setSenderLoyalty(connection.getID()-1);
                     System.out.println("We have an action in " + actionMessage.getPosX() + ";" + actionMessage.getPosY());
                     server.sendToAllExceptTCP(connection.getID(),actionMessage);
                     return;

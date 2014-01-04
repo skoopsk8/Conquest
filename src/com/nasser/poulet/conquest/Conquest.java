@@ -75,18 +75,16 @@ public class Conquest {
                 else if (s[0].equals("multiplayer")){
                     s = this.startMenu("multiplayer");
                     if(s[0].equals("host")){
-                        // Create the server
-                        this.initServer("127.0.0.1", "1224");
-                        this.initClient("127.0.0.1", "1224");
+                        // Create the server and connect the user client
+                        this.initServer("127.0.0.1", Integer.toString(Network.port));
+                        this.initClient("127.0.0.1", Integer.toString(Network.port));
                         this.startMultiplayerGame();
-                        //this.startGame("blue");
                     }
                     else if(s[0].equals("join")){
                         String[] str = s[1].split(":");
                         // Launch multiplayer session
-                        this.initClient("127.0.0.1", "1224");
+                        this.initClient(str[0], str[1]);
                         this.startMultiplayerGame();
-                        //this.startGame("blue");
                     }
                 }
             }while (!s[0].equals("quit"));
@@ -150,6 +148,8 @@ public class Conquest {
     int[][] board, prod;
     int width, height;
 
+    Player[] players = new Player[3];
+
     private void startMultiplayerGame(){
         mainBoard = new Board(20, 15, false);
 
@@ -168,11 +168,31 @@ public class Conquest {
                     wait=false;
                     return;
                 }
+
+                if (object instanceof Network.SelectMessageClient) {
+                    Network.SelectMessageClient selectMessage = (Network.SelectMessageClient)object;
+                    int loyalty = selectMessage.getSenderLoyalty();
+                    if(players[loyalty] instanceof MultiplayerRemote)
+                        players[loyalty].setSelected(mainBoard.getState(selectMessage.getPosX(), selectMessage.getPosY()));
+                    return;
+                }
+
+                if (object instanceof Network.ActionMessageClient) {
+                    Network.ActionMessageClient actionMessage = (Network.ActionMessageClient)object;
+                    int loyalty = actionMessage.getSenderLoyalty();
+                    if(players[loyalty] instanceof MultiplayerRemote){
+                        if(players[loyalty].getLoyalty()!=null){
+                            players[loyalty].action(actionMessage.getPosX(), actionMessage.getPosY());
+                        }
+                    }
+                    return;
+                }
             }
         });
+
         client.sendSyncRequest();
+
         if(startLobby()[0].equals("continue")){
-            Player[] players = new Player[3];
             System.out.println(client.getClient().getID());
             players[client.getClient().getID()-1] = new Multiplayer(Loyalty.values()[client.getClient().getID()+1], mainBoard, client.getClient());
             for(int i=0; i<3; i++){

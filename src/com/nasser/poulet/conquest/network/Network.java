@@ -65,7 +65,7 @@ public class Network {
     }   // Unit Action
 
     static public class SelectMessageClient{
-        private int posX, posY;
+        private int posX, posY, senderLoyalty;
 
         public int getPosX() {
             return posX;
@@ -81,13 +81,19 @@ public class Network {
 
         public void setPosY(int posY) {
             this.posY = posY;
+        }
+
+        public int getSenderLoyalty() {
+            return senderLoyalty;
+        }
+
+        public void setSenderLoyalty(int senderLoyalty) {
+            this.senderLoyalty = senderLoyalty;
         }
     }   // Unit selection
 
     static public class ActionMessageClient{
-        private int posX, posY;
-
-        public int check = 1994;
+        private int posX, posY, senderLoyalty;
 
         public int getPosX() {
             return posX;
@@ -103,6 +109,14 @@ public class Network {
 
         public void setPosY(int posY) {
             this.posY = posY;
+        }
+
+        public int getSenderLoyalty() {
+            return senderLoyalty;
+        }
+
+        public void setSenderLoyalty(int senderLoyalty) {
+            this.senderLoyalty = senderLoyalty;
         }
     }   // Unit Action
 
