@@ -58,6 +58,7 @@ public abstract class Player {
     	for(ArrayList<State> move: moves) {
     		if(move.contains(newmove.get(0))) {
     			moves.remove(i);	
+    			moves.add(i, newmove);
     		}
     		i++;
     	}	
