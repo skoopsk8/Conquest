@@ -21,8 +21,15 @@ public class State {
 
         this.productivity = 2000 + (int)(Math.random()*4000);
     }
-    
-    
+
+    public State( int x, int y, Loyalty loyalty, int productivity){
+        this.posX = x;
+        this.posY = y;
+        this.loyalty = loyalty;
+        eventUnitCallback = -1;
+
+        this.productivity = productivity;
+    }
 
     @Override
 	public boolean equals(Object arg) {
@@ -62,6 +69,10 @@ public class State {
 
     public int getProductivity() {
         return productivity;
+    }
+
+    public void setProductivity(int productivity) {
+        this.productivity = productivity;
     }
 
     public Loyalty getLoyalty(){

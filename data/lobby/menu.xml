@@ -1,0 +1,16 @@
+<menu>
+    <objects>
+        <label id="0">
+            <name>Title</name>
+            <text>Waiting for everybody to be ready</text>
+            <posX>120</posX>
+            <posY>220</posY>
+            <font>
+                <fontName>Arial</fontName>
+                <size>25</size>
+                <color>white</color>
+                <strengh>BOLD</strengh>
+            </font>
+        </label>
+    </objects>
+</menu>

@@ -1,7 +1,10 @@
-package com.nasser.poulet.conquest.model;
+package com.nasser.poulet.conquest.player;
 
 import com.nasser.poulet.conquest.astar.AStar;
 import com.nasser.poulet.conquest.controller.BoardController;
+import com.nasser.poulet.conquest.model.Board;
+import com.nasser.poulet.conquest.model.Loyalty;
+import com.nasser.poulet.conquest.model.State;
 
 import java.util.ArrayList;
 
@@ -45,7 +48,7 @@ public abstract class Player {
             this.abort();
     }
 
-    protected void action( int posX, int posY ){
+    public void action( int posX, int posY ){
     	ArrayList<State> resultastar = new ArrayList<State>();
         resultastar = AStar.getPath(this.boardController.getBoard(), selected, this.boardController.getBoard().getState(posX, posY));
         if(resultastar != null) addMove(resultastar); // If impossible path, dont move
@@ -77,5 +80,13 @@ public abstract class Player {
     		}
     	}
         return;
+    }
+
+    public State getSelected() {
+        return selected;
+    }
+
+    public void setSelected(State selected) {
+        this.selected = selected;
     }
 }
