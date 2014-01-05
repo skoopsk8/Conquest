@@ -7,6 +7,8 @@ import com.nasser.poulet.conquest.model.Loyalty;
 import com.nasser.poulet.conquest.model.State;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Vector;
 
 /**
  * Created by Thomas on 12/28/13.
@@ -58,8 +60,9 @@ public abstract class Player {
     public void addMove(ArrayList<State> newmove) {    	
     	int i = 0;
         boolean noIf = false;
-    	
-    	for(ArrayList<State> move: moves) {
+        
+    	for(Iterator<ArrayList<State>> it = moves.iterator(); it.hasNext();) {
+    		ArrayList<State> move = it.next();
     		if(move.contains(newmove.get(0))) {
                 noIf =true;
     			moves.remove(i);	
@@ -72,17 +75,18 @@ public abstract class Player {
     }
     
     public void update() {
-    	for(int j = 0; j < moves.size(); j++) {
-    		if(moves.get(j).size() > 1) {
-    			this.boardController.action(moves.get(j).get(0), moves.get(j).get(1).getPosX(), moves.get(j).get(1).getPosY());
-        		moves.get(j).remove(0);
+    	for(Iterator<ArrayList<State>> it = moves.iterator(); it.hasNext();) {
+    		ArrayList<State> move = it.next();
+    		
+    		if(move.size() > 1) {
+    			this.boardController.action(move.get(0), move.get(1).getPosX(), move.get(1).getPosY());
+    			move.remove(0);
     		}
-    		else {
-    			moves.remove(j);
-    			j--;
+    		else{
+    			it.remove();
     		}
     	}
-        return;
+    	return;
     }
 
     public State getSelected() {
