@@ -14,6 +14,8 @@ public class Board {
     private ArrayList<State> stateArrayList[] = new ArrayList[3];    // For easy gamelogic
 
     private int boardWidth, boardHeight;
+    
+    public static int[] numberOfUnit = {0, 0, 0};
 
     public Board( int width, int height, boolean generate ){
         this.boardWidth = width;

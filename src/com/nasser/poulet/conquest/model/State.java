@@ -92,14 +92,16 @@ public class State {
     }
 
     public boolean addUnit( Unit unit ){
-        if(this.units[0] == null)   // No units
-            this.units[0] = unit;
-        else if(this.units[1] == null)  // Only one
-            this.units[1] = unit;
-        else
-            return false;   // Too many units on the state
+	        if(this.units[0] == null)   // No units
+	            this.units[0] = unit;
+	        else if(this.units[1] == null)  // Only one
+	            this.units[1] = unit;
+	        else
+	            return false;   // Too many units on the state
 
-        return true;
+	        return true;
+	   
+
     }
 
     public void removeUnit( int level ){
@@ -138,7 +140,10 @@ public class State {
         if(eventUnitCallback!=-1) Turn.removeEvent(eventUnitCallback);   // Clear actual Callback
         this.setEventUnitCallback(Turn.addEvent(new Event(-1, productivity, this, new Callback<State>() {
             public void methodCallback(State state) {
-                state.addUnit(new Unit(state.getLoyalty()));
+            	if(Board.numberOfUnit[state.getLoyalty().ordinal() - 2] < 10) {
+            		if(state.addUnit(new Unit(state.getLoyalty())))
+     	        	   Board.numberOfUnit[state.getLoyalty().ordinal() - 2]++;
+            	}
             }
         })));
     }
