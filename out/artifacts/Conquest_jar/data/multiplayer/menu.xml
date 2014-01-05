@@ -1,0 +1,46 @@
+<menu>
+    <properties>
+        <keyboard>true</keyboard>
+    </properties>
+    <objects>
+        <label id="0">
+            <name>Title</name>
+            <text>Choose your network option</text>
+            <posX>130</posX>
+            <posY>50</posY>
+            <font>
+                <fontName>Arial</fontName>
+                <size>40</size>
+                <color>white</color>
+                <strengh>BOLD</strengh>
+            </font>
+        </label>
+        <button id="1">
+            <name>Button1</name>
+            <text>Host</text>
+            <posX>340</posX>
+            <posY>150</posY>
+            <width>100</width>
+            <height>50</height>
+            <action>host</action>
+        </button>
+        <button id="2">
+            <name>Button2</name>
+            <text>Join</text>
+            <posX>345</posX>
+            <posY>250</posY>
+            <width>100</width>
+            <height>50</height>
+            <action>join</action>
+        </button>
+        <input id="3">
+            <name>Button3</name>
+            <text>127.0.0.1</text>
+            <posX>100</posX>
+            <posY>350</posY>
+            <width>100</width>
+            <height>50</height>
+            <action>ip</action>
+        </input>
+    </objects>
+</menu>

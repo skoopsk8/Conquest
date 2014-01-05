@@ -15,7 +15,7 @@ public class Turn{
     private int turnNumber;
 
     private int gameSnapshot, turnSnapshot, pauseSnapshot, currentSnapshot;
-    static private Vector<Event> eventList = new Vector<Event>();
+    static private ArrayList<Event> eventList = new ArrayList<Event>();
 
     public Turn(){
         this.gameSnapshot = Timer.addSnapshot();
@@ -79,6 +79,10 @@ public class Turn{
 
     public void stop(){
         Timer.duration(this.gameSnapshot, this.currentSnapshot);   // Game duration
+        eventList.clear();
+    }
+
+    public static void clearEvent(){
         eventList.clear();
     }
 }

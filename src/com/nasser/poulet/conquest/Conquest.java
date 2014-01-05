@@ -252,6 +252,7 @@ public class Conquest {
         Action inputAction;
 
         // Have to stay just before the while
+        Board.numberOfUnit[0]=Board.numberOfUnit[1]=Board.numberOfUnit[2]=0;
         turn.startTurn();
         while(!Display.isCloseRequested()){
             inputAction = this.pollInput();

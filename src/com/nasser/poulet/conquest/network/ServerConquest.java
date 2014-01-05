@@ -4,7 +4,9 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
+import com.nasser.poulet.conquest.controller.Turn;
 import com.nasser.poulet.conquest.model.Board;
+import com.nasser.poulet.conquest.model.Event;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,6 +23,8 @@ public class ServerConquest{
     public ServerConquest(){
         //Generate the board
         board = new Board(20,15, true);
+        Turn.clearEvent();
+
 
         server = new Server(){
             protected Connection newConnection () {
