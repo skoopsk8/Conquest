@@ -29,6 +29,10 @@ public class Conquest {
     private ServerConquest server;
     private ClientConquest client;
 
+    public Board mainBoard;
+
+    Player[] players = new Player[3];
+
     public Conquest(String[] args){
         // Check arguments
         int i=0;
@@ -68,6 +72,24 @@ public class Conquest {
                 s = this.startMenu("mainMenu");
                 if (s[0].equals("play")){
                     s = this.startMenu("play");
+                    mainBoard = null;
+                    mainBoard = new Board(20, 15, true);
+                    if(s[0].equals("blue")){
+                        players[0] = new Human(Loyalty.BLUE,mainBoard);
+                        players[1] = new IA(Loyalty.GREEN,mainBoard);
+                        players[2] = new IA(Loyalty.YELLOW,mainBoard);
+                    }
+                    else if(s[0].equals("green")){
+                        players[0] = new Human(Loyalty.GREEN,mainBoard);
+                        players[1] = new IA(Loyalty.BLUE,mainBoard);
+                        players[2] = new IA(Loyalty.YELLOW,mainBoard);
+                    }
+                    else if(s[0].equals("yellow")){
+                        players[0] = new Human(Loyalty.YELLOW,mainBoard);
+                        players[1] = new IA(Loyalty.GREEN,mainBoard);
+                        players[2] = new IA(Loyalty.BLUE,mainBoard);
+                    }
+                    this.startGame(players);
                 }
                 else if (s[0].equals("multiplayer")){
                     s = this.startMenu("multiplayer");
@@ -140,15 +162,16 @@ public class Conquest {
         return menu.render();
     }
 
-    public Board mainBoard;
+
     private boolean wait =true;
 
     int[][] board, prod;
     int width, height;
 
-    Player[] players = new Player[3];
+
 
     private void startMultiplayerGame(){
+        mainBoard = null;
         mainBoard = new Board(20, 15, false);
 
         client.getClient().addListener(new Listener() {
