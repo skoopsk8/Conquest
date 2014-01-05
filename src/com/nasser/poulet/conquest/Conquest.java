@@ -209,7 +209,7 @@ public class Conquest {
         RenderBoard renderer = new RenderBoard();
         Human human = null;
         IA remote1 = null;
-        //IA remote2 = null;
+        IA remote2 = null;
 
         Turn turn = new Turn();
 
@@ -220,8 +220,8 @@ public class Conquest {
             if(player instanceof IA){
                 if(remote1 == null)
                     remote1 = (IA)player;
-                //else if(remote2 == null)
-                 //   remote2 = (IA)player;
+                else if(remote2 == null)
+                    remote2 = (IA)player;
             }
         }
 
@@ -239,6 +239,8 @@ public class Conquest {
             turn.update();
             if(turn.getTurnNumber() != currentTurn) {
             	human.update();
+                remote1.update();
+                remote2.update();
             	currentTurn = turn.getTurnNumber();
             }
             

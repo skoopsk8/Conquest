@@ -57,15 +57,18 @@ public abstract class Player {
     
     public void addMove(ArrayList<State> newmove) {    	
     	int i = 0;
+        boolean noIf = false;
     	
     	for(ArrayList<State> move: moves) {
     		if(move.contains(newmove.get(0))) {
+                noIf =true;
     			moves.remove(i);	
     			moves.add(i, newmove);
     		}
     		i++;
-    	}	
-    	moves.add(newmove);
+    	}
+        if(!noIf)
+    	    moves.add(newmove);
     }
     
     public void update() {
