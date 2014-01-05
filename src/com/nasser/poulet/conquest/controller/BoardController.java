@@ -70,13 +70,13 @@ public class BoardController {
         // Neutral
         if(state.getLoyalty() == Loyalty.EMPTY){
             if(board.getCivilizationPower(unit.getLoyalty())>board.getCivilizationPower(state.getUnit().getLoyalty())) {
+                Board.numberOfUnit[state.getUnit(0).getLoyalty().ordinal() - 2]--;
             	state.removeUnit(0);
-            	Board.numberOfUnit[state.getUnit(0).getLoyalty().ordinal() - 2]--;
             }
 
             else {
+                Board.numberOfUnit[state.getUnit(1).getLoyalty().ordinal() - 2]--;
             	state.removeUnit(1);
-            	Board.numberOfUnit[state.getUnit(1).getLoyalty().ordinal() - 2]--;
             }
               
         }
@@ -84,12 +84,12 @@ public class BoardController {
         // Attack
         else{
             if(board.getCivilizationPower(unit.getLoyalty())>board.getCivilizationPower(state.getUnit().getLoyalty())*1.2) {
-                state.removeUnit(0);
                 Board.numberOfUnit[state.getUnit(0).getLoyalty().ordinal() - 2]--;
+                state.removeUnit(0);
             }
             else {
-                state.removeUnit(1);
                 Board.numberOfUnit[state.getUnit(1).getLoyalty().ordinal() - 2]--;
+                state.removeUnit(1);
             }
         }
     }
