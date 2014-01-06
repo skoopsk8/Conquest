@@ -31,62 +31,20 @@ public class Node implements Comparable<Node> {
 	
 	public Node(State state){
 		this.state = state;
-		if(this.state.getLoyalty() == Loyalty.EMPTY || (this.state.getLoyalty() == state.getLoyalty() && state.canHostUnit())) {
-			this.weight = 1;
-		}
-		else if (this.state.getLoyalty() == Loyalty.NONE){
-			this.weight = 3;
-		}
-		else if((this.state.getLoyalty() != Loyalty.BLUE)) {
-			this.weight = 10;
-		}
-		else {
-			this.weight = 1;
-		}
+		this.weight = 0;
 		G = Integer.MAX_VALUE;
 	
 	}
-
-	public Node(State state, int G){
-		this.state = state;
-		if(this.state.getLoyalty() == Loyalty.EMPTY || (this.state.getLoyalty() == state.getLoyalty() && state.canHostUnit())) {
-			this.weight = 1;
-		}
-		else if (this.state.getLoyalty() == Loyalty.NONE){
-			this.weight = 3;
-		}
-		else if((this.state.getLoyalty() != Loyalty.BLUE)) {
-			this.weight = 10;
-		}
-		else {
-			this.weight = 1;
-		}
-		this.G = G;
-		
-	}
 	
-	public Node(State state, int G, Node parent){
-		this.state = state;
-		if(this.state.getLoyalty() == Loyalty.EMPTY || (this.state.getLoyalty() == state.getLoyalty() && state.canHostUnit())) {
-			this.weight = 1;
-		}
-		else if (this.state.getLoyalty() == Loyalty.NONE){
-			this.weight = 3;
-		}
-		else if((this.state.getLoyalty() != Loyalty.BLUE)) {
-			this.weight = 10;
-		}
-		else {
-			this.weight = 1;
-		}
-		this.G = G;
-		this.parent = parent;
+	public Node(State state, int weight) {
+		this(state);
+		this.weight = weight;
 	}
 	
 	public State getState() {
 		return state;
 	}
-
+	
 	@Override
 	public boolean equals(Object arg) {
 		if (this.getState().getPosX() == ((Node) arg).getState().getPosX() && this.getState().getPosY() == ((Node) arg).getState().getPosY()) {
@@ -140,103 +98,126 @@ public class Node implements Comparable<Node> {
 	    }
 	}
 	
+	public int computeWeight(State state) {
+		Loyalty nodeLoyalty = this.getState().getLoyalty(); 
+		Loyalty neighborLoyalty = state.getLoyalty();
+		
+		if(neighborLoyalty == Loyalty.NONE) {
+			return 3;
+		}
+		
+		else if(neighborLoyalty == Loyalty.EMPTY) {
+			return 1;
+		}
+		
+		else if(neighborLoyalty == nodeLoyalty && state.canHostUnit()) {
+			return 1;
+		}
+		
+		else{
+			return 10;
+		}
+	}
+	
 	public ArrayList<Node> getNeighbor(Board board) {
 		ArrayList<Node> neighbourANode = new ArrayList<Node>();
+		
+		
 		
 		// We look if it's in the middle of the map
 		if(this.getState().getPosX() > 0 && this.getState().getPosX() < board.getBoardWidth()-1) {
 			if(this.getState().getPosY() > 0 && this.getState().getPosY() < board.getBoardHeight()-1) {
 				neighbourANode.clear();
-				neighbourANode.add(new Node(board.getState(this.getState().getPosX(), this.getState().getPosY() - 1))); // UP 
-				neighbourANode.add(new Node(board.getState(this.getState().getPosX() - 1, this.getState().getPosY()))); // LEFT 
-				neighbourANode.add(new Node(board.getState(this.getState().getPosX(), this.getState().getPosY() + 1))); // DOWN
-				neighbourANode.add(new Node(board.getState(this.getState().getPosX() + 1, this.getState().getPosY()))); // RIGHT
+				neighbourANode.add(new Node(board.getState(this.getState().getPosX(), this.getState().getPosY() - 1), computeWeight(board.getState(this.getState().getPosX(), this.getState().getPosY() - 1)))); // UP 
+				neighbourANode.add(new Node(board.getState(this.getState().getPosX() - 1, this.getState().getPosY()), computeWeight(board.getState(this.getState().getPosX() - 1, this.getState().getPosY())))); // LEFT 
+				neighbourANode.add(new Node(board.getState(this.getState().getPosX(), this.getState().getPosY() + 1), computeWeight(board.getState(this.getState().getPosX(), this.getState().getPosY() + 1)))); // DOWN
+				neighbourANode.add(new Node(board.getState(this.getState().getPosX() + 1, this.getState().getPosY()), computeWeight(board.getState(this.getState().getPosX() + 1, this.getState().getPosY())))); // RIGHT
 				
-				neighbourANode.add(new Node(board.getState(this.getState().getPosX() - 1, this.getState().getPosY() - 1))); // UP LEFT 
-				neighbourANode.add(new Node(board.getState(this.getState().getPosX() - 1, this.getState().getPosY() + 1))); // DOWN LEFT
-				neighbourANode.add(new Node(board.getState(this.getState().getPosX() + 1, this.getState().getPosY() - 1))); // UP RIGHT
-				neighbourANode.add(new Node(board.getState(this.getState().getPosX() + 1, this.getState().getPosY() + 1))); // DOWN RIGHT
+				neighbourANode.add(new Node(board.getState(this.getState().getPosX() - 1, this.getState().getPosY() - 1), computeWeight(board.getState(this.getState().getPosX() - 1, this.getState().getPosY() - 1)))); // UP LEFT 
+				neighbourANode.add(new Node(board.getState(this.getState().getPosX() - 1, this.getState().getPosY() + 1), computeWeight(board.getState(this.getState().getPosX() - 1, this.getState().getPosY() + 1)))); // DOWN LEFT
+				neighbourANode.add(new Node(board.getState(this.getState().getPosX() + 1, this.getState().getPosY() - 1), computeWeight(board.getState(this.getState().getPosX() + 1, this.getState().getPosY() - 1)))); // UP RIGHT
+				neighbourANode.add(new Node(board.getState(this.getState().getPosX() + 1, this.getState().getPosY() + 1), computeWeight(board.getState(this.getState().getPosX() + 1, this.getState().getPosY() + 1)))); // DOWN RIGHT
 			}
 		}
 		
 		// We look if it's in the left upper corner
 		if(this.getState().getPosX() == 0 && this.getState().getPosY() == 0) {
 			neighbourANode.clear();
-			neighbourANode.add(new Node(board.getState(this.getState().getPosX() + 1, this.getState().getPosY()))); // RIGHT
-			neighbourANode.add(new Node(board.getState(this.getState().getPosX(), this.getState().getPosY() + 1))); // DOWN
+			neighbourANode.add(new Node(board.getState(this.getState().getPosX() + 1, this.getState().getPosY()), computeWeight(board.getState(this.getState().getPosX() + 1, this.getState().getPosY())))); // RIGHT
+			neighbourANode.add(new Node(board.getState(this.getState().getPosX(), this.getState().getPosY() + 1), computeWeight(board.getState(this.getState().getPosX(), this.getState().getPosY() + 1)))); // DOWN
 			
-			neighbourANode.add(new Node(board.getState(this.getState().getPosX() + 1, this.getState().getPosY() + 1))); // DOWN RIGHT
+			neighbourANode.add(new Node(board.getState(this.getState().getPosX() + 1, this.getState().getPosY() + 1), computeWeight(board.getState(this.getState().getPosX() + 1, this.getState().getPosY() + 1)))); // DOWN RIGHT
 		}
 		
 		// We look if it's in right upper corner
 		if(this.getState().getPosX() == board.getBoardWidth()-1 && this.getState().getPosY() == 0) {
 			neighbourANode.clear();
-			neighbourANode.add(new Node(board.getState(this.getState().getPosX() - 1, this.getState().getPosY()))); // LEFT
-			neighbourANode.add(new Node(board.getState(this.getState().getPosX(), this.getState().getPosY() + 1))); // DOWN
+			neighbourANode.add(new Node(board.getState(this.getState().getPosX() - 1, this.getState().getPosY()), computeWeight(board.getState(this.getState().getPosX() - 1, this.getState().getPosY())))); // LEFT
+			neighbourANode.add(new Node(board.getState(this.getState().getPosX(), this.getState().getPosY() + 1), computeWeight(board.getState(this.getState().getPosX(), this.getState().getPosY() + 1)))); // DOWN
 			
-			neighbourANode.add(new Node(board.getState(this.getState().getPosX() - 1, this.getState().getPosY() + 1))); // DOWN LEFT
+			neighbourANode.add(new Node(board.getState(this.getState().getPosX() - 1, this.getState().getPosY() + 1), computeWeight(board.getState(this.getState().getPosX() - 1, this.getState().getPosY() + 1)))); // DOWN LEFT
 		}
 		
 		// We look if it's in the left down corner
 		if(this.getState().getPosX() == 0 && this.getState().getPosY() == board.getBoardHeight()-1) {
 			neighbourANode.clear();
-			neighbourANode.add(new Node(board.getState(this.getState().getPosX(), this.getState().getPosY() - 1))); // UP
-			neighbourANode.add(new Node(board.getState(this.getState().getPosX() + 1, this.getState().getPosY()))); // RIGHT
+			neighbourANode.add(new Node(board.getState(this.getState().getPosX(), this.getState().getPosY() - 1), computeWeight(board.getState(this.getState().getPosX(), this.getState().getPosY() - 1)))); // UP
+			neighbourANode.add(new Node(board.getState(this.getState().getPosX() + 1, this.getState().getPosY()), computeWeight(board.getState(this.getState().getPosX() + 1, this.getState().getPosY())))); // RIGHT
 			
-			neighbourANode.add(new Node(board.getState(this.getState().getPosX() + 1, this.getState().getPosY() - 1))); // UP RIGHT
+			neighbourANode.add(new Node(board.getState(this.getState().getPosX() + 1, this.getState().getPosY() - 1), computeWeight(board.getState(this.getState().getPosX() + 1, this.getState().getPosY() - 1)))); // UP RIGHT
 		}
 		
 		// We look if it's in the right down corner
 		if(this.getState().getPosX() == board.getBoardWidth()-1 && this.getState().getPosY() == board.getBoardHeight()-1) {
 			neighbourANode.clear();
-			neighbourANode.add(new Node(board.getState(this.getState().getPosX() - 1, this.getState().getPosY()))); // LEFT
-			neighbourANode.add(new Node(board.getState(this.getState().getPosX(), this.getState().getPosY() - 1))); // UP
+			neighbourANode.add(new Node(board.getState(this.getState().getPosX() - 1, this.getState().getPosY()), computeWeight(board.getState(this.getState().getPosX() - 1, this.getState().getPosY())))); // LEFT
+			neighbourANode.add(new Node(board.getState(this.getState().getPosX(), this.getState().getPosY() - 1), computeWeight(board.getState(this.getState().getPosX(), this.getState().getPosY() - 1)))); // UP
 
-			neighbourANode.add(new Node(board.getState(this.getState().getPosX() - 1, this.getState().getPosY() - 1))); // UP LEFT
+			neighbourANode.add(new Node(board.getState(this.getState().getPosX() - 1, this.getState().getPosY() - 1), computeWeight(board.getState(this.getState().getPosX() - 1, this.getState().getPosY() - 1)))); // UP LEFT
 		}
 		
 		// We look if it's in the upper part
 		if(this.getState().getPosX() > 0 && this.getState().getPosX() < board.getBoardWidth() - 1 && this.getState().getPosY() == 0) {
 			neighbourANode.clear();
-			neighbourANode.add(new Node(board.getState(this.getState().getPosX() - 1, this.getState().getPosY()))); // LEFT
-			neighbourANode.add(new Node(board.getState(this.getState().getPosX(), this.getState().getPosY() + 1))); // DOWN
-			neighbourANode.add(new Node(board.getState(this.getState().getPosX() + 1, this.getState().getPosY()))); // RIGHT
+			neighbourANode.add(new Node(board.getState(this.getState().getPosX() - 1, this.getState().getPosY()), computeWeight(board.getState(this.getState().getPosX() - 1, this.getState().getPosY())))); // LEFT
+			neighbourANode.add(new Node(board.getState(this.getState().getPosX(), this.getState().getPosY() + 1), computeWeight(board.getState(this.getState().getPosX(), this.getState().getPosY() + 1)))); // DOWN
+			neighbourANode.add(new Node(board.getState(this.getState().getPosX() + 1, this.getState().getPosY()), computeWeight(board.getState(this.getState().getPosX() + 1, this.getState().getPosY())))); // RIGHT
 			
-			neighbourANode.add(new Node(board.getState(this.getState().getPosX() - 1, this.getState().getPosY() + 1))); // DOWN LEFT
-			neighbourANode.add(new Node(board.getState(this.getState().getPosX() + 1, this.getState().getPosY() + 1))); // DOWN RIGHT
+			neighbourANode.add(new Node(board.getState(this.getState().getPosX() - 1, this.getState().getPosY() + 1), computeWeight(board.getState(this.getState().getPosX() - 1, this.getState().getPosY() + 1)))); // DOWN LEFT
+			neighbourANode.add(new Node(board.getState(this.getState().getPosX() + 1, this.getState().getPosY() + 1), computeWeight(board.getState(this.getState().getPosX() + 1, this.getState().getPosY() + 1)))); // DOWN RIGHT
 		}
 		
 		// We look if it's in lower part
 		if(this.getState().getPosX() > 0 && this.getState().getPosX() < board.getBoardWidth() - 1 && this.getState().getPosY() == board.getBoardHeight() - 1) {
 			neighbourANode.clear();
-			neighbourANode.add(new Node(board.getState(this.getState().getPosX() - 1, this.getState().getPosY()))); // LEFT
-			neighbourANode.add(new Node(board.getState(this.getState().getPosX(), this.getState().getPosY() - 1))); // UP
-			neighbourANode.add(new Node(board.getState(this.getState().getPosX() + 1, this.getState().getPosY()))); // RIGHT
+			neighbourANode.add(new Node(board.getState(this.getState().getPosX() - 1, this.getState().getPosY()), computeWeight(board.getState(this.getState().getPosX() - 1, this.getState().getPosY())))); // LEFT
+			neighbourANode.add(new Node(board.getState(this.getState().getPosX(), this.getState().getPosY() - 1), computeWeight(board.getState(this.getState().getPosX(), this.getState().getPosY() - 1)))); // UP
+			neighbourANode.add(new Node(board.getState(this.getState().getPosX() + 1, this.getState().getPosY()), computeWeight(board.getState(this.getState().getPosX() + 1, this.getState().getPosY())))); // RIGHT
 			
-			neighbourANode.add(new Node(board.getState(this.getState().getPosX() - 1, this.getState().getPosY() - 1))); // UP LEFT
-			neighbourANode.add(new Node(board.getState(this.getState().getPosX() + 1, this.getState().getPosY() - 1))); // UP RIGHT
+			neighbourANode.add(new Node(board.getState(this.getState().getPosX() - 1, this.getState().getPosY() - 1), computeWeight(board.getState(this.getState().getPosX() - 1, this.getState().getPosY() - 1)))); // UP LEFT
+			neighbourANode.add(new Node(board.getState(this.getState().getPosX() + 1, this.getState().getPosY() - 1), computeWeight(board.getState(this.getState().getPosX() + 1, this.getState().getPosY() - 1)))); // UP RIGHT
 		}
 		
 		// We look if it's in the left part
-		if(this.getState().getPosY() > 1 && this.getState().getPosY() < board.getBoardHeight() - 1 && this.getState().getPosX() == 0) {
+		if(this.getState().getPosY() > 0 && this.getState().getPosY() < board.getBoardHeight() - 1 && this.getState().getPosX() == 0) {
 			neighbourANode.clear();
-			neighbourANode.add(new Node(board.getState(this.getState().getPosX(), this.getState().getPosY() - 1))); // UP
-			neighbourANode.add(new Node(board.getState(this.getState().getPosX() + 1, this.getState().getPosY()))); // RIGHT
-			neighbourANode.add(new Node(board.getState(this.getState().getPosX(), this.getState().getPosY() + 1))); // DOWN
+			neighbourANode.add(new Node(board.getState(this.getState().getPosX(), this.getState().getPosY() - 1), computeWeight(board.getState(this.getState().getPosX(), this.getState().getPosY() - 1)))); // UP
+			neighbourANode.add(new Node(board.getState(this.getState().getPosX() + 1, this.getState().getPosY()), computeWeight(board.getState(this.getState().getPosX() + 1, this.getState().getPosY())))); // RIGHT
+			neighbourANode.add(new Node(board.getState(this.getState().getPosX(), this.getState().getPosY() + 1), computeWeight(board.getState(this.getState().getPosX(), this.getState().getPosY() + 1)))); // DOWN
 			
-			neighbourANode.add(new Node(board.getState(this.getState().getPosX() + 1, this.getState().getPosY() - 1))); // UP RIGHT
-			neighbourANode.add(new Node(board.getState(this.getState().getPosX() + 1, this.getState().getPosY() + 1))); // DOWN RIGHT
+			neighbourANode.add(new Node(board.getState(this.getState().getPosX() + 1, this.getState().getPosY() - 1), computeWeight(board.getState(this.getState().getPosX() + 1, this.getState().getPosY() - 1)))); // UP RIGHT
+			neighbourANode.add(new Node(board.getState(this.getState().getPosX() + 1, this.getState().getPosY() + 1), computeWeight(board.getState(this.getState().getPosX() + 1, this.getState().getPosY() + 1)))); // DOWN RIGHT
 		}
 		
 		// We look if it's in the right part
-		if(this.getState().getPosY() > 1 && this.getState().getPosY() < board.getBoardHeight() - 1 && this.getState().getPosX() == board.getBoardWidth() - 1) {
+		if(this.getState().getPosY() > 0 && this.getState().getPosY() < board.getBoardHeight() - 1 && this.getState().getPosX() == board.getBoardWidth() - 1) {
 			neighbourANode.clear();
-			neighbourANode.add(new Node(board.getState(this.getState().getPosX(), this.getState().getPosY() - 1))); // UP
-			neighbourANode.add(new Node(board.getState(this.getState().getPosX() - 1, this.getState().getPosY()))); // LEFT
-			neighbourANode.add(new Node(board.getState(this.getState().getPosX(), this.getState().getPosY() + 1))); // DOWN
+			neighbourANode.add(new Node(board.getState(this.getState().getPosX(), this.getState().getPosY() - 1), computeWeight(board.getState(this.getState().getPosX(), this.getState().getPosY() - 1)))); // UP
+			neighbourANode.add(new Node(board.getState(this.getState().getPosX() - 1, this.getState().getPosY()), computeWeight(board.getState(this.getState().getPosX() - 1, this.getState().getPosY())))); // LEFT
+			neighbourANode.add(new Node(board.getState(this.getState().getPosX(), this.getState().getPosY() + 1), computeWeight(board.getState(this.getState().getPosX(), this.getState().getPosY() + 1)))); // DOWN
 			
-			neighbourANode.add(new Node(board.getState(this.getState().getPosX() - 1, this.getState().getPosY() - 1))); // UP LEFT
-			neighbourANode.add(new Node(board.getState(this.getState().getPosX() - 1, this.getState().getPosY() + 1))); // DOWN LEFT
+			neighbourANode.add(new Node(board.getState(this.getState().getPosX() - 1, this.getState().getPosY() - 1), computeWeight(board.getState(this.getState().getPosX() - 1, this.getState().getPosY() - 1)))); // UP LEFT
+			neighbourANode.add(new Node(board.getState(this.getState().getPosX() - 1, this.getState().getPosY() + 1), computeWeight(board.getState(this.getState().getPosX() - 1, this.getState().getPosY() + 1)))); // DOWN LEFT
 		}
 		
 		return neighbourANode;
