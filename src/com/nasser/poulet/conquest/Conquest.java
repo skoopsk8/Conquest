@@ -299,7 +299,7 @@ public class Conquest {
     }
 
     private boolean endGame( Board board, int turnNumber){
-        if(board.numberOfEmpty() == 0){ // Start end game
+        if(board.numberOfEmpty() == 0 && triggerTurn == -1){ // Start end game
             triggerTurn = turnNumber;
             System.out.println("Start end counter");
         }

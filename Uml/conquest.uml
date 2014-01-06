@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.nasser.poulet.conquest.astar</OriginalElement>
+  <nodes>
+    <node x="2874.4031870039676" y="2467.0">com.nasser.poulet.conquest.view.RenderBoard</node>
+    <node x="1333.3719370039676" y="2198.5">com.nasser.poulet.conquest.player.Human</node>
+    <node x="2485.662580605159" y="1118.0">com.nasser.poulet.conquest.model.Board</node>
+    <node x="579.5625806051587" y="2507.0">com.nasser.poulet.conquest.player.MultiplayerRemote</node>
+    <node x="1662.1219370039676" y="2241.0">com.nasser.poulet.conquest.network.Network.ActionMessage</node>
+    <node x="2358.1219370039676" y="2199.0">com.nasser.poulet.conquest.network.Network.ActionMessageClient</node>
+    <node x="19.208413938491958" y="1218.0">com.nasser.poulet.conquest.menu.Font</node>
+    <node x="2280.1219370039676" y="2229.0">com.nasser.poulet.conquest.network.Network.Start</node>
+    <node x="1610.5974144345223" y="3447.0">com.nasser.poulet.conquest.Conquest.Action</node>
+    <node x="1563.3719370039676" y="2477.0">com.nasser.poulet.conquest.player.Multiplayer</node>
+    <node x="" y="">com.nasser.poulet.conquest.menu.UIElement</node>
+    <node x="1353.5974144345223" y="2847.0">com.nasser.poulet.conquest.Conquest</node>
+    <node x="0.0" y="3600.0">com.nasser.poulet.conquest.controller.Timer</node>
+    <node x="1078.270913938492" y="1858.0">com.nasser.poulet.conquest.player.Player</node>
+    <node x="2145.1219370039676" y="2219.0">com.nasser.poulet.conquest.network.ServerConquest.GameConnection</node>
+    <node x="569.0" y="3600.0">com.nasser.poulet.conquest.view.Debug</node>
+    <node x="2764.1875806051585" y="0.0">com.nasser.poulet.conquest.model.Loyalty</node>
+    <node x="2044.1219370039676" y="2229.0">com.nasser.poulet.conquest.network.Network.SetReady</node>
+    <node x="325.0" y="3600.0">com.nasser.poulet.conquest.model.StartPositions</node>
+    <node x="518.3125806051587" y="2198.5">com.nasser.poulet.conquest.player.IA</node>
+    <node x="" y="">com.nasser.poulet.conquest.network.ServerConquest</node>
+    <node x="3095.3504774305547" y="1188.5">com.nasser.poulet.conquest.astar.Node</node>
+    <node x="3451.3504774305547" y="0.0">com.nasser.poulet.conquest.model.Perlin</node>
+    <node x="55.6250806051587" y="2377.0">com.nasser.poulet.conquest.menu.Menu</node>
+    <node x="" y="">com.nasser.poulet.conquest.view.Render</node>
+    <node x="2511.1219370039676" y="2199.0">com.nasser.poulet.conquest.network.Network.SelectMessageClient</node>
+    <node x="1073.645913938492" y="446.0">com.nasser.poulet.conquest.model.Event</node>
+    <node x="208.5" y="1888.5">com.nasser.poulet.conquest.menu.Button</node>
+    <node x="2664.1219370039676" y="2189.0">com.nasser.poulet.conquest.network.Network.SyncBoard</node>
+    <node x="" y="">com.nasser.poulet.conquest.menu.Label</node>
+    <node x="2600.375" y="677.0">com.nasser.poulet.conquest.model.State</node>
+    <node x="" y="">com.nasser.poulet.conquest.network.Network.forceStart</node>
+    <node x="339.35983382936365" y="2219.0">com.nasser.poulet.conquest.menu.Input</node>
+    <node x="1922.1219370039676" y="2229.0">com.nasser.poulet.conquest.network.Network.RequestBoard</node>
+    <node x="2019.375" y="1949.0">com.nasser.poulet.conquest.network.Network</node>
+    <node x="596.645913938492" y="697.0">com.nasser.poulet.conquest.controller.Turn</node>
+    <node x="1214.008810763888" y="338.0">com.nasser.poulet.conquest.model.Callback</node>
+    <node x="3133.4031870039676" y="2528.0">com.nasser.poulet.conquest.view.RenderUI</node>
+    <node x="1686.1219370039676" y="2209.0">com.nasser.poulet.conquest.network.Network.SelectMessage</node>
+    <node x="1174.9375806051587" y="1608.5">com.nasser.poulet.conquest.controller.BoardController</node>
+    <node x="1850.8719370039676" y="2477.0">com.nasser.poulet.conquest.network.ClientConquest</node>
+    <node x="2759.1875806051585" y="198.0">com.nasser.poulet.conquest.model.Unit</node>
+    <node x="3113.8504774305547" y="1659.5">com.nasser.poulet.conquest.astar.AStar</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.nasser.poulet.conquest.Conquest.Action" target="com.nasser.poulet.conquest.Conquest">
+      <point x="0.0" y="-54.0" />
+      <point x="0.0" y="275.0" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.model.State" target="com.nasser.poulet.conquest.model.Event">
+      <point x="-192.0" y="-195.5" />
+      <point x="2632.375" y="657.0" />
+      <point x="1255.895913938492" y="657.0" />
+      <point x="60.75" y="85.5" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.model.Unit" target="com.nasser.poulet.conquest.model.Loyalty">
+      <point x="0.0" y="-45.0" />
+      <point x="2833.6875806051585" y="173.0" />
+      <point x="2848.1875806051585" y="173.0" />
+      <point x="0.0" y="74.0" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.Conquest" target="com.nasser.poulet.conquest.player.MultiplayerRemote">
+      <point x="-214.0" y="-275.0" />
+      <point x="1460.5974144345223" y="2807.0" />
+      <point x="654.5625806051587" y="2807.0" />
+      <point x="0.0" y="45.0" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.network.ServerConquest" target="com.nasser.poulet.conquest.network.ServerConquest.GameConnection">
+      <point x="-105.4375" y="-85.0" />
+      <point x="2521.6599144345223" y="2357.0" />
+      <point x="2173.8719370039676" y="2357.0" />
+      <point x="-28.75" y="24.0" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.player.Multiplayer" target="com.nasser.poulet.conquest.network.Network.ActionMessage">
+      <point x="0.0" y="-75.0" />
+      <point x="1668.3719370039676" y="2357.0" />
+      <point x="1664.1219370039676" y="2357.0" />
+      <point x="0.0" y="2.0" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.player.Multiplayer" target="com.nasser.poulet.conquest.network.Network.SelectMessage">
+      <point x="70.0" y="-75.0" />
+      <point x="1738.3719370039676" y="2357.0" />
+      <point x="1742.6219370039676" y="2357.0" />
+      <point x="0.0" y="34.0" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.menu.Menu" target="com.nasser.poulet.conquest.model.Event">
+      <point x="186.375" y="-175.0" />
+      <point x="455.0000806051587" y="2357.0" />
+      <point x="507.8125806051587" y="2357.0" />
+      <point x="507.8125806051587" y="637.0" />
+      <point x="1093.895913938492" y="637.0" />
+      <point x="-101.25" y="85.5" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.network.Network.RequestBoard" target="com.nasser.poulet.conquest.network.Network">
+      <point x="0.0" y="-14.0" />
+      <point x="1973.1219370039676" y="2169.0" />
+      <point x="2062.152777777778" y="2169.0" />
+      <point x="-12.222222222222172" y="34.5" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.Conquest" target="com.nasser.poulet.conquest.player.Player">
+      <point x="-85.59999999999991" y="-275.0" />
+      <point x="1588.9974144345224" y="2777.0" />
+      <point x="1322.8719370039676" y="2777.0" />
+      <point x="1322.8719370039676" y="2169.0" />
+      <point x="1333.270913938492" y="2169.0" />
+      <point x="51.0" y="125.5" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.player.IA" target="com.nasser.poulet.conquest.model.Event">
+      <point x="0.0" y="-44.5" />
+      <point x="611.8125806051587" y="2169.0" />
+      <point x="586.145913938492" y="2169.0" />
+      <point x="586.145913938492" y="647.0" />
+      <point x="1134.395913938492" y="647.0" />
+      <point x="-60.75" y="85.5" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.player.Human" target="com.nasser.poulet.conquest.player.Player">
+      <point x="0.0" y="-44.5" />
+      <point x="1437.8719370039676" y="2169.0" />
+      <point x="1435.270913938492" y="2169.0" />
+      <point x="153.0" y="125.5" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.Conquest" target="com.nasser.poulet.conquest.controller.Turn">
+      <point x="-171.20000000000005" y="-275.0" />
+      <point x="1503.3974144345223" y="2797.0" />
+      <point x="824.645913938492" y="2797.0" />
+      <point x="0.0" y="175.5" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.Conquest" target="com.nasser.poulet.conquest.player.Human">
+      <point x="-42.799999999999955" y="-275.0" />
+      <point x="1631.7974144345224" y="2767.0" />
+      <point x="1385.6219370039676" y="2767.0" />
+      <point x="-52.25" y="44.5" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.network.Network.SelectMessageClient" target="com.nasser.poulet.conquest.network.Network">
+      <point x="0.0" y="-44.0" />
+      <point x="2577.6219370039676" y="2139.0" />
+      <point x="2111.0416666666665" y="2139.0" />
+      <point x="36.666666666666515" y="34.5" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.network.Network.ActionMessageClient" target="com.nasser.poulet.conquest.network.Network">
+      <point x="0.0" y="-44.0" />
+      <point x="2424.6219370039676" y="2149.0" />
+      <point x="2098.8194444444443" y="2149.0" />
+      <point x="24.444444444444343" y="34.5" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.menu.Menu" target="com.nasser.poulet.conquest.menu.UIElement">
+      <point x="-186.375" y="-175.0" />
+      <point x="82.2500806051587" y="2357.0" />
+      <point x="0.0" y="2357.0" />
+      <point x="0.0" y="1833.0" />
+      <point x="66.3750806051587" y="1833.0" />
+      <point x="-99.33333333333326" y="114.5" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.network.ServerConquest" target="com.nasser.poulet.conquest.network.Network.SyncBoard">
+      <point x="45.1875" y="-85.0" />
+      <point x="2672.2849144345223" y="2337.0" />
+      <point x="2744.1219370039676" y="2337.0" />
+      <point x="0.0" y="54.0" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.Conquest" target="com.nasser.poulet.conquest.menu.Menu">
+      <point x="-299.5999999999999" y="-275.0" />
+      <point x="1374.9974144345224" y="2827.0" />
+      <point x="268.6250806051587" y="2827.0" />
+      <point x="0.0" y="175.0" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.model.Board" target="com.nasser.poulet.conquest.model.State">
+      <point x="170.66666666666652" y="-205.5" />
+      <point x="2912.329247271825" y="1098.0" />
+      <point x="2913.975" y="1098.0" />
+      <point x="89.59999999999991" y="195.5" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.menu.UIElement" target="com.nasser.poulet.conquest.menu.Font">
+      <point x="74.5" y="-114.5" />
+      <point x="240.20841393849196" y="1559.0" />
+      <point x="238.95841393849196" y="1559.0" />
+      <point x="73.25" y="105.5" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.player.Player" target="com.nasser.poulet.conquest.controller.BoardController">
+      <point x="51.0" y="-125.5" />
+      <point x="1333.270913938492" y="1833.0" />
+      <point x="1391.6875806051587" y="1833.0" />
+      <point x="72.25" y="85.0" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.network.ClientConquest" target="com.nasser.poulet.conquest.network.Network.RequestBoard">
+      <point x="0.0" y="-75.0" />
+      <point x="1984.3719370039676" y="2357.0" />
+      <point x="1973.1219370039676" y="2357.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.controller.BoardController" target="com.nasser.poulet.conquest.model.Board">
+      <point x="96.33333333333326" y="-85.0" />
+      <point x="1415.770913938492" y="1549.0" />
+      <point x="2536.8625806051587" y="1549.0" />
+      <point x="-204.80000000000018" y="205.5" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.network.ServerConquest.GameConnection" target="com.nasser.poulet.conquest.network.ServerConquest">
+      <point x="28.75" y="24.0" />
+      <point x="2231.3719370039676" y="2347.0" />
+      <point x="2551.7849144345223" y="2347.0" />
+      <point x="-75.3125" y="-85.0" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.model.Callback" target="com.nasser.poulet.conquest.model.Unit">
+      <point x="0.0" y="-24.0" />
+      <point x="1297.508810763888" y="313.0" />
+      <point x="2777.8125806051585" y="313.0" />
+      <point x="-55.875" y="45.0" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.Conquest" target="com.nasser.poulet.conquest.player.IA">
+      <point x="-256.79999999999995" y="-275.0" />
+      <point x="1417.7974144345224" y="2817.0" />
+      <point x="569.0625806051587" y="2817.0" />
+      <point x="569.0625806051587" y="2357.0" />
+      <point x="565.0625806051587" y="2357.0" />
+      <point x="-46.75" y="44.5" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.model.Event" target="com.nasser.poulet.conquest.model.Callback">
+      <point x="0.0" y="-85.5" />
+      <point x="1195.145913938492" y="426.0" />
+      <point x="1297.508810763888" y="426.0" />
+      <point x="0.0" y="24.0" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.view.RenderUI" target="com.nasser.poulet.conquest.view.Render">
+      <point x="0.0" y="-24.0" />
+      <point x="29.5" y="24.0" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.menu.Menu" target="com.nasser.poulet.conquest.model.Callback">
+      <point x="133.125" y="-175.0" />
+      <point x="401.7500806051587" y="2347.0" />
+      <point x="496.8125806051587" y="2347.0" />
+      <point x="496.8125806051587" y="406.0" />
+      <point x="1230.708810763888" y="406.0" />
+      <point x="-66.79999999999995" y="24.0" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.network.ClientConquest" target="com.nasser.poulet.conquest.network.Network.forceStart">
+      <point x="-89.0" y="-75.0" />
+      <point x="1895.3719370039676" y="2357.0" />
+      <point x="1860.6219370039676" y="2357.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.network.Network.ActionMessage" target="com.nasser.poulet.conquest.network.Network">
+      <point x="0.0" y="-2.0" />
+      <point x="1664.1219370039676" y="2139.0" />
+      <point x="2025.486111111111" y="2139.0" />
+      <point x="-48.888888888888914" y="34.5" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.network.ServerConquest" target="com.nasser.poulet.conquest.network.Network.SelectMessageClient">
+      <point x="15.0625" y="-85.0" />
+      <point x="2642.1599144345223" y="2317.0" />
+      <point x="2577.6219370039676" y="2317.0" />
+      <point x="0.0" y="44.0" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.Conquest" target="com.nasser.poulet.conquest.model.Board">
+      <point x="0.0" y="-275.0" />
+      <point x="1674.5974144345223" y="2757.0" />
+      <point x="1552.8719370039676" y="2757.0" />
+      <point x="1552.8719370039676" y="1559.0" />
+      <point x="2639.2625806051583" y="1559.0" />
+      <point x="-102.40000000000009" y="205.5" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.menu.Menu" target="com.nasser.poulet.conquest.menu.Label">
+      <point x="-133.125" y="-175.0" />
+      <point x="135.5000806051587" y="2357.0" />
+      <point x="99.5" y="2357.0" />
+      <point x="0.0" y="54.5" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.menu.Button" target="com.nasser.poulet.conquest.menu.UIElement">
+      <point x="0.0" y="-95.0" />
+      <point x="331.5" y="1833.0" />
+      <point x="265.0417472718252" y="1833.0" />
+      <point x="99.33333333333331" y="114.5" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.network.Network.SetReady" target="com.nasser.poulet.conquest.network.Network">
+      <point x="0.0" y="-14.0" />
+      <point x="2084.6219370039676" y="2169.0" />
+      <point x="2074.375" y="2169.0" />
+      <point x="0.0" y="34.5" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.menu.Menu" target="com.nasser.poulet.conquest.menu.Button">
+      <point x="-26.625" y="-175.0" />
+      <point x="242.0000806051587" y="2317.0" />
+      <point x="328.85983382936365" y="2317.0" />
+      <point x="328.85983382936365" y="2169.0" />
+      <point x="331.5" y="2169.0" />
+      <point x="0.0" y="95.0" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.view.RenderBoard" target="com.nasser.poulet.conquest.view.Render">
+      <point x="0.0" y="-85.0" />
+      <point x="2993.9031870039676" y="2357.0" />
+      <point x="3133.4031870039676" y="2357.0" />
+      <point x="-29.5" y="24.0" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.menu.Input" target="com.nasser.poulet.conquest.menu.Button">
+      <point x="0.0" y="-24.0" />
+      <point x="410.85983382936365" y="2169.0" />
+      <point x="413.5" y="2169.0" />
+      <point x="82.0" y="95.0" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.model.Unit" target="com.nasser.poulet.conquest.model.State">
+      <point x="18.625" y="45.0" />
+      <point x="2852.3125806051585" y="657.0" />
+      <point x="2888.375" y="657.0" />
+      <point x="64.0" y="-195.5" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.Conquest" target="com.nasser.poulet.conquest.network.ClientConquest">
+      <point x="85.60000000000014" y="-275.0" />
+      <point x="1760.1974144345224" y="2777.0" />
+      <point x="1917.6219370039676" y="2777.0" />
+      <point x="-66.75" y="75.0" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.Conquest" target="com.nasser.poulet.conquest.player.Multiplayer">
+      <point x="42.80000000000018" y="-275.0" />
+      <point x="1717.3974144345225" y="2747.0" />
+      <point x="1668.3719370039676" y="2747.0" />
+      <point x="0.0" y="75.0" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.Conquest" target="com.nasser.poulet.conquest.network.ServerConquest">
+      <point x="214.0" y="-275.0" />
+      <point x="1888.5974144345223" y="2807.0" />
+      <point x="2687.3474144345223" y="2807.0" />
+      <point x="60.25" y="85.0" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.model.State" target="com.nasser.poulet.conquest.model.Loyalty">
+      <point x="192.0" y="-195.5" />
+      <point x="3016.375" y="637.0" />
+      <point x="2918.6875806051585" y="637.0" />
+      <point x="2918.6875806051585" y="173.0" />
+      <point x="2904.1875806051585" y="173.0" />
+      <point x="56.0" y="74.0" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.network.Network.SyncBoard" target="com.nasser.poulet.conquest.network.Network">
+      <point x="0.0" y="-54.0" />
+      <point x="2744.1219370039676" y="2129.0" />
+      <point x="2123.2638888888887" y="2129.0" />
+      <point x="48.88888888888869" y="34.5" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.network.Network.SelectMessage" target="com.nasser.poulet.conquest.network.Network">
+      <point x="0.0" y="-34.0" />
+      <point x="1742.6219370039676" y="2149.0" />
+      <point x="2037.7083333333333" y="2149.0" />
+      <point x="-36.66666666666674" y="34.5" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.Conquest" target="com.nasser.poulet.conquest.view.RenderBoard">
+      <point x="299.5999999999999" y="-275.0" />
+      <point x="1974.1974144345222" y="2827.0" />
+      <point x="2993.9031870039676" y="2827.0" />
+      <point x="0.0" y="85.0" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.astar.Node" target="com.nasser.poulet.conquest.model.State">
+      <point x="0.0" y="-135.0" />
+      <point x="3250.8504774305547" y="1098.0" />
+      <point x="3003.575" y="1098.0" />
+      <point x="179.19999999999982" y="195.5" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.menu.Menu" target="com.nasser.poulet.conquest.menu.Input">
+      <point x="26.625" y="-175.0" />
+      <point x="295.2500806051587" y="2327.0" />
+      <point x="375.10983382936365" y="2327.0" />
+      <point x="-35.75" y="24.0" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.network.ServerConquest" target="com.nasser.poulet.conquest.network.Network.Start">
+      <point x="-45.1875" y="-85.0" />
+      <point x="2581.9099144345223" y="2337.0" />
+      <point x="2309.1219370039676" y="2337.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.menu.Label" target="com.nasser.poulet.conquest.menu.UIElement">
+      <point x="0.0" y="-54.5" />
+      <point x="99.5" y="1833.0" />
+      <point x="165.70841393849196" y="1833.0" />
+      <point x="0.0" y="114.5" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.model.State" target="com.nasser.poulet.conquest.model.Unit">
+      <point x="128.0" y="-195.5" />
+      <point x="2952.375" y="647.0" />
+      <point x="2863.3125806051585" y="647.0" />
+      <point x="2863.3125806051585" y="313.0" />
+      <point x="2889.5625806051585" y="313.0" />
+      <point x="55.875" y="45.0" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.player.IA" target="com.nasser.poulet.conquest.model.Callback">
+      <point x="-62.33333333333337" y="-44.5" />
+      <point x="549.4792472718253" y="2169.0" />
+      <point x="575.145913938492" y="2169.0" />
+      <point x="575.145913938492" y="416.0" />
+      <point x="1264.108810763888" y="416.0" />
+      <point x="-33.40000000000009" y="24.0" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.controller.BoardController" target="com.nasser.poulet.conquest.model.Callback">
+      <point x="0.0" y="-85.0" />
+      <point x="1319.4375806051587" y="1559.0" />
+      <point x="1327.145913938492" y="1559.0" />
+      <point x="1327.145913938492" y="426.0" />
+      <point x="1330.9088107638881" y="426.0" />
+      <point x="33.40000000000009" y="24.0" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.controller.BoardController" target="com.nasser.poulet.conquest.model.Event">
+      <point x="-96.33333333333326" y="-85.0" />
+      <point x="1223.1042472718254" y="1559.0" />
+      <point x="1215.395913938492" y="1559.0" />
+      <point x="20.25" y="85.5" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.player.Player" target="com.nasser.poulet.conquest.model.State">
+      <point x="153.0" y="-125.5" />
+      <point x="1435.270913938492" y="1833.0" />
+      <point x="1536.0625806051587" y="1833.0" />
+      <point x="1536.0625806051587" y="1088.0" />
+      <point x="2645.175" y="1088.0" />
+      <point x="-179.19999999999982" y="195.5" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.player.MultiplayerRemote" target="com.nasser.poulet.conquest.player.IA">
+      <point x="0.0" y="-45.0" />
+      <point x="654.5625806051587" y="2357.0" />
+      <point x="658.5625806051587" y="2357.0" />
+      <point x="46.75" y="44.5" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.network.ServerConquest" target="com.nasser.poulet.conquest.model.Board">
+      <point x="105.4375" y="-85.0" />
+      <point x="2732.5349144345223" y="2357.0" />
+      <point x="2845.6219370039676" y="2357.0" />
+      <point x="2845.6219370039676" y="1559.0" />
+      <point x="2844.0625806051585" y="1559.0" />
+      <point x="102.40000000000009" y="205.5" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.player.Multiplayer" target="com.nasser.poulet.conquest.player.Human">
+      <point x="-70.0" y="-75.0" />
+      <point x="1598.3719370039676" y="2357.0" />
+      <point x="1490.1219370039676" y="2357.0" />
+      <point x="52.25" y="44.5" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.network.ServerConquest" target="com.nasser.poulet.conquest.network.Network.ActionMessageClient">
+      <point x="-15.0625" y="-85.0" />
+      <point x="2612.0349144345223" y="2327.0" />
+      <point x="2424.6219370039676" y="2327.0" />
+      <point x="0.0" y="44.0" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.player.Player" target="com.nasser.poulet.conquest.model.Loyalty">
+      <point x="-153.0" y="-125.5" />
+      <point x="1129.270913938492" y="1833.0" />
+      <point x="1063.145913938492" y="1833.0" />
+      <point x="1063.145913938492" y="173.0" />
+      <point x="2792.1875806051585" y="173.0" />
+      <point x="-56.0" y="74.0" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.model.State" target="com.nasser.poulet.conquest.model.Callback">
+      <point x="-64.0" y="-195.5" />
+      <point x="2760.375" y="647.0" />
+      <point x="2822.2125806051586" y="647.0" />
+      <point x="2822.2125806051586" y="426.0" />
+      <point x="1364.308810763888" y="426.0" />
+      <point x="66.79999999999995" y="24.0" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.player.IA" target="com.nasser.poulet.conquest.player.Player">
+      <point x="62.33333333333337" y="-44.5" />
+      <point x="674.1459139384921" y="2169.0" />
+      <point x="1129.270913938492" y="2169.0" />
+      <point x="-153.0" y="125.5" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.network.ClientConquest" target="com.nasser.poulet.conquest.network.Network.SetReady">
+      <point x="89.0" y="-75.0" />
+      <point x="2073.3719370039676" y="2357.0" />
+      <point x="2084.6219370039676" y="2357.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.controller.Turn" target="com.nasser.poulet.conquest.model.Event">
+      <point x="0.0" y="-175.5" />
+      <point x="824.645913938492" y="657.0" />
+      <point x="1174.895913938492" y="657.0" />
+      <point x="-20.25" y="85.5" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.astar.AStar" target="com.nasser.poulet.conquest.astar.Node">
+      <point x="0.0" y="-34.0" />
+      <point x="0.0" y="135.0" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.network.Network.Start" target="com.nasser.poulet.conquest.network.Network">
+      <point x="0.0" y="-14.0" />
+      <point x="2309.1219370039676" y="2159.0" />
+      <point x="2086.597222222222" y="2159.0" />
+      <point x="12.222222222222172" y="34.5" />
+    </edge>
+    <edge source="com.nasser.poulet.conquest.network.Network.forceStart" target="com.nasser.poulet.conquest.network.Network">
+      <point x="0.0" y="-14.0" />
+      <point x="1860.6219370039676" y="2159.0" />
+      <point x="2049.9305555555557" y="2159.0" />
+      <point x="-24.444444444444343" y="34.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.24486529741264337" x="1878.5" y="1864.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+    <Category>Inner Classes</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

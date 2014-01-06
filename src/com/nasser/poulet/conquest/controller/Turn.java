@@ -35,7 +35,6 @@ public class Turn{
 
     public long update(){
         if(!pause){
-            // TODO : Add the pause in the duration calculation
             if (Timer.duration(this.turnSnapshot, this.currentSnapshot)>=TURN_DURATION) this.startTurn();  // If more than 1s has elapsed
 
             Timer.updateSnapshot(this.currentSnapshot);
