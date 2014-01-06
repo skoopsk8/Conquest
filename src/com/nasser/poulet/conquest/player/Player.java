@@ -19,7 +19,14 @@ public abstract class Player {
     protected State selected;
     protected ArrayList<ArrayList<State>> moves = new ArrayList<ArrayList<State>>();
 
-    public Player( Loyalty loyalty, Board board ){
+    @Override
+	public String toString() {
+		String s;
+		s="hello";
+		return super.toString();
+	}
+
+	public Player( Loyalty loyalty, Board board ){
         this.loyalty = loyalty;
         this.boardController = new BoardController(board);
     }
@@ -58,20 +65,19 @@ public abstract class Player {
     }
     
     public void addMove(ArrayList<State> newmove) {    	
-    	int i = 0;
-        boolean noIf = false;
+        ArrayList<ArrayList<State>> updateMove = new ArrayList<ArrayList<State>>();
+        updateMove = moves;
         
-    	for(Iterator<ArrayList<State>> it = moves.iterator(); it.hasNext();) {
+    	for(Iterator<ArrayList<State>> it = updateMove.iterator(); it.hasNext();) {
     		ArrayList<State> move = it.next();
     		if(move.contains(newmove.get(0))) {
-                noIf =true;
-    			moves.remove(i);	
-    			moves.add(i, newmove);
+    			it.remove();
     		}
-    		i++;
     	}
-        if(!noIf)
-    	    moves.add(newmove);
+    	
+    	updateMove.add(newmove);
+        
+        moves = updateMove;
     }
     
     public void update() {
