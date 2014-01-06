@@ -292,23 +292,23 @@ public class Conquest {
         turn.stop();
     }
 
-    private int triggerTurn = Integer.MAX_VALUE;
+    private int triggerTurn = -1;
 
     private String getWinner( Board board ){
         return board.getwinner();
     }
 
     private boolean endGame( Board board, int turnNumber){
-        if(board.numberOfEmpty() == 0 && turnNumber == 0){ // Start end game
+        if(board.numberOfEmpty() == 0){ // Start end game
             triggerTurn = turnNumber;
             System.out.println("Start end counter");
         }
 
-        if(triggerTurn + (60000/Turn.TURN_DURATION)>turnNumber){
-            return true;
+        if(triggerTurn != -1 && triggerTurn + (60000/Turn.TURN_DURATION)>turnNumber){
+            return false;
         }
 
-        return false;
+        return true;
     }
 
     private enum Action{
