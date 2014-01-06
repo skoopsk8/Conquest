@@ -93,7 +93,11 @@ public class Board {
         return stateArray[posX][posY];
     }
 
-    public int[][] explodeBoard(){
+    public ArrayList<State>[] getStateArrayList() {
+		return stateArrayList;
+	}
+
+	public int[][] explodeBoard(){
         int[][] returnValue = new int[boardWidth][boardHeight];
 
         for(int i=0;i<boardWidth;i++) for (int j = 0; j < boardHeight; j++) returnValue[i][j] = stateArray[i][j].getLoyalty().ordinal();
@@ -129,9 +133,9 @@ public class Board {
         if(stateArrayList[0].size()>stateArrayList[1].size() && stateArrayList[0].size()>stateArrayList[2].size())
             return "blue";
         if(stateArrayList[1].size()>stateArrayList[0].size() && stateArrayList[1].size()>stateArrayList[2].size())
-            return "blue";
+            return "green";
         if(stateArrayList[2].size()>stateArrayList[1].size() && stateArrayList[2].size()>stateArrayList[0].size())
-            return "blue";
+            return "yellow";
         else
             return "no winner";
     }

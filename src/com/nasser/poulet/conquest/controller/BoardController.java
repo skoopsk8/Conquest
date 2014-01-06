@@ -61,7 +61,11 @@ public class BoardController {
             public void methodCallback(State state) {
             if(state.isInCapture()){
                 state.setInCapture(false);
+                if(state.getLoyalty() != state.getProvLoyalty() && state.getLoyalty() != Loyalty.EMPTY && state.getLoyalty() != Loyalty.NONE) {
+                	board.getStateArrayList()[state.getLoyalty().ordinal() - 2].remove(state);
+                }
                 state.setLoyalty(state.getProvLoyalty());
+                board.getStateArrayList()[state.getLoyalty().ordinal() - 2].add(state);
                 state.generateUnitSpawnCallback();
             }
             }
