@@ -31,7 +31,7 @@ public class Node implements Comparable<Node> {
 	
 	public Node(State state){
 		this.state = state;
-		if(this.state.getLoyalty() == Loyalty.EMPTY) { // normalement le test de loyalty
+		if(this.state.getLoyalty() == Loyalty.EMPTY || (this.state.getLoyalty() == state.getLoyalty() && state.canHostUnit())) {
 			this.weight = 1;
 		}
 		else if (this.state.getLoyalty() == Loyalty.NONE){
@@ -49,7 +49,7 @@ public class Node implements Comparable<Node> {
 
 	public Node(State state, int G){
 		this.state = state;
-		if(this.state.getLoyalty() == Loyalty.EMPTY) { // normalement le test de loyalty
+		if(this.state.getLoyalty() == Loyalty.EMPTY || (this.state.getLoyalty() == state.getLoyalty() && state.canHostUnit())) {
 			this.weight = 1;
 		}
 		else if (this.state.getLoyalty() == Loyalty.NONE){
@@ -67,7 +67,7 @@ public class Node implements Comparable<Node> {
 	
 	public Node(State state, int G, Node parent){
 		this.state = state;
-		if(this.state.getLoyalty() == Loyalty.EMPTY) { // normalement le test de loyalty
+		if(this.state.getLoyalty() == Loyalty.EMPTY || (this.state.getLoyalty() == state.getLoyalty() && state.canHostUnit())) {
 			this.weight = 1;
 		}
 		else if (this.state.getLoyalty() == Loyalty.NONE){
