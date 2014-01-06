@@ -60,7 +60,8 @@ public class Turn{
 
     static public void removeEvent( int index ){
         System.out.println("Remove event: "+index);
-        eventList.remove(index);
+        if(eventList.size()>index)
+            eventList.remove(index);
     }
 
     public boolean isPause() {
