@@ -27,16 +27,20 @@ public class BoardController {
             Unit actionUnit = this.move(selectedState, posX, posY);
 
             // Combat
-            if(board.getState(posX, posY).getUnit()!=null){
-                if(board.getState(posX, posY).getUnit().getLoyalty() != actionUnit.getLoyalty()){
-                    this.combat(actionUnit, board.getState(posX, posY));
+            if(actionUnit != null){
+                if(board.getState(posX, posY).getUnit()!=null){
+                    if(board.getState(posX, posY).getUnit().getLoyalty() != actionUnit.getLoyalty()){
+                        this.combat(actionUnit, board.getState(posX, posY));
+                    }
+                }
+
+                // Capture
+                if(board.getState(posX, posY).getLoyalty() != Loyalty.NONE && board.getState(posX, posY).getLoyalty() != actionUnit.getLoyalty() && board.getState(posX, posY).getUnit() == actionUnit){
+                    this.capture(actionUnit, board.getState(posX, posY));
                 }
             }
-
-            // Capture
-            if(board.getState(posX, posY).getLoyalty() != Loyalty.NONE && board.getState(posX, posY).getLoyalty() != actionUnit.getLoyalty() && board.getState(posX, posY).getUnit() == actionUnit){
-                this.capture(actionUnit, board.getState(posX, posY));
-            }
+            else
+                return false;
 
             return true;
         }

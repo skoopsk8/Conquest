@@ -102,7 +102,12 @@ public class Conquest {
                     else if(s[0].equals("join")){
                         String[] str = s[1].split(":");
                         // Launch multiplayer session
-                        Network.port = Integer.parseInt(str[1]);
+
+                        if(str.length==1)
+                            Network.port = 54555;
+                        else
+                            Network.port = Integer.parseInt(str[1]);
+
                         this.initClient(str[0]);
                         this.startMultiplayerGame();
                     }
@@ -122,6 +127,9 @@ public class Conquest {
             if(Keyboard.getEventKeyState()) {   // Only pressed keys
                 if(Keyboard.getEventKey() == Keyboard.KEY_SPACE){
                    //this.turn.setPause(!this.turn.isPause());
+                }
+                if(Keyboard.getEventKey() == Keyboard.KEY_ESCAPE){
+                    return Action.ECHAP;
                 }
             }
         }
