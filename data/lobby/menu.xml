@@ -12,5 +12,14 @@
                 <strengh>BOLD</strengh>
             </font>
         </label>
+        <button id="1">
+            <name>Button1</name>
+            <text>Force Start</text>
+            <posX>100</posX>
+            <posY>250</posY>
+            <width>100</width>
+            <height>50</height>
+            <action>forceStart</action>
+        </button>
     </objects>
 </menu>

@@ -22,6 +22,7 @@ public class Network {
         kryo.register(RequestBoard.class);
         kryo.register(SetReady.class);
         kryo.register(Start.class);
+        kryo.register(forceStart.class);
     }
 
     static public class SelectMessage{
@@ -162,4 +163,6 @@ public class Network {
     static public class SetReady{}           // Rise Ready Flag
 
     static public class Start{}              // Rise Start Flag
+
+    static public class forceStart{}              // Rise Force Start Flag
 }

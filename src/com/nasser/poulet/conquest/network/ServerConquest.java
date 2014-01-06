@@ -18,7 +18,8 @@ public class ServerConquest{
     private Server server;
     private Board board;
 
-    private boolean[] ready ={false,false};
+    private boolean[] ready ={false,false,false};
+    private boolean forceStart = false;
 
     public ServerConquest(){
         //Generate the board
@@ -67,11 +68,15 @@ public class ServerConquest{
                 if (object instanceof Network.SetReady) {
                     ready[connection.getID()-1]=true;
                     System.out.println("Got a ready from " + connection.getID());
-                    if(ready[0] && ready[1]){
+                    if((ready[0] && ready[1] && ready[2]) || forceStart){
                         System.out.println("Send Start");
                         server.sendToAllTCP(new Network.Start());
                     }
                     return;
+                }
+
+                if (object instanceof  Network.forceStart){
+                    forceStart = true;
                 }
             }
         });

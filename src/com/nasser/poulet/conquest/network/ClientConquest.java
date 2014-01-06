@@ -44,6 +44,10 @@ public class ClientConquest{
         client.sendTCP(new Network.SetReady());
     }
 
+    public void sendForceStart(){
+        client.sendTCP(new Network.forceStart());
+    }
+
     public Client getClient() {
         return client;
     }

@@ -167,7 +167,16 @@ public class Conquest {
             }
         });
         client.sendReady();
-        return menu.render();
+        String[] menuReturn;
+        do {
+             menuReturn = menu.render();
+            if(menuReturn[0].equals("forceStart")){
+                client.sendForceStart();
+                client.sendReady();
+            }
+        }while (!menuReturn[0].equals("continue"));
+
+        return menuReturn;
     }
 
 
