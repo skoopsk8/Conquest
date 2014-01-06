@@ -53,15 +53,15 @@ public class Turn{
             return Timer.duration(this.turnSnapshot, this.currentSnapshot);
     }
 
-    static public int addEvent(Event event){
+    static public Event addEvent(Event event){
         eventList.add(event);
-        return eventList.size()-1;
+        return event;
     }
 
-    static public void removeEvent( int index ){
-        System.out.println("Remove event: "+index);
+    static public void removeEvent( Event event ){
+        System.out.println("Remove event: ");
         //if(eventList.size()>index)
-            eventList.remove(index);
+            eventList.remove(event);
     }
 
     public boolean isPause() {

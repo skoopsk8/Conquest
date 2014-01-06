@@ -10,14 +10,14 @@ public class State {
     private int productivity;
     private Loyalty loyalty, provLoyalty;
     private boolean inCapture;
-    private int eventUnitCallback;
+    private Event eventUnitCallback;
     private Unit[] units = new Unit[2];
 
     public State( int x, int y, Loyalty loyalty){
         this.posX = x;
         this.posY = y;
         this.loyalty = loyalty;
-        eventUnitCallback = -1;
+        eventUnitCallback = null;
 
         this.productivity = 2000 + (int)(Math.random()*4000);
     }
@@ -26,7 +26,7 @@ public class State {
         this.posX = x;
         this.posY = y;
         this.loyalty = loyalty;
-        eventUnitCallback = -1;
+        eventUnitCallback = null;
 
         this.productivity = productivity;
     }
@@ -83,11 +83,11 @@ public class State {
         this.loyalty = loyalty;
     }
 
-    public int getEventUnitCallback() {
+    public Event getEventUnitCallback() {
         return eventUnitCallback;
     }
 
-    public void setEventUnitCallback(int eventUnitCallback) {
+    public void setEventUnitCallback(Event eventUnitCallback) {
         this.eventUnitCallback = eventUnitCallback;
     }
 
@@ -137,7 +137,7 @@ public class State {
     }
 
     public void generateUnitSpawnCallback(){
-        if(eventUnitCallback!=-1) Turn.removeEvent(eventUnitCallback);   // Clear actual Callback
+        if(eventUnitCallback!=null) Turn.removeEvent(eventUnitCallback);   // Clear actual Callback
         this.setEventUnitCallback(Turn.addEvent(new Event(-1, productivity, this, new Callback<State>() {
             public void methodCallback(State state) {
             	if(Board.numberOfUnit[state.getLoyalty().ordinal() - 2] < 10) {
