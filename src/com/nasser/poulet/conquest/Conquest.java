@@ -304,7 +304,7 @@ public class Conquest {
             System.out.println("Start end counter");
         }
 
-        if(triggerTurn != -1 || triggerTurn + (60000/Turn.TURN_DURATION)>turnNumber){
+        if(triggerTurn != -1 && triggerTurn + (60000/Turn.TURN_DURATION)<turnNumber){
             return false;
         }
 
