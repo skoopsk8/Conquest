@@ -9,7 +9,7 @@ import java.util.*;
  * Created by Lord on 12/12/13.
  */
 public class Turn{
-    private final int TURN_DURATION = 1500;
+    public static final int TURN_DURATION = 1500;
 
     private boolean pause;
     private int turnNumber;
@@ -60,7 +60,7 @@ public class Turn{
 
     static public void removeEvent( int index ){
         System.out.println("Remove event: "+index);
-        if(eventList.size()>index)
+        //if(eventList.size()>index)
             eventList.remove(index);
     }
 

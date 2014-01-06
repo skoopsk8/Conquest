@@ -185,8 +185,6 @@ public class Conquest {
     int[][] board, prod;
     int width, height;
 
-
-
     private void startMultiplayerGame(){
         mainBoard = null;
         mainBoard = new Board(20, 15, false);
@@ -271,7 +269,7 @@ public class Conquest {
         // Have to stay just before the while
         Board.numberOfUnit[0]=Board.numberOfUnit[1]=Board.numberOfUnit[2]=0;
         turn.startTurn();
-        while(!Display.isCloseRequested()){
+        while( this.endGame(mainBoard, turn.getTurnNumber()) && !Display.isCloseRequested()){
             inputAction = this.pollInput();
             if(inputAction == Action.MOUSE)
                 human.click(Mouse.getX(), (-Mouse.getY() + 600));
@@ -289,7 +287,28 @@ public class Conquest {
             Display.update();
         }
 
+        System.out.println("The winner is " + this.getWinner(mainBoard));
+
         turn.stop();
+    }
+
+    private int triggerTurn = Integer.MAX_VALUE;
+
+    private String getWinner( Board board ){
+        return board.getwinner();
+    }
+
+    private boolean endGame( Board board, int turnNumber){
+        if(board.numberOfEmpty() == 0 && turnNumber == 0){ // Start end game
+            triggerTurn = turnNumber;
+            System.out.println("Start end counter");
+        }
+
+        if(triggerTurn + (60000/Turn.TURN_DURATION)>turnNumber){
+            return true;
+        }
+
+        return false;
     }
 
     private enum Action{
