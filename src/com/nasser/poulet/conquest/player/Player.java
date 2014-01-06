@@ -19,13 +19,6 @@ public abstract class Player {
     protected State selected;
     protected ArrayList<ArrayList<State>> moves = new ArrayList<ArrayList<State>>();
 
-    @Override
-	public String toString() {
-		String s;
-		s="hello";
-		return super.toString();
-	}
-
 	public Player( Loyalty loyalty, Board board ){
         this.loyalty = loyalty;
         this.boardController = new BoardController(board);
