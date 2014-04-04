@@ -23,6 +23,7 @@ public class Network {
         kryo.register(SetReady.class);
         kryo.register(Start.class);
         kryo.register(forceStart.class);
+        kryo.register(ChatMessage.class);
     }
 
     static public class SelectMessage{
@@ -157,6 +158,27 @@ public class Network {
             this.productivity = productivity;
         }
     }       // Board Synchronisation
+
+    static public class ChatMessage{
+        private String message;
+        private int roomId;
+
+        public String getMessage(){
+            return message;
+        }
+
+        public void setMessage( String message ){
+            this.message = message;
+        }
+
+        public int getRoomId() {
+            return roomId;
+        }
+
+        public void setRoomId(int roomId) {
+            this.roomId = roomId;
+        }
+    }
 
     static public class RequestBoard{}       // Board Request
 
