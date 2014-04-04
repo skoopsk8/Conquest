@@ -8,18 +8,22 @@ import java.awt.*;
 /**
  * Created by Thomas on 12/29/13.
  */
-public class Button extends UIElement {
-    private int width, height;
+public class Button extends UIElementImage {
     private String action;
     private Color color = Color.white;
+    
+    public Button() {
+    	super("data/img/button-left.png", "data/img/button-center.png", "data/img/button-right.png");
+    }
 
     @Override
     public void render() {
-        font.getFont().drawString(posX, posY, text, color);
+    	super.render();
+        font.getFont().drawString(posX + 7, posY + 5, text, color);
     }
 
     public String click( int posX, int posY){
-        if(inside(posX, posY)){
+        if(super.inside(posX, posY)){
             return this.action;
         }
         return null;
@@ -27,37 +31,13 @@ public class Button extends UIElement {
 
     @Override
     public String hover(int posX, int posY) {
-        if(inside(posX, posY)){
+        if(super.inside(posX, posY)){
             color = Color.gray;
+            super.hover(0, 0);
             return null;
         }
         color = Color.white;
         return null;
-    }
-
-    private boolean inside( int posX, int posY ){
-        if(posX>=this.posX && posX<=this.posX+this.width){
-            if(posY>=this.posY && posY<=this.posY+this.height){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
     }
 
     public String getAction() {
