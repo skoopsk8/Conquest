@@ -30,7 +30,7 @@ public class Server {
         System.out.println("Starting ...");
 
         // Create the basic rooms -Lobby
-        lobby = new Lobby();
+        lobby = new Lobby(server);
 
         // Create the kryonet server
         server = new com.esotericsoftware.kryonet.Server(){
@@ -44,23 +44,24 @@ public class Server {
         server.addListener(new Listener() {
             public void received (Connection connection, Object object) {
                 if (object instanceof Network.ChatMessage) {
-                    if (((Network.ChatMessage) object).getRoomId()==0){
-                        lobby.receiveMessage(((Network.ChatMessage) object).getMessage());
-                    }
+                    if (((Network.ChatMessage) object).getRoomId()==0)
+                        lobby.receivedMessage(((Network.ChatMessage) object).getMessage());
                     else
-                        roomList.get(((Network.ChatMessage) object).getRoomId()).receiveMessage(((Network.ChatMessage) object).getMessage());
+                        roomList.get(((Network.ChatMessage) object).getRoomId()).receivedMessage(((Network.ChatMessage) object).getMessage());
                 }
             }
         });
 
         // Bind the server
         try {
+            System.out.println("Start binding ...");
             server.bind(Network.port);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         server.start();
+        System.out.println("Server up & running");
     }
 
     public static void main(String[] args){
