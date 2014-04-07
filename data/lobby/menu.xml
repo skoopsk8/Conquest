@@ -1,6 +1,9 @@
 <menu>
     <objects>
-        <label id="0">
+    	<background id="0">
+			<image>data/img/bg.png</image>
+		</background>
+        <label id="1">
             <name>Title</name>
             <text>Waiting for everybody to be ready</text>
             <posX>120</posX>
@@ -12,7 +15,7 @@
                 <strengh>BOLD</strengh>
             </font>
         </label>
-        <button id="1">
+        <button id="2">
             <name>Button1</name>
             <text>Force Start</text>
             <posX>100</posX>

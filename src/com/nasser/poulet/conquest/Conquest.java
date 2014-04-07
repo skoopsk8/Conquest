@@ -63,7 +63,8 @@ public class Conquest {
         try {
 			Display.setIcon(new ByteBuffer[] {
 			        new ImageIOImageData().imageToByteBuffer(ImageIO.read(new File("data/img/icon16.png")), false, false, null),
-			        new ImageIOImageData().imageToByteBuffer(ImageIO.read(new File("data/img/icon32.png")), false, false, null)
+			        new ImageIOImageData().imageToByteBuffer(ImageIO.read(new File("data/img/icon32.png")), false, false, null),
+			        new ImageIOImageData().imageToByteBuffer(ImageIO.read(new File("data/img/icon128.png")), false, false, null)
 			        });
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

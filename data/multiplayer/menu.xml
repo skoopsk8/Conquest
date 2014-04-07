@@ -3,7 +3,10 @@
         <keyboard>true</keyboard>
     </properties>
     <objects>
-        <label id="0">
+    	<background id="0">
+			<image>data/img/bg.png</image>
+		</background>	
+        <label id="1">
             <name>Title</name>
             <text>Choose your network option</text>
             <posX>130</posX>
@@ -15,7 +18,7 @@
                 <strengh>BOLD</strengh>
             </font>
         </label>
-        <button id="1">
+        <button id="2">
             <name>Button1</name>
             <text>Host</text>
             <posX>340</posX>
@@ -24,7 +27,7 @@
             <height>50</height>
             <action>host</action>
         </button>
-        <button id="2">
+        <button id="3">
             <name>Button2</name>
             <text>Join</text>
             <posX>345</posX>
@@ -33,7 +36,7 @@
             <height>50</height>
             <action>join</action>
         </button>
-        <input id="3">
+        <input id="4">
             <name>Button3</name>
             <text>127.0.0.1</text>
             <posX>100</posX>
