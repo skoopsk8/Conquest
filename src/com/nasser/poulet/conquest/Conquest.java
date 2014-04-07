@@ -3,6 +3,12 @@ package com.nasser.poulet.conquest;
  * Created by Lord on 10/12/13.
  */
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+
+import javax.imageio.ImageIO;
+
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.nasser.poulet.conquest.menu.Menu;
@@ -13,12 +19,14 @@ import com.nasser.poulet.conquest.model.*;
 import com.nasser.poulet.conquest.network.ClientConquest;
 import com.nasser.poulet.conquest.network.ServerConquest;
 import com.nasser.poulet.conquest.view.RenderBoard;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
+import org.newdawn.slick.opengl.ImageIOImageData;
 
 public class Conquest {
     private boolean fullscreen;
@@ -50,6 +58,17 @@ public class Conquest {
         }
 
         noClick = true;
+        
+        // we set the icon
+        try {
+			Display.setIcon(new ByteBuffer[] {
+			        new ImageIOImageData().imageToByteBuffer(ImageIO.read(new File("data/img/icon16.png")), false, false, null),
+			        new ImageIOImageData().imageToByteBuffer(ImageIO.read(new File("data/img/icon32.png")), false, false, null)
+			        });
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
         try {
             System.out.println("Launching ...");

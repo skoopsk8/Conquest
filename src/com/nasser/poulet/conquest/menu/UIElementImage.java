@@ -77,6 +77,14 @@ public class UIElementImage extends UIElement {
 		}
 	}
 
+	public Image getImg1() {
+		return img1;
+	}
+
+	public void setImg1(Image img1) {
+		this.img1 = img1;
+	}
+
 	@Override
 	public String click(int posX, int posY) {
 		// TODO Auto-generated method stub

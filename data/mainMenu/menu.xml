@@ -1,6 +1,9 @@
 <menu>
     <objects>
-        <label id="0">
+    	<background id="0">
+			<image>data/img/bg.png</image>
+		</background>
+        <label id="1">
             <name>Title</name>
             <text>Conquest</text>
             <posX>300</posX>
@@ -12,7 +15,7 @@
                 <strengh>BOLD</strengh>
             </font>
         </label>
-        <button id="1">
+        <button id="2">
             <name>Button1</name>
             <text>Play</text>
             <posX>100</posX>
@@ -21,7 +24,7 @@
             <height>50</height>
             <action>play</action>
         </button>
-        <button id="2">
+        <button id="3">
             <name>Button2</name>
             <text>Multiplayer</text>
             <posX>100</posX>
@@ -30,7 +33,7 @@
             <height>50</height>
             <action>multiplayer</action>
         </button>
-        <button id="3">
+        <button id="4">
             <name>Button3</name>
             <text>Quit</text>
             <posX>100</posX>

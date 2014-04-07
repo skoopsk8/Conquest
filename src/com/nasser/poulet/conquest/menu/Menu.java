@@ -2,13 +2,18 @@ package com.nasser.poulet.conquest.menu;
 
 import com.nasser.poulet.conquest.controller.Timer;
 import com.nasser.poulet.conquest.model.*;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 import org.xml.sax.*;
 import org.xml.sax.helpers.*;
+
 import javax.xml.parsers.*;
+
 import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -64,14 +69,18 @@ public class Menu extends DefaultHandler{
                 action = "quit";
 
             GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-
+            
+          
+            
+            
             for(UIElement uiElement : uiElements){
                 uiElement.render();
             }
 
             // Hover action
             for(UIElement uiElement : uiElements){
-                uiElement.hover(Mouse.getX(), (-Mouse.getY()+600));
+            	if(uiElement.getType() != "background")
+            		uiElement.hover(Mouse.getX(), (-Mouse.getY()+600));
             }
 
             // Click action
@@ -145,6 +154,10 @@ public class Menu extends DefaultHandler{
         if(qName.equals("objects")){
             uiElements = new LinkedList<UIElement>();
         }
+        else if(qName.equals("background")){
+            element = new Background();
+            element.setType("background");
+        }
         else if(qName.equals("label")){
             element = new Label();
             element.setType("label");
@@ -170,6 +183,10 @@ public class Menu extends DefaultHandler{
             uiElements.add(element);
             element = null;
         }
+        else if(qName.equals("background")){
+        	uiElements.add(element);
+            element = null;
+        }
         else if(qName.equals("button")){
             uiElements.add(element);
             element = null;
@@ -181,6 +198,15 @@ public class Menu extends DefaultHandler{
         }
         else if(qName.equals("name")){
             element.setName(buffer.toString());
+            buffer = null;
+        }
+        else if(qName.equals("image")){
+            try {
+            	((UIElementImage) element).setImg1(new Image(buffer.toString()));
+			} catch (SlickException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
             buffer = null;
         }
         else if(qName.equals("text")){
