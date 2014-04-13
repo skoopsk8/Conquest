@@ -1,13 +1,8 @@
 package com.nasser.poulet.conquest.menu;
 
-import java.io.IOException;
-
-import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
-import org.newdawn.slick.util.ResourceLoader;
 
 public class UIElementImage extends UIElement {
 	
@@ -28,7 +23,7 @@ public class UIElementImage extends UIElement {
 		this.height = height;
 	}
 
-	private Image img1, img2, img3;
+	private Image img1=null, img2=null, img3=null;
 	
 	public UIElementImage() {
 		img1 = null;
@@ -58,22 +53,20 @@ public class UIElementImage extends UIElement {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+    }
 	
 
 	@Override
 	public void render() {
-		// TODO Auto-generated method stub
-		// afire le render des images mais que button (enfant) appel le render de son parent pour faire le render des images
 		if(img3 == null && img2 == null) {
-			img1.draw(posX, posY);
+			img1.draw(posX, posY,Display.getWidth(), Display.getHeight());
 		}
 		else {
-			img1.draw(posX,posY);
-			for(int x = 1; x < 20; x++) {
-				img2.draw(posX + 7*x, posY);
-			}
-			img3.draw(posX + 140, posY);
+            int ratioX = Display.getWidth()/30;
+            int ratioY = Display.getHeight()/20;
+			img1.draw(posX*ratioX,posY*ratioY,32,this.height*ratioY);
+		    img2.draw(posX*ratioX + 32, posY*ratioY,this.width*ratioX-64,this.height*ratioY);
+			img3.draw(posX*ratioX + ((this.width*ratioX/32)*32)-32, posY*ratioY,32,this.height*ratioY);
 		}
 	}
 
@@ -88,19 +81,20 @@ public class UIElementImage extends UIElement {
 	@Override
 	public String click(int posX, int posY) {
 		// TODO Auto-generated method stub
-		return null;
+		return "";
 	}
 
 	@Override
-	public String hover(int posX, int posY) {
+	public boolean hover(int posX, int posY) {
 		// TODO Auto-generated method stub
 		 if(inside(posX, posY)){
 			 img1.setAlpha(0.8f);
 			 render();
+             return true;
 		 }
 		 img1.setAlpha(1f);
 		 render();
-		return null;
+		return false;
 	}
 
 	@Override
@@ -108,10 +102,12 @@ public class UIElementImage extends UIElement {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
     public boolean inside( int posX, int posY ){
-        if(posX>=this.posX && posX<=this.posX+this.width){
-            if(posY>=this.posY && posY<=this.posY+this.height){
+        int ratioX = Display.getWidth()/30;
+        int ratioY = Display.getHeight()/20;
+        if(posX>=this.posX*ratioX && posX<=this.posX*ratioX+this.width*ratioX){
+            if(posY>=this.posY*ratioY && posY<=this.posY*ratioY+this.height*ratioY){
                 return true;
             }
         }

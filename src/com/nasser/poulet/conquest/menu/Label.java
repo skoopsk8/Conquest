@@ -16,12 +16,12 @@ public class Label extends UIElement{
 
     @Override
     public String click(int posX, int posY) {
-        return null;
+        return "";
     }
 
     @Override
-    public String hover(int posX, int posY) {
-        return null;
+    public boolean hover(int posX, int posY) {
+        return false;
     }
 
     @Override

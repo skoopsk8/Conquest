@@ -1,5 +1,6 @@
 package com.nasser.poulet.conquest.menu;
 
+import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;
 
@@ -11,33 +12,36 @@ import java.awt.*;
 public class Button extends UIElementImage {
     private String action;
     private Color color = Color.white;
+    private Font font = null;
     
     public Button() {
     	super("data/img/button-left.png", "data/img/button-center.png", "data/img/button-right.png");
+        font = new Font("Arial",Display.getHeight()/20-20);
     }
 
     @Override
     public void render() {
     	super.render();
-        font.getFont().drawString(posX + 7, posY + 5, text, color);
+        int ratioX = Display.getWidth()/30;
+        int ratioY = Display.getHeight()/20;
+        font.getFont().drawString(posX*ratioX + ((this.getWidth()*ratioX)-font.getFont().getWidth(text))/2, posY*ratioY + 10, text, color);
     }
 
     public String click( int posX, int posY){
         if(super.inside(posX, posY)){
             return this.action;
         }
-        return null;
+        return "";
     }
 
     @Override
-    public String hover(int posX, int posY) {
-        if(super.inside(posX, posY)){
+    public boolean hover(int posX, int posY) {
+        if(super.hover(posX, posY)){
             color = Color.gray;
-            super.hover(0, 0);
-            return null;
+            return true;
         }
         color = Color.white;
-        return null;
+        return false;
     }
 
     public String getAction() {

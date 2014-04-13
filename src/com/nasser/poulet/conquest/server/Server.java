@@ -62,6 +62,8 @@ public class Server {
 
         server.start();
         System.out.println("Server up & running");
+
+        lobby.receivedMessage("/test 1234");
     }
 
     public static void main(String[] args){

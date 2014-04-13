@@ -1,9 +1,9 @@
 <menu>
     <objects>
-    	<background id="0">
+    	<background>
 			<image>data/img/bg.png</image>
 		</background>
-        <label id="1">
+        <label>
             <name>Title</name>
             <text>Choose your loyalty</text>
             <posX>200</posX>
@@ -15,32 +15,41 @@
                 <strengh>BOLD</strengh>
             </font>
         </label>
-        <button id="2">
+        <button>
             <name>Button1</name>
             <text>Blue</text>
-            <posX>340</posX>
-            <posY>150</posY>
-            <width>100</width>
-            <height>50</height>
+            <posX>9</posX>
+            <posY>5</posY>
+            <width>10</width>
+            <height>1</height>
             <action>blue</action>
         </button>
-        <button id="3">
+        <button>
             <name>Button2</name>
             <text>Yellow</text>
-            <posX>340</posX>
-            <posY>250</posY>
-            <width>100</width>
-            <height>50</height>
+            <posX>9</posX>
+            <posY>9</posY>
+            <width>10</width>
+            <height>1</height>
             <action>yellow</action>
         </button>
-        <button id="4">
+        <button>
             <name>Button3</name>
             <text>Green</text>
-            <posX>340</posX>
-            <posY>350</posY>
-            <width>100</width>
-            <height>50</height>
+            <posX>9</posX>
+            <posY>13</posY>
+            <width>10</width>
+            <height>1</height>
             <action>green</action>
+        </button>
+        <button>
+            <name>Button4</name>
+            <text>Back</text>
+            <posX>11</posX>
+            <posY>17</posY>
+            <width>6</width>
+            <height>1</height>
+            <action>quit</action>
         </button>
     </objects>
 </menu>

@@ -30,51 +30,158 @@ import org.newdawn.slick.opengl.ImageIOImageData;
 
 public class Conquest {
     private boolean fullscreen;
-    private boolean noSplash = false;
-    private boolean debug;
-    private boolean noClick;
+    private boolean noClick = true;
 
     private ServerConquest server;
     private ClientConquest client;
 
     public Board mainBoard;
 
+    private DisplayMode[] modes = null;
+    private int activeMode = 7;
+
     Player[] players = new Player[3];
 
+    Menu[] menus = new Menu[4]; // Menu preloader
+
+    public static void main(String[] args){
+        new Conquest(args);
+    }
+
     public Conquest(String[] args){
-        // Check arguments
+        // Var init
         int i=0;
+        boolean noSplash = false;
+
+        // Arguments
         for (String s: args) {
-            if(s.equals("-dev"))
-                this.debug = true;      // Not Working
-            else if(s.equals("-fullscreen"))
+            if(s.equals("-fullscreen"))
                 this.fullscreen = true; // Not Working
             else if(s.equals("-noSplash"))
-                this.noSplash = true;
+                noSplash = true;
             else if(s.equals("-port"))
                 Network.port = Integer.parseInt(args[i+1]);
 
              i++;
         }
 
-        noClick = true;
-        
-        // we set the icon
-        try {
-			Display.setIcon(new ByteBuffer[] {
-			        new ImageIOImageData().imageToByteBuffer(ImageIO.read(new File("data/img/icon16.png")), false, false, null),
-			        new ImageIOImageData().imageToByteBuffer(ImageIO.read(new File("data/img/icon32.png")), false, false, null),
-			        new ImageIOImageData().imageToByteBuffer(ImageIO.read(new File("data/img/icon128.png")), false, false, null)
-			        });
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        // Set the display
+        initializeDisplay();
 
+        // Preload Menu
+        menus[0] = new Menu("mainMenu");
+        menus[1] = new Menu("play");
+        menus[2] = new Menu("multiplayer");
+        menus[3] = new Menu("settings");
+
+
+        // Splash Screen
+        if(!noSplash){
+            Menu splash = this.startMenu("splash");
+            while(splash.action!="continue"){splash.render();}
+        }
+
+        // Menu
+        Menu mainMenu = menus[0];
+        do {
+            if (mainMenu.action.equals("play"))
+                playMenu();
+            else if (mainMenu.action.equals("multiplayer"))
+                multiplayerMenu();
+            else if (mainMenu.action.equals("settings"))
+                settingsMenu();
+
+            mainMenu.render();
+        }while (!mainMenu.action.equals("quit"));
+
+        // Display destroy & free
+        Display.destroy();
+    }
+
+    private void playMenu(){
+        Menu playMenu = menus[1];
+        do {
+            if(playMenu.action.equals("blue")){
+                players[0] = new Human(Loyalty.BLUE,mainBoard);
+                players[1] = new IA(Loyalty.GREEN,mainBoard);
+                players[2] = new IA(Loyalty.YELLOW,mainBoard);
+            }
+            else if(playMenu.action.equals("green")){
+                players[0] = new Human(Loyalty.GREEN,mainBoard);
+                players[1] = new IA(Loyalty.BLUE,mainBoard);
+                players[2] = new IA(Loyalty.YELLOW,mainBoard);
+            }
+            else if(playMenu.action.equals("yellow")){
+                players[0] = new Human(Loyalty.YELLOW,mainBoard);
+                players[1] = new IA(Loyalty.GREEN,mainBoard);
+                players[2] = new IA(Loyalty.BLUE,mainBoard);
+            }
+            playMenu.render();
+        }while (!playMenu.action.equals("quit"));
+        if(!playMenu.action.equals("quit")){
+            mainBoard = null;
+            mainBoard = new Board(20, 15, true);
+            this.startGame(players);
+        }
+    }
+
+    private void settingsMenu(){
+        Menu settingsMenu = menus[3];
+        settingsMenu.updateText(modes[activeMode].toString(),"resolution");
+        do {
+            if(settingsMenu.action.equals("resolution")){
+                if(activeMode+1 < modes.length)
+                    activeMode++;
+                else
+                    activeMode=0;
+                settingsMenu.updateText(modes[activeMode].toString(),"resolution");
+            }
+            settingsMenu.render();
+        }while (!settingsMenu.action.equals("save"));
+
+        // Change the resolution
+        try {
+            Display.setDisplayMode(modes[activeMode]);
+            initializeOpenGL(Display.getWidth(), Display.getHeight());
+        } catch (LWJGLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void multiplayerMenu(){
+        Menu multiplayerMenu  = menus[2];
+        do {
+            if(multiplayerMenu.action.equals("host")){
+                // Create the server and connect the user client
+                this.initServer();
+                this.initClient("127.0.0.1");
+                this.startMultiplayerGame();
+            }
+            else if(multiplayerMenu.action.equals("join")){
+                String[] str = {"192.168.1.1","123"};
+                // Launch multiplayer session
+
+                if(str.length==1)
+                    Network.port = 54555;
+                else
+                    Network.port = Integer.parseInt(str[1]);
+
+                this.initClient(str[0]);
+                this.startMultiplayerGame();
+            }
+            multiplayerMenu.render();
+        }while (!multiplayerMenu.action.equals("quit"));
+    }
+
+    private void initializeDisplay(){
         try {
             System.out.println("Launching ...");
-            Display.setDisplayMode(new DisplayMode(800, 600));
-            if(this.fullscreen) Display.setFullscreen(true);
+            modes = Display.getAvailableDisplayModes();
+            Display.setDisplayMode(modes[activeMode]);
+            if(this.fullscreen){
+                System.out.println("Fullscreen");
+                Display.setFullscreen(true);
+            }
             Display.setTitle("Conquest");
             Display.create();
         } catch (LWJGLException e) {
@@ -82,64 +189,19 @@ public class Conquest {
             System.exit(0);
         }
 
-        this.initializeOpenGL(800, 600);    // Launch OpenGL
-
-        String[] s = new String[2];
-        if(!noSplash)s=this.startMenu("splash");
-        else s[0]="continue";
-        if (s[0].equals("continue")){
-            do {
-                s = this.startMenu("mainMenu");
-                if (s[0].equals("play")){
-                    s = this.startMenu("play");
-                    mainBoard = null;
-                    mainBoard = new Board(20, 15, true);
-                    if(s[0].equals("blue")){
-                        players[0] = new Human(Loyalty.BLUE,mainBoard);
-                        players[1] = new IA(Loyalty.GREEN,mainBoard);
-                        players[2] = new IA(Loyalty.YELLOW,mainBoard);
-                    }
-                    else if(s[0].equals("green")){
-                        players[0] = new Human(Loyalty.GREEN,mainBoard);
-                        players[1] = new IA(Loyalty.BLUE,mainBoard);
-                        players[2] = new IA(Loyalty.YELLOW,mainBoard);
-                    }
-                    else if(s[0].equals("yellow")){
-                        players[0] = new Human(Loyalty.YELLOW,mainBoard);
-                        players[1] = new IA(Loyalty.GREEN,mainBoard);
-                        players[2] = new IA(Loyalty.BLUE,mainBoard);
-                    }
-                    this.startGame(players);
-                }
-                else if (s[0].equals("multiplayer")){
-                    s = this.startMenu("multiplayer");
-                    if(s[0].equals("host")){
-                        // Create the server and connect the user client
-                        this.initServer();
-                        this.initClient("127.0.0.1");
-                        this.startMultiplayerGame();
-                    }
-                    else if(s[0].equals("join")){
-                        String[] str = s[1].split(":");
-                        // Launch multiplayer session
-
-                        if(str.length==1)
-                            Network.port = 54555;
-                        else
-                            Network.port = Integer.parseInt(str[1]);
-
-                        this.initClient(str[0]);
-                        this.startMultiplayerGame();
-                    }
-                }
-            }while (!s[0].equals("quit"));
+        // we set the icon
+        try {
+            Display.setIcon(new ByteBuffer[] {
+                    new ImageIOImageData().imageToByteBuffer(ImageIO.read(new File("data/img/icon16.png")), false, false, null),
+                    new ImageIOImageData().imageToByteBuffer(ImageIO.read(new File("data/img/icon32.png")), false, false, null),
+                    new ImageIOImageData().imageToByteBuffer(ImageIO.read(new File("data/img/icon128.png")), false, false, null)
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-        Display.destroy();
-    }
-
-    public static void main(String[] args){
-        new Conquest(args);
+        // Change the draw ration
+        this.initializeOpenGL(Display.getWidth(),Display.getHeight());    // Launch OpenGL
     }
 
     public Action pollInput(){
@@ -169,14 +231,16 @@ public class Conquest {
         GL11.glLoadIdentity();
         GL11.glOrtho(0, width, height, 0, 1, -1);
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
     }
 
-    private String[] startMenu( String filename ){
+    private Menu startMenu( String filename ){
         Menu menu = new Menu(filename);
-        return menu.render();
+        return menu;
     }
 
-    private String[] startLobby(){
+    private void startLobby(){
         final Menu menu = new Menu("lobby");
         client.getClient().addListener(new Listener() {
             public void received (Connection connection, Object object) {
@@ -187,16 +251,13 @@ public class Conquest {
             }
         });
         client.sendReady();
-        String[] menuReturn;
         do {
-             menuReturn = menu.render();
-            if(menuReturn[0].equals("forceStart")){
+            if(menu.action.equals("forceStart")){
                 client.sendForceStart();
                 client.sendReady();
             }
-        }while (!menuReturn[0].equals("continue"));
-
-        return menuReturn;
+            menu.render();
+        }while (!menu.action.equals("continue"));
     }
 
 
@@ -248,16 +309,17 @@ public class Conquest {
 
         client.sendSyncRequest();
 
-        if(startLobby()[0].equals("continue")){
-            System.out.println(client.getClient().getID());
-            players[client.getClient().getID()-1] = new Multiplayer(Loyalty.values()[client.getClient().getID()+1], mainBoard, client.getClient());
-            for(int i=0; i<3; i++){
-                if(players[i] == null)
-                    players[i] = new MultiplayerRemote(Loyalty.values()[i], mainBoard, client.getClient());
-            }
-            mainBoard.format(width, height, board, prod);
-            this.startGame(players);
+        startLobby();
+
+
+        System.out.println(client.getClient().getID());
+        players[client.getClient().getID()-1] = new Multiplayer(Loyalty.values()[client.getClient().getID()+1], mainBoard, client.getClient());
+        for(int i=0; i<3; i++){
+            if(players[i] == null)
+                players[i] = new MultiplayerRemote(Loyalty.values()[i], mainBoard, client.getClient());
         }
+        mainBoard.format(width, height, board, prod);
+        this.startGame(players);
 
         client.close();
         if(server!=null) server.close();

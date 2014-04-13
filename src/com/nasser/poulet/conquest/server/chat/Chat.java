@@ -19,8 +19,11 @@ public class Chat {
     public void decodeChat( String message ){
         ChatMessage chatMessage = new ChatMessage(message);
         chatMessage.decode();
+        System.out.println(chatMessage.isCommand());
+        System.out.println(chatMessage.getCommand());
+        System.out.println(chatMessage.getMessage());
         if(!chatMessage.isCommand()){
-            server.sendToAllTCP(chatMessage.getMessage());
+//            server.sendToAllTCP(chatMessage.getMessage());
         }
     }
 }

@@ -17,7 +17,7 @@ public class ChatMessage {
     public void decode(){
         if(original.startsWith("/")){
             isCommand = true;
-            String[] temp = (original.substring(1)).split("");
+            String[] temp = (original.substring(1)).split(" ");
             this.command = temp[0];
             this.message = original.substring(2+this.command.length());
         }
