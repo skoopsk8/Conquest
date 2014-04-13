@@ -90,7 +90,15 @@ public class Board {
     }
 
     public State getState( int posX, int posY) {
+        if(posX<0 || posX >=boardWidth || posY<0 || posY >=boardHeight)
+            return null;
         return stateArray[posX][posY];
+    }
+
+    public int getStateLoyalty( int posX, int posY) {
+        if(posX<0 || posX >=boardWidth || posY<0 || posY >=boardHeight)
+            return 0;
+        return stateArray[posX][posY].getLoyalty().ordinal();
     }
 
     public ArrayList<State>[] getStateArrayList() {

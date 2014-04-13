@@ -88,11 +88,19 @@ public class UIElementImage extends UIElement {
 	public boolean hover(int posX, int posY) {
 		// TODO Auto-generated method stub
 		 if(inside(posX, posY)){
-			 img1.setAlpha(0.8f);
+			 img1.setAlpha(0.5f);
+             if(img2!=null){
+                 img2.setAlpha(0.5f);
+                 img3.setAlpha(0.5f);
+             }
 			 render();
              return true;
 		 }
 		 img1.setAlpha(1f);
+        if(img2!=null){
+            img2.setAlpha(1f);
+            img3.setAlpha(1f);
+        }
 		 render();
 		return false;
 	}

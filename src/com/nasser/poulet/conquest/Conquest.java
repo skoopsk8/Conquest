@@ -101,6 +101,7 @@ public class Conquest {
     private void playMenu(){
         Menu playMenu = menus[1];
         do {
+            playMenu.render();
             if(playMenu.action.equals("blue")){
                 players[0] = new Human(Loyalty.BLUE,mainBoard);
                 players[1] = new IA(Loyalty.GREEN,mainBoard);
@@ -116,8 +117,7 @@ public class Conquest {
                 players[1] = new IA(Loyalty.GREEN,mainBoard);
                 players[2] = new IA(Loyalty.BLUE,mainBoard);
             }
-            playMenu.render();
-        }while (!playMenu.action.equals("quit"));
+        }while (playMenu.action.equals(""));
         if(!playMenu.action.equals("quit")){
             mainBoard = null;
             mainBoard = new Board(20, 15, true);
