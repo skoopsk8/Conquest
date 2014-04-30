@@ -19,8 +19,6 @@ public class Image {
                 e.printStackTrace();
             }
         }
-        else
-            System.out.println("Access image: "+filename);
         return images.get(filename);
     }
 

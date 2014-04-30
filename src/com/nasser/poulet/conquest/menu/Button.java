@@ -16,7 +16,7 @@ public class Button extends UIElementImage {
     public Button() {
     	super("data/img/button-left.png", "data/img/button-center.png", "data/img/button-right.png");
         font = "Arial";
-        size = Integer.toString(Display.getHeight()/20-20);
+        size = Integer.toString(Display.getHeight() / 20 - 20);
     }
 
     @Override
@@ -50,5 +50,11 @@ public class Button extends UIElementImage {
 
     public void setAction(String action) {
         this.action = action;
+    }
+
+    @Override
+    public void reload(){
+        size = Integer.toString(Display.getHeight() / 20 - 20);
+        super.reload();
     }
 }
