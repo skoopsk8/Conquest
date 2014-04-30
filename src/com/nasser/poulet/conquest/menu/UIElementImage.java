@@ -24,6 +24,8 @@ public class UIElementImage extends UIElement {
 	}
 
 	private Image img1=null, img2=null, img3=null;
+
+    private String img1Name=null, img2Name=null, img3Name=null;
 	
 	public UIElementImage() {
 		img1 = null;
@@ -34,6 +36,7 @@ public class UIElementImage extends UIElement {
 	public UIElementImage(String img) {
 		try {
 			img1 = new Image(img);
+            img1Name = img;
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -43,16 +46,12 @@ public class UIElementImage extends UIElement {
 	}
 	
 	public UIElementImage(String img1, String img2, String img3) {
-		try {
-			this.img1 = new Image(img1);
-			this.img2 = new Image(img2);
-			this.img3 = new Image(img3);
-		} catch (SlickException e) {
-		
-
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        this.img1 = com.nasser.poulet.conquest.view.Image.getImage(img1);
+        this.img1Name = img1;
+        this.img2 = com.nasser.poulet.conquest.view.Image.getImage(img2);
+        this.img2Name = img2;
+        this.img3 = com.nasser.poulet.conquest.view.Image.getImage(img3);
+        this.img3Name = img3;
     }
 	
 
@@ -74,8 +73,9 @@ public class UIElementImage extends UIElement {
 		return img1;
 	}
 
-	public void setImg1(Image img1) {
-		this.img1 = img1;
+	public void setImg1(String img1) {
+        this.img1 = com.nasser.poulet.conquest.view.Image.getImage(img1);
+        this.img1Name = img1;
 	}
 
 	@Override
@@ -110,6 +110,20 @@ public class UIElementImage extends UIElement {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+    @Override
+    public void reload() {
+        System.out.println("Reload Images");
+        if(img1Name != null )
+            this.img1 = com.nasser.poulet.conquest.view.Image.getImage(img1Name);
+        if(img2Name != null )
+            this.img2 = com.nasser.poulet.conquest.view.Image.getImage(img2Name);
+        if(img3Name != null )
+            this.img3 = com.nasser.poulet.conquest.view.Image.getImage(img3Name);
+
+        font=null;
+        font = new Font("Arial",Display.getHeight()/20-20);
+    }
 
     public boolean inside( int posX, int posY ){
         int ratioX = Display.getWidth()/30;

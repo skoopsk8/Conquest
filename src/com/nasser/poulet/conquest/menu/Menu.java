@@ -50,6 +50,13 @@ public class Menu extends DefaultHandler{
 
     // Menu Grid 30*20
 
+    public void reload(){
+        System.out.println("Reload menu resources");
+        for (UIElement uiElement : uiElements) {
+            uiElement.reload();
+        }
+    }
+
     public void render() {
         // Reset action
         action = "";
@@ -184,12 +191,7 @@ public class Menu extends DefaultHandler{
             element.setName(buffer.toString());
             buffer = null;
         } else if (qName.equals("image")) {
-            try {
-                ((UIElementImage) element).setImg1(new Image(buffer.toString()));
-            } catch (SlickException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            ((UIElementImage) element).setImg1(buffer.toString());
             buffer = null;
         } else if (qName.equals("text")) {
             element.setText(buffer.toString());

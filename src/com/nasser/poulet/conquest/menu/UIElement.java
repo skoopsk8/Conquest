@@ -65,4 +65,6 @@ public abstract class UIElement {
     public void setType(String type) {
         this.type = type;
     }
+
+    public abstract void reload();
 }

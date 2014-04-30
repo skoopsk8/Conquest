@@ -28,4 +28,10 @@ public class Label extends UIElement{
     public String getAction() {
         return null;
     }
+
+    @Override
+    public void reload() {
+        font = null;
+        font = new Font();
+    }
 }

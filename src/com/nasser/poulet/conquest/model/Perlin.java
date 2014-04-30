@@ -104,7 +104,7 @@ public class Perlin {
         return ret;
     }
     
-    public static int[][] generateMap(int width, int height, float roughness) {
+    public static float[][] generateMap(int width, int height, float roughness) {
     	boolean[][] bool_map;
     	int[][] int_map = new int[width][height];
         Perlin n = new Perlin(null, roughness, width, height);
@@ -132,6 +132,6 @@ public class Perlin {
              }
         }while (!finished);
        
-		return int_map;
+		return n.grid_;
     }
 }

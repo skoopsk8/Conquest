@@ -1,6 +1,8 @@
 package com.nasser.poulet.conquest.model;
 
 import com.nasser.poulet.conquest.controller.Turn;
+import com.nasser.poulet.conquest.view.ImageOperation;
+import org.lwjgl.opengl.Display;
 
 import java.util.ArrayList;
 
@@ -12,6 +14,7 @@ public class Board {
     // Board representation
     private State[][] stateArray;    // For easy pathfinding and generation
     private ArrayList<State> stateArrayList[] = new ArrayList[3];    // For easy gamelogic
+    private float[][] groundMap, farmMap, forestMap;
 
     private int boardWidth, boardHeight;
     
@@ -31,16 +34,35 @@ public class Board {
 
         if(generate){
             // Generate Board
-            generateBoard(boardWidth, boardHeight);
+            //generateBoard(boardWidth, boardHeight);
+            groundMap = Perlin.generateMap(800,600,1f);
+            farmMap = Perlin.generateMap(800,600,1f);
+            forestMap = Perlin.generateMap(800,600,1f);
+
+            groundMap = ImageOperation.threshold(groundMap, 0.0001f);
+            farmMap = ImageOperation.multiply(groundMap, farmMap);
+            forestMap = ImageOperation.multiply(groundMap, forestMap);
 
             // Generate Player start
-            generateStartState();
+            //generateStartState();
         }
     }
 
     private void generateBoard( int width, int height ){
-        int[][] map = Perlin.generateMap(width,height,0.5f);
-        for(int i=0;i<width;i++) for (int j = 0; j < height; j++) stateArray[i][j] = new State(i, j, Loyalty.values()[map[i][j]]);
+        //int[][] map = Perlin.generateMap(width,height,0.5f);
+        //for(int i=0;i<width;i++) for (int j = 0; j < height; j++) stateArray[i][j] = new State(i, j, Loyalty.values()[map[i][j]]);
+    }
+
+    public float[][] getGroundMap() {
+        return groundMap;
+    }
+
+    public float[][] getFarmMap() {
+        return farmMap;
+    }
+
+    public float[][] getForestMap() {
+        return forestMap;
     }
 
     private void generateStartState(){

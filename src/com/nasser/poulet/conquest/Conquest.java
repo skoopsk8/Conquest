@@ -6,6 +6,7 @@ package com.nasser.poulet.conquest;
 import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.Hashtable;
 
 import javax.imageio.ImageIO;
 
@@ -18,6 +19,7 @@ import com.nasser.poulet.conquest.controller.Turn;
 import com.nasser.poulet.conquest.model.*;
 import com.nasser.poulet.conquest.network.ClientConquest;
 import com.nasser.poulet.conquest.network.ServerConquest;
+import com.nasser.poulet.conquest.view.Image;
 import com.nasser.poulet.conquest.view.RenderBoard;
 
 import org.lwjgl.LWJGLException;
@@ -140,11 +142,14 @@ public class Conquest {
         }while (!settingsMenu.action.equals("save"));
 
         // Change the resolution
-        try {
-            Display.setDisplayMode(modes[activeMode]);
-            initializeOpenGL(Display.getWidth(), Display.getHeight());
-        } catch (LWJGLException e) {
-            e.printStackTrace();
+        Display.destroy();
+        initializeDisplay();
+        initializeOpenGL(Display.getWidth(), Display.getHeight());
+
+        Image.destroy();
+
+        for (Menu menu: menus){
+            menu.reload();
         }
     }
 
@@ -352,6 +357,11 @@ public class Conquest {
         Board.numberOfUnit[0]=Board.numberOfUnit[1]=Board.numberOfUnit[2]=0;
         turn.startTurn();
         while( this.endGame(mainBoard, turn.getTurnNumber()) && !Display.isCloseRequested()){
+            // Clear display
+            GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
+            GL11.glClearColor (0.0f, 0.0f, 0.0f, 0.0f);
+            GL11.glClear (GL11.GL_COLOR_BUFFER_BIT);
+
             inputAction = this.pollInput();
             if(inputAction == Action.MOUSE)
                 human.click(Mouse.getX(), (-Mouse.getY() + 600));
@@ -381,14 +391,14 @@ public class Conquest {
     }
 
     private boolean endGame( Board board, int turnNumber){
-        if(board.numberOfEmpty() == 0 && triggerTurn == -1){ // Start end game
+        /*if(board.numberOfEmpty() == 0 && triggerTurn == -1){ // Start end game
             triggerTurn = turnNumber;
             System.out.println("Start end counter");
         }
 
         if(triggerTurn != -1 && triggerTurn + (60000/Turn.TURN_DURATION)<turnNumber){
             return false;
-        }
+        }*/
 
         return true;
     }
