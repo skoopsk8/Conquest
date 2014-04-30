@@ -47,6 +47,8 @@ public class Input extends Button {
             case 53:
                 text+=":";
                 break;
+            default:
+            	System.out.println(keyEvent);
         }
     }
 }

@@ -107,23 +107,65 @@ public class Perlin {
     public static float[][] generateMap(int width, int height, float roughness) {
     	boolean[][] bool_map;
     	int[][] int_map = new int[width][height];
+    	float[][] float_map = new float[width][height];
         Perlin n = new Perlin(null, roughness, width, height);
         int cpt = 0;
         boolean finished = false;
         
         do {
             n.initialise();
-            bool_map = n.toBooleans();
+            // bool_map = n.toBooleans();
+            float_map = n.grid_.clone();
+           
+            float min = float_map[0][0];
+            for(int i = 0; i < width; i++) {
+            	for(int j = 0; j < height; j++) {
+            		if(float_map[i][j] < min) min = float_map[i][j];
+            	}
+            }
+     
+            min = -min;
+            for(int i = 0; i < width; i++) {
+            	for(int j = 0; j < height; j++) {
+            		float_map[i][j] = (float_map[i][j]+min);
+            	}
+            }
+            
+            float max = float_map[0][0];
+            for(int i = 0; i < width; i++) {
+            	for(int j = 0; j < height; j++) {
+            		if(float_map[i][j] > max) max = float_map[i][j];
+            	}
+            }
+            
+            for(int i = 0; i < width; i++) {
+            	for(int j = 0; j < height; j++) {
+            		float_map[i][j] = (float_map[i][j]/max);
+            	}
+            }
+            
+            System.out.println("Entre 0 et 1");
+            for(int i = 0; i < width; i++) {
+            	for(int j = 0; j < height; j++) {
+            		System.out.print(float_map[i][j]);
+            	}
+            	System.out.println();
+            }
             cpt = 0;
             
-             for(int i = 0; i < width; i++) {
+            /* ICI LE SEUILLAGE */
+              for(int i = 0; i < width; i++) {
              	for(int j = 0; j < height; j++) {
-             		if(bool_map[i][j]) {
+            		if(float_map[i][j] > 0.5) {
              			int_map[i][j] = 1;
              			cpt++;
              		}
-             		else {
+             		else if(float_map[i][j] > 0.4) {
              			int_map[i][j] = 0;
+             			cpt++;
+             		}
+             		else {
+             			int_map[i][j] = -1;
              		}
              	}
              }
