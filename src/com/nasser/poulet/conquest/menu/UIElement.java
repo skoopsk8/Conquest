@@ -7,12 +7,21 @@ public abstract class UIElement {
     protected String name;
     protected String text;
     protected int posX, posY;
-    protected Font font = new Font();
+    protected String font = "Arial";
+    protected String size = "20";
     protected String type;
 
     public abstract void render();
 
     public abstract String click( int posX, int posY );
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
 
     public abstract boolean hover( int posX, int posY );
 
@@ -48,11 +57,11 @@ public abstract class UIElement {
         this.posY = posY;
     }
 
-    public Font getFont() {
+    public String getFont() {
         return font;
     }
 
-    public void setFont(Font font) {
+    public void setFont(String font) {
         this.font = font;
     }
 

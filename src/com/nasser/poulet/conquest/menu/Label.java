@@ -11,7 +11,7 @@ import java.awt.*;
 public class Label extends UIElement{
 
     public void render(){
-        font.getFont().drawString(posX, posY, text, Color.white);
+        Font.getFont(font+":"+size).drawString(posX, posY, text, Color.white);
     }
 
     @Override
@@ -31,7 +31,6 @@ public class Label extends UIElement{
 
     @Override
     public void reload() {
-        font = null;
-        font = new Font();
+        Font.destroy();
     }
 }

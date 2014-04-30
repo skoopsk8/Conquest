@@ -121,8 +121,8 @@ public class UIElementImage extends UIElement {
         if(img3Name != null )
             this.img3 = com.nasser.poulet.conquest.view.Image.getImage(img3Name);
 
-        font=null;
-        font = new Font("Arial",Display.getHeight()/20-20);
+        //sfont = null;
+        //font = new Font("Arial",Display.getHeight()/20-20);
     }
 
     public boolean inside( int posX, int posY ){

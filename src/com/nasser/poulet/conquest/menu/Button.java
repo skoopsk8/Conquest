@@ -12,11 +12,11 @@ import java.awt.*;
 public class Button extends UIElementImage {
     private String action;
     private Color color = Color.white;
-    private Font font = null;
     
     public Button() {
     	super("data/img/button-left.png", "data/img/button-center.png", "data/img/button-right.png");
-        font = new Font("Arial",Display.getHeight()/20-20);
+        font = "Arial";
+        size = Integer.toString(Display.getHeight()/20-20);
     }
 
     @Override
@@ -24,7 +24,7 @@ public class Button extends UIElementImage {
     	super.render();
         int ratioX = Display.getWidth()/30;
         int ratioY = Display.getHeight()/20;
-        font.getFont().drawString(posX*ratioX + ((this.getWidth()*ratioX)-font.getFont().getWidth(text))/2, posY*ratioY + 10, text, color);
+        Font.getFont(font+":"+size).drawString(posX*ratioX + ((this.getWidth()*ratioX)-Font.getFont(font+":"+size).getWidth(text))/2, posY*ratioY + 10, text, color);
     }
 
     public String click( int posX, int posY){

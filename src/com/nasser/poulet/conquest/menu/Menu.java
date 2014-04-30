@@ -215,10 +215,10 @@ public class Menu extends DefaultHandler{
             this.wait = Integer.parseInt(buffer.toString());
             buffer = null;
         } else if (qName.equals("fontName")) {
-            element.getFont().setFontName(buffer.toString());
+            element.setFont(buffer.toString());
             buffer = null;
         } else if (qName.equals("size")) {
-            element.getFont().setSize(Integer.parseInt(buffer.toString()));
+            element.setSize(buffer.toString());
             buffer = null;
         } else if (qName.equals("keyboard")) {
             this.keyboard = true;
