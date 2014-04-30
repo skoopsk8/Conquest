@@ -109,7 +109,7 @@ public class Menu extends DefaultHandler{
             while (Keyboard.next()) {
                 if (Keyboard.getEventKeyState()) {   // Only pressed keys
                     if (selectedInput != null)
-                        selectedInput.keyboard(Keyboard.getEventKey());
+                        selectedInput.keyboard(Keyboard.getEventCharacter(), Keyboard.getEventKey());
                 }
             }
         }

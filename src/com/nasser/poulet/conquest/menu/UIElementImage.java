@@ -28,7 +28,12 @@ public class UIElementImage extends UIElement {
     private String img1Name=null, img2Name=null, img3Name=null;
 	
 	public UIElementImage() {
-		img1 = null;
+		try {
+			img1 = new Image("data/img/void.png");
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		img2 = null;
 		img3 = null;
 	}
