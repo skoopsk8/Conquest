@@ -1,5 +1,6 @@
 package com.nasser.poulet.conquest.menu;
 
+import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;
 
@@ -11,7 +12,13 @@ import java.awt.*;
 public class Label extends UIElement{
 
     public void render(){
-        Font.getFont(font+":"+size).drawString(posX, posY, text, Color.white);
+        int ratioX = Display.getWidth()/30;
+        int ratioY = Display.getHeight()/20;
+
+        // Reset the size
+        size = Integer.toString(Display.getHeight() / 20);
+
+        Font.getFont(font + ":" + size).drawString(posX*ratioX - Font.getFont(font+":"+size).getWidth(text)/2, posY*ratioY, text, Color.white);
     }
 
     @Override

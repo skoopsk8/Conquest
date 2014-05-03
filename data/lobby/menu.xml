@@ -6,8 +6,8 @@
         <label id="1">
             <name>Title</name>
             <text>Waiting for everybody to be ready</text>
-            <posX>120</posX>
-            <posY>220</posY>
+            <posX>14</posX>
+            <posY>7</posY>
             <font>
                 <fontName>Arial</fontName>
                 <size>25</size>
@@ -19,7 +19,7 @@
             <name>Button1</name>
             <text>Force Start</text>
             <posX>9</posX>
-            <posY>5</posY>
+            <posY>9</posY>
             <width>10</width>
             <height>1</height>
             <action>forceStart</action>

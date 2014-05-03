@@ -6,8 +6,8 @@
         <label id="0">
             <name>Title</name>
             <text>Conquest</text>
-            <posX>270</posX>
-            <posY>220</posY>
+            <posX>14</posX>
+            <posY>9</posY>
             <font>
                 <fontName>Arial</fontName>
                 <size>50</size>

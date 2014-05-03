@@ -90,25 +90,27 @@ public class UIElementImage extends UIElement {
 	}
 
 	@Override
-	public boolean hover(int posX, int posY) {
-		// TODO Auto-generated method stub
-		 if(inside(posX, posY)){
-			 img1.setAlpha(0.5f);
-             if(img2!=null){
-                 img2.setAlpha(0.5f);
-                 img3.setAlpha(0.5f);
-             }
-			 render();
-             return true;
-		 }
-		 img1.setAlpha(1f);
-        if(img2!=null){
-            img2.setAlpha(1f);
-            img3.setAlpha(1f);
+    public boolean hover(int posX, int posY) {
+        boolean returnValue = false;
+        if(inside(posX, posY)){
+            img1.setAlpha(0.5f);
+            if(img2!=null){
+                img2.setAlpha(0.5f);
+                img3.setAlpha(0.5f);
+            }
+            returnValue = true;
         }
-		 render();
-		return false;
-	}
+        else{
+            img1.setAlpha(1f);
+            if(img2!=null){
+                img2.setAlpha(1f);
+                img3.setAlpha(1f);
+            }
+        }
+
+        render();
+        return returnValue;
+    }
 
 	@Override
 	public String getAction() {
@@ -126,8 +128,8 @@ public class UIElementImage extends UIElement {
         if(img3Name != null )
             this.img3 = com.nasser.poulet.conquest.view.Image.getImage(img3Name);
 
-        //sfont = null;
-        //font = new Font("Arial",Display.getHeight()/20-20);
+        // Update Font size
+        size = Integer.toString(Display.getHeight()/20-20);
     }
 
     public boolean inside( int posX, int posY ){

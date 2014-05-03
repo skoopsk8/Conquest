@@ -9,8 +9,8 @@
         <label>
             <name>Title</name>
             <text>Choose your network option</text>
-            <posX>130</posX>
-            <posY>50</posY>
+            <posX>14</posX>
+            <posY>2</posY>
             <font>
                 <fontName>Arial</fontName>
                 <size>40</size>
