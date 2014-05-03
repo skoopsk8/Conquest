@@ -10,7 +10,7 @@
             <posY>2</posY>
             <font>
                 <fontName>Arial</fontName>
-                <size>40</size>
+                <size>auto</size>
                 <color>white</color>
                 <strengh>BOLD</strengh>
             </font>

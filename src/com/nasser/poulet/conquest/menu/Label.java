@@ -15,10 +15,15 @@ public class Label extends UIElement{
         int ratioX = Display.getWidth()/30;
         int ratioY = Display.getHeight()/20;
 
-        // Reset the size
-        size = Integer.toString(Display.getHeight() / 20);
+        String fontSize = size;
 
-        Font.getFont(font + ":" + size).drawString(posX*ratioX - Font.getFont(font+":"+size).getWidth(text)/2, posY*ratioY, text, Color.white);
+        // Reset the size
+        if(size.equals("auto"))
+            fontSize = Integer.toString(Display.getHeight() / 20);
+        else if(size.equals("auto2"))
+            fontSize = Integer.toString(Display.getHeight() / 40);
+
+        Font.getFont(font + ":" + fontSize).drawString(posX*ratioX - Font.getFont(font+":"+fontSize).getWidth(text)/2, posY*ratioY, text, Color.white);
     }
 
     @Override

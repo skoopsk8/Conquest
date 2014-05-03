@@ -11,11 +11,25 @@
             <posY>2</posY>
             <font>
                 <fontName>Arial</fontName>
-                <size>40</size>
+                <size>auto</size>
                 <color>white</color>
                 <strengh>BOLD</strengh>
             </font>
         </label>
+
+        <label>
+            <name>Resolution_Label</name>
+            <text>Resolution</text>
+            <posX>14</posX>
+            <posY>4</posY>
+            <font>
+                <fontName>Arial</fontName>
+                <size>auto2</size>
+                <color>white</color>
+                <strengh>BOLD</strengh>
+            </font>
+        </label>
+
         <button>
             <name>resolution</name>
             <text>xXx</text>
@@ -25,6 +39,29 @@
             <height>1</height>
             <action>resolution</action>
         </button>
+
+        <label>
+            <name>Browser_Label</name>
+            <text>Server Browser Address</text>
+            <posX>14</posX>
+            <posY>7</posY>
+            <font>
+                <fontName>Arial</fontName>
+                <size>auto2</size>
+                <color>white</color>
+                <strengh>BOLD</strengh>
+            </font>
+        </label>
+        <input>
+            <name>Browser</name>
+            <text>5.135.190.151</text>
+            <posX>9</posX>
+            <posY>8</posY>
+            <width>10</width>
+            <height>1</height>
+            <action>ip</action>
+        </input>
+
         <button>
             <name>Button4</name>
             <text>Save</text>
@@ -33,6 +70,16 @@
             <width>4</width>
             <height>1</height>
             <action>save</action>
+        </button>
+
+        <button>
+            <name>Cancel</name>
+            <text>Cancel</text>
+            <posX>9</posX>
+            <posY>17</posY>
+            <width>4</width>
+            <height>1</height>
+            <action>cancel</action>
         </button>
     </objects>
 </menu>

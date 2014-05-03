@@ -139,6 +139,8 @@ public class Conquest {
                 settingsMenu.updateText(modes[activeMode].toString(),"resolution");
             }
             settingsMenu.render();
+            if(settingsMenu.action.equals("cancel"))
+                return;
         }while (!settingsMenu.action.equals("save"));
 
         // Change the resolution
