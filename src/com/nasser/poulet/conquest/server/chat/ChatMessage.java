@@ -9,9 +9,15 @@ public class ChatMessage {
     private boolean isCommand = false;
     private String message;
     private String command;
+    private String answer;
+
+    public String getAnswer() {
+        return answer;
+    }
 
     public ChatMessage( String message ){
         this.original = message;
+        decode();
     }
 
     public void decode(){
@@ -20,6 +26,7 @@ public class ChatMessage {
             String[] temp = (original.substring(1)).split(" ");
             this.command = temp[0];
             this.message = original.substring(2+this.command.length());
+            generateCommandAnswer();
         }
         else{
             this.message = this.original;
@@ -36,5 +43,11 @@ public class ChatMessage {
 
     public String getCommand(){
         return command;
+    }
+
+    private void generateCommandAnswer(){
+        if(command.equals("help")){
+            answer = "Help coming soon!";
+        }
     }
 }

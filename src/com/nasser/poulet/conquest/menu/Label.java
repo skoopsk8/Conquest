@@ -23,7 +23,7 @@ public class Label extends UIElement{
         else if(size.equals("auto2"))
             fontSize = Integer.toString(Display.getHeight() / 40);
 
-        Font.getFont(font + ":" + fontSize).drawString(posX*ratioX - Font.getFont(font+":"+fontSize).getWidth(text)/2, posY*ratioY, text, Color.white);
+        Font.getFont(font + ":" + fontSize).drawString(posX*ratioX - Font.getFont(font+":"+fontSize).getWidth(text)/2, posY*ratioY-(Integer.parseInt(fontSize)/2), text, Color.white);
     }
 
     @Override

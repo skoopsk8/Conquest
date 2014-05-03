@@ -25,4 +25,10 @@ public class Input extends Button {
 	        		 text+=keyChar;
     	}
     }
+    public String click( int posX, int posY){
+        if(super.inside(posX, posY)){
+            return "input_activate";
+        }
+        return "";
+    }
 }

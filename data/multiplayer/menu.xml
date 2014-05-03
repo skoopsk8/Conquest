@@ -8,7 +8,7 @@
 		</background>	
         <label>
             <name>Title</name>
-            <text>Choose your network option</text>
+            <text>Login to the server browser</text>
             <posX>14</posX>
             <posY>2</posY>
             <font>
@@ -18,41 +18,97 @@
                 <strengh>BOLD</strengh>
             </font>
         </label>
-        <button>
-            <name>Button1</name>
-            <text>Host</text>
-            <posX>9</posX>
-            <posY>5</posY>
-            <width>10</width>
-            <height>1</height>
-            <action>host</action>
-        </button>
-        <button>
-            <name>Button2</name>
-            <text>Join</text>
-            <posX>9</posX>
+
+        <input>
+            <name>Username</name>
+            <text>Username</text>
+            <posX>4</posX>
             <posY>9</posY>
             <width>10</width>
             <height>1</height>
-            <action>join</action>
-        </button>
-        <input>
-            <name>Button3</name>
-            <text>127.0.0.1</text>
-            <posX>8</posX>
-            <posY>13</posY>
-            <width>12</width>
-            <height>1</height>
-            <action>ip</action>
+            <action>username</action>
         </input>
-        <button>
-            <name>Button4</name>
-            <text>Back</text>
-            <posX>11</posX>
-            <posY>17</posY>
-            <width>6</width>
+
+        <input>
+            <name>Password</name>
+            <text>Password</text>
+            <posX>16</posX>
+            <posY>9</posY>
+            <width>10</width>
             <height>1</height>
-            <action>quit</action>
+            <action>password</action>
+        </input>
+
+        <label>
+            <name>Current_Label</name>
+            <text>Current Server Browser:</text>
+            <posX>14</posX>
+            <posY>11</posY>
+            <font>
+                <fontName>Arial</fontName>
+                <size>auto2</size>
+                <color>white</color>
+                <strengh>BOLD</strengh>
+            </font>
+        </label>
+
+        <label>
+            <name>Current</name>
+            <text>Current Server Browser:</text>
+            <posX>14</posX>
+            <posY>12</posY>
+            <font>
+                <fontName>Arial</fontName>
+                <size>auto</size>
+                <color>white</color>
+                <strengh>BOLD</strengh>
+            </font>
+        </label>
+
+        <label>
+            <name>Current_Change_Label</name>
+            <text>You can change the address in the settings panel</text>
+            <posX>14</posX>
+            <posY>13</posY>
+            <font>
+                <fontName>Arial</fontName>
+                <size>auto2</size>
+                <color>white</color>
+                <strengh>BOLD</strengh>
+            </font>
+        </label>
+
+        <label>
+            <name>Error</name>
+            <text></text>
+            <posX>14</posX>
+            <posY>7</posY>
+            <font>
+                <fontName>Arial</fontName>
+                <size>auto</size>
+                <color>red</color>
+                <strengh>BOLD</strengh>
+            </font>
+        </label>
+
+        <button>
+            <name>Connect</name>
+            <text>Connect</text>
+            <posX>4</posX>
+            <posY>17</posY>
+            <width>4</width>
+            <height>1</height>
+            <action>connect</action>
+        </button>
+
+        <button>
+            <name>Cancel</name>
+            <text>Cancel</text>
+            <posX>9</posX>
+            <posY>17</posY>
+            <width>4</width>
+            <height>1</height>
+            <action>cancel</action>
         </button>
     </objects>
 </menu>

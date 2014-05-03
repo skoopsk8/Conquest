@@ -13,7 +13,8 @@ import java.io.IOException;
  */
 public class ClientConquest{
     private Client client;
-    public ClientConquest( String address ){
+
+    public ClientConquest( String address ) throws IOException {
         client = new Client();
         client.start();
 
@@ -28,12 +29,8 @@ public class ClientConquest{
                 System.out.println("Disconnected!");
             }
         });
-        try {
-            client.connect(5000,address,Network.port);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
+        client.connect(10000,address,Network.port);
     }
 
     public void sendSyncRequest(){
@@ -52,7 +49,21 @@ public class ClientConquest{
         return client;
     }
 
+    public void sendCredentials(String username, String password){
+        System.out.println("send credentials: "+username +" "+Crypt.encrypt(password));
+        client.sendTCP(new Network.sendCredentials(username, Crypt.encrypt(password)));
+    }
+
     public void close(){
         client.close();
+    }
+
+    public void registerClient(){
+        client.sendTCP(new Network.RegisterClient());
+    }
+
+    public void sendChat(String message){
+        System.out.println("Send message " + message);
+        client.sendTCP(new Network.ChatMessage(message,0));
     }
 }

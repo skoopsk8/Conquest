@@ -99,10 +99,18 @@ public class Menu extends DefaultHandler{
                 if(Mouse.getEventButton() == 0){
                     for (int i = 0; i < uiElements.size() && action.equals(""); i++) {
                         action = uiElements.get(i).click(Mouse.getX(), (-Mouse.getY() + Display.getHeight()));
+                        // Activate Input
+                        if(action.equals("input_activate")){
+                            selectedInput = (Input)uiElements.get(i);
+                        }
                     }
                 }
             }
         }
+
+        // reset aciton
+        if(action.equals("input_activate"))
+            action = "";
 
         // Get keyboard input
         if (keyboard) {
@@ -128,6 +136,16 @@ public class Menu extends DefaultHandler{
                     uiElement.setText(text);
             }
         }
+    }
+
+    public String getText(String name) {
+        for (UIElement uiElement : uiElements) {
+            if(uiElement.getName() != null){
+                if (uiElement.getName().equals(name))
+                    return uiElement.getText();
+            }
+        }
+        return  "";
     }
 
     private void start() {

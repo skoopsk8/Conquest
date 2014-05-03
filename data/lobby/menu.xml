@@ -1,28 +1,98 @@
 <menu>
+    <properties>
+        <keyboard>true</keyboard>
+    </properties>
     <objects>
     	<background id="0">
 			<image>data/img/bg.png</image>
 		</background>
-        <label id="1">
+        <label>
             <name>Title</name>
-            <text>Waiting for everybody to be ready</text>
+            <text>Conquest Online Lobby</text>
             <posX>14</posX>
-            <posY>7</posY>
+            <posY>2</posY>
             <font>
                 <fontName>Arial</fontName>
-                <size>25</size>
+                <size>auto</size>
                 <color>white</color>
                 <strengh>BOLD</strengh>
             </font>
         </label>
-        <button id="2">
-            <name>Button1</name>
-            <text>Force Start</text>
-            <posX>9</posX>
+
+        <button>
+            <name>create</name>
+            <text>Create a game</text>
+            <posX>2</posX>
+            <posY>4</posY>
+            <width>4</width>
+            <height>1</height>
+            <action>create</action>
+        </button>
+
+        <button>
+            <name>join</name>
+            <text>Join the server</text>
+            <posX>2</posX>
+            <posY>6</posY>
+            <width>4</width>
+            <height>1</height>
+            <action>join</action>
+        </button>
+
+        <label>
+            <name>chat_label</name>
+            <text>Chat</text>
+            <posX>19</posX>
+            <posY>4</posY>
+            <font>
+                <fontName>Arial</fontName>
+                <size>auto</size>
+                <color>red</color>
+                <strengh>BOLD</strengh>
+            </font>
+        </label>
+
+        <label>
+            <name>chat</name>
+            <text></text>
+            <posX>19</posX>
+            <posY>6</posY>
+            <font>
+                <fontName>Arial</fontName>
+                <size>auto2</size>
+                <color>red</color>
+                <strengh>BOLD</strengh>
+            </font>
+        </label>
+
+        <input>
+            <name>input_chat</name>
+            <text>Message ...</text>
+            <posX>14</posX>
+            <posY>7</posY>
+            <width>10</width>
+            <height>1</height>
+            <action>chat</action>
+        </input>
+
+        <button>
+            <name>button_chat</name>
+            <text>Send</text>
+            <posX>14</posX>
             <posY>9</posY>
             <width>10</width>
             <height>1</height>
-            <action>forceStart</action>
+            <action>send_chat</action>
+        </button>
+
+        <button>
+            <name>Disconnect</name>
+            <text>Disconnect</text>
+            <posX>4</posX>
+            <posY>17</posY>
+            <width>4</width>
+            <height>1</height>
+            <action>disconnect</action>
         </button>
     </objects>
 </menu>

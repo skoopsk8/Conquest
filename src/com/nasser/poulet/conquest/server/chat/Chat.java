@@ -6,17 +6,14 @@ import com.esotericsoftware.kryonet.Server;
  * Created by Thomas on 4/4/14.
  */
 public class Chat {
-    private Server server;
+    private String message;
 
-    public Chat(Server server){
-        this.server=server;
+    public Chat(String message){
+        this.message = message;
+        decodeChat();
     }
 
-    public void sendChat(){
-
-    }
-
-    public void decodeChat( String message ){
+    public void decodeChat(){
         ChatMessage chatMessage = new ChatMessage(message);
         chatMessage.decode();
         System.out.println(chatMessage.isCommand());

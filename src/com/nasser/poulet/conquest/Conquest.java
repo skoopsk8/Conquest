@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+import com.nasser.poulet.conquest.controller.Timer;
 import com.nasser.poulet.conquest.menu.Menu;
 import com.nasser.poulet.conquest.network.Network;
 import com.nasser.poulet.conquest.player.*;
@@ -45,6 +46,9 @@ public class Conquest {
     Player[] players = new Player[3];
 
     Menu[] menus = new Menu[4]; // Menu preloader
+
+    //private String serverBrowserIp = "5.135.190.151";
+    private String serverBrowserIp = "127.0.0.1";
 
     public static void main(String[] args){
         new Conquest(args);
@@ -130,6 +134,7 @@ public class Conquest {
     private void settingsMenu(){
         Menu settingsMenu = menus[3];
         settingsMenu.updateText(modes[activeMode].toString(),"resolution");
+        settingsMenu.updateText(serverBrowserIp.toString(),"Browser");
         do {
             if(settingsMenu.action.equals("resolution")){
                 if(activeMode+1 < modes.length)
@@ -150,34 +155,87 @@ public class Conquest {
 
         Image.destroy();
 
+        // Change server Browser IP
+        serverBrowserIp = settingsMenu.getText("Browser");
+
         for (Menu menu: menus){
             menu.reload();
         }
     }
 
+    boolean validation = false, response = false;
+
     private void multiplayerMenu(){
         Menu multiplayerMenu  = menus[2];
+        multiplayerMenu.updateText(serverBrowserIp.toString(),"Current");
+        boolean connected = false;
+
         do {
-            if(multiplayerMenu.action.equals("host")){
-                // Create the server and connect the user client
-                this.initServer();
-                this.initClient("127.0.0.1");
-                this.startMultiplayerGame();
-            }
-            else if(multiplayerMenu.action.equals("join")){
-                String[] str = {"192.168.1.1","123"};
-                // Launch multiplayer session
+            if(multiplayerMenu.action.equals("connect")){
+                // Contact the server browser
+                try {
+                    client = new ClientConquest(serverBrowserIp);
 
-                if(str.length==1)
-                    Network.port = 54555;
-                else
-                    Network.port = Integer.parseInt(str[1]);
+                    connected = true;
 
-                this.initClient(str[0]);
-                this.startMultiplayerGame();
+                    // Send the credentials
+                    client.sendCredentials(multiplayerMenu.getText("Username"), multiplayerMenu.getText("Password"));
+
+                    client.getClient().addListener(new Listener() {
+                        public void received (Connection connection, Object object) {
+                            if (object instanceof Network.CredentialsValidation) {
+                                response = true;
+                                validation = ((Network.CredentialsValidation) object).isValidation();
+                            }
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    multiplayerMenu.updateText("Failed to reach the given server browser!","Error");
+                }
             }
+
+            if(connected){
+                if(response){
+                    if (validation){
+                        lobbyMenu();
+                        response = false;
+                        connected = false;
+                        client.close();
+                    }
+                    else{
+                        multiplayerMenu.updateText("Please check your credentials!","Error");
+                        multiplayerMenu.updateText("Password", "Password");
+                        response = false;
+                        connected = false;
+                        client.close();
+                    }
+                }
+            }
+
             multiplayerMenu.render();
-        }while (!multiplayerMenu.action.equals("quit"));
+        }while (!multiplayerMenu.action.equals("cancel"));
+    }
+
+    private void lobbyMenu(){
+        final Menu lobbyMenu = new Menu("lobby");
+
+        client.registerClient();
+
+        client.getClient().addListener(new Listener() {
+            public void received (Connection connection, Object object) {
+                if (object instanceof Network.ChatMessage) {
+                    lobbyMenu.updateText(((Network.ChatMessage) object).getMessage(),"chat");
+                }
+            }
+        });
+
+        do {
+            if(lobbyMenu.action.equals("send_chat")){
+                client.sendChat(lobbyMenu.getText("input_chat"));
+            }
+            lobbyMenu.render();
+        }while (!lobbyMenu.action.equals("disconnect"));
     }
 
     private void initializeDisplay(){
@@ -417,6 +475,6 @@ public class Conquest {
     }
 
     private void initClient( String address ){
-        client = new ClientConquest(address);
+        //client = new ClientConquest(address);
     }
 }

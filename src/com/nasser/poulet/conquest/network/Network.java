@@ -24,6 +24,9 @@ public class Network {
         kryo.register(Start.class);
         kryo.register(forceStart.class);
         kryo.register(ChatMessage.class);
+        kryo.register(CredentialsValidation.class);
+        kryo.register(sendCredentials.class);
+        kryo.register(RegisterClient.class);
     }
 
     static public class SelectMessage{
@@ -163,6 +166,13 @@ public class Network {
         private String message;
         private int roomId;
 
+        public ChatMessage() {}
+
+        public ChatMessage(String message, int roomId) {
+            this.message = message;
+            this.roomId = roomId;
+        }
+
         public String getMessage(){
             return message;
         }
@@ -187,4 +197,55 @@ public class Network {
     static public class Start{}              // Rise Start Flag
 
     static public class forceStart{}              // Rise Force Start Flag
+
+    static public class CredentialsValidation{
+        private boolean validation;
+
+        public CredentialsValidation(){}
+
+        public CredentialsValidation(boolean validation){
+            this.validation = validation;
+        }
+
+        public boolean isValidation() {
+            return validation;
+        }
+
+        public void setValidation(boolean validation) {
+            this.validation = validation;
+        }
+    }
+
+    static public class sendCredentials{
+        private String username, password;
+
+        public sendCredentials(){
+
+        }
+
+        public sendCredentials(String username, String password){
+            this.username = username;
+            this.password = password;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
+    }
+
+    static public class RegisterClient{
+
+    }
 }
