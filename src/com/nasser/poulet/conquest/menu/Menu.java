@@ -33,6 +33,7 @@ public class Menu extends DefaultHandler{
     private Input input;
     private Input selectedInput = null;
     private GameView gameView;
+    private TextArea textarea;
 
     private boolean keyboard = false;   // Require keyboard listening
 
@@ -93,7 +94,7 @@ public class Menu extends DefaultHandler{
 
         // Render
         for (UIElement uiElement : uiElements) {
-            uiElement.render();
+        	uiElement.render();
         }
 
         // Hover action
@@ -206,7 +207,12 @@ public class Menu extends DefaultHandler{
             button = input;
             element = button;
             element.setType("input");
-        } else if (qName.equals("gameView")) {
+        } else if (qName.equals("textarea")) {
+            textarea = new TextArea();
+            element = textarea;
+            element.setType("textarea");
+        }
+        else if (qName.equals("gameView")) {
             gameView = new GameView();
             element = gameView;
             element.setType("gameView");
@@ -232,6 +238,15 @@ public class Menu extends DefaultHandler{
             uiElements.add(element);
             selectedInput = input;
             element = null;
+        } else if (qName.equals("textarea")) {
+            uiElements.add(element);
+            element = null;
+        } else if (qName.equals("content")) {
+            ((TextArea)element).setContent(buffer.toString());
+            element = null;
+        } else if (qName.equals("lines")) {
+            ((TextArea)element).setLines(Integer.getInteger(buffer.toString()));
+            element = null;
         } else if (qName.equals("name")) {
             element.setName(buffer.toString());
             buffer = null;
@@ -252,12 +267,16 @@ public class Menu extends DefaultHandler{
                 button.setWidth(Integer.parseInt(buffer.toString()));
             else if(gameView!=null)
                 gameView.setWidth(Integer.parseInt(buffer.toString()));
+            else if(textarea!=null)
+            	textarea.setWidth(Integer.parseInt(buffer.toString()));
             buffer = null;
         } else if (qName.equals("height")) {
             if(button!=null)
                 button.setHeight(Integer.parseInt(buffer.toString()));
             else if(gameView!=null)
                 gameView.setHeight(Integer.parseInt(buffer.toString()));
+            else if(textarea!=null)
+            	textarea.setHeight(Integer.parseInt(buffer.toString()));
             buffer = null;
         } else if (qName.equals("action")) {
             button.setAction(buffer.toString());

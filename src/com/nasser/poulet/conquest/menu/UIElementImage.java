@@ -6,7 +6,7 @@ import org.newdawn.slick.SlickException;
 
 public class UIElementImage extends UIElement {
 	
-	private int width, height;
+	protected int width, height;
 	public int getWidth() {
 		return width;
 	}
@@ -23,7 +23,7 @@ public class UIElementImage extends UIElement {
 		this.height = height;
 	}
 
-	private Image img1=null, img2=null, img3=null;
+	protected Image img1=null, img2=null, img3=null;
 
     private String img1Name=null, img2Name=null, img3Name=null;
 	
