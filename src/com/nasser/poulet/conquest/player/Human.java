@@ -20,6 +20,8 @@ public class Human extends Player {
     public void click( int posX, int posY ){
         posX = (int)Math.floor(posX/40);
         posY = (int)Math.floor(posY/40);
+        System.out.println(posX +" "+ posY);
+
         if(this.selected == null)   // No previous selection
             this.select(posX, posY);
         else    // There is a previous selection

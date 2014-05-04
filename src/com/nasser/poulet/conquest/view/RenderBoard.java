@@ -3,16 +3,23 @@ package com.nasser.poulet.conquest.view;
 import com.nasser.poulet.conquest.model.Board;
 import com.nasser.poulet.conquest.model.State;
 import com.nasser.poulet.conquest.model.Unit;
+import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
 /**
  * Created by Lord on 10/12/13.
  */
 public class RenderBoard implements Render {
-    private final int TILE_SIZE = 32;
-    private final int BORDER_SIZE = 8;
+    private int TILE_SIZE = 31;
+    private int BORDER_SIZE = 8;
 
-    public RenderBoard() {
+    private int offsetX, offsetY, width, height;
+
+    public RenderBoard(int offsetX, int offsetY, int width, int height) {
+        this.offsetX = offsetX*(Display.getWidth()/30);
+        this.offsetY = offsetY*(Display.getHeight()/20);
+        this.width = width*(Display.getWidth()/30);
+        this.height = height*(Display.getHeight()/20);
     }
 
     public void render(){
@@ -20,7 +27,13 @@ public class RenderBoard implements Render {
 
     public void render( Board board ) {
         // Clear the display
-        GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
+        //GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
+
+        // Adjust state size
+        if(width>height){
+            TILE_SIZE = width/board.getBoardWidth()-((width/board.getBoardWidth())/4);
+            BORDER_SIZE = (width/board.getBoardWidth())/4;
+        }
 
         // Render the Board
         for(int i=0;i<board.getBoardWidth();i++) {
@@ -33,30 +46,30 @@ public class RenderBoard implements Render {
     private void renderState( State state ){
         switch (state.getLoyalty()){
             case NONE:
-                GL11.glColor3f(0.1f, 0.1f, 0.1f);
+                GL11.glColor4f(0.1f, 0.1f, 0.1f, 1.f);
                 break;
             case EMPTY:
-                GL11.glColor3f(0.3f, 0.3f, 0.3f);
+                GL11.glColor4f(0.3f, 0.3f, 0.3f, 1.f);
                 break;
             case BLUE:
-                GL11.glColor3f(0.1f, 0.1f, 0.5f);
+                GL11.glColor4f(0.1f, 0.1f, 0.5f, 1.f);
                 break;
             case GREEN:
-                GL11.glColor3f(0.1f, 0.5f, 0.1f);
+                GL11.glColor4f(0.1f, 0.5f, 0.1f, 1.f);
                 break;
             case YELLOW:
-                GL11.glColor3f(0.5f, 0.5f, 0.1f);
+                GL11.glColor4f(0.5f, 0.5f, 0.1f, 1.f);
                 break;
             case BARBARIAN:
-                GL11.glColor3f(0.5f, 0.1f, 0.1f);
+                GL11.glColor4f(0.5f, 0.1f, 0.1f, 1.f);
                 break;
         }
 
         GL11.glBegin(GL11.GL_QUADS);
-        GL11.glVertex2f((state.getPosX()*(TILE_SIZE+BORDER_SIZE))+(BORDER_SIZE/2),(state.getPosY()*(TILE_SIZE+BORDER_SIZE))+(BORDER_SIZE/2));
-        GL11.glVertex2f((state.getPosX()*(TILE_SIZE+BORDER_SIZE))+TILE_SIZE+(BORDER_SIZE/2),(state.getPosY()*(TILE_SIZE+BORDER_SIZE))+(BORDER_SIZE/2));
-        GL11.glVertex2f((state.getPosX()*(TILE_SIZE+BORDER_SIZE))+TILE_SIZE+(BORDER_SIZE/2),(state.getPosY()*(TILE_SIZE+BORDER_SIZE))+TILE_SIZE+(BORDER_SIZE/2));
-        GL11.glVertex2f((state.getPosX()*(TILE_SIZE+BORDER_SIZE))+(BORDER_SIZE/2),(state.getPosY()*(TILE_SIZE+BORDER_SIZE))+TILE_SIZE+(BORDER_SIZE/2));
+        GL11.glVertex2f((state.getPosX()*(TILE_SIZE+BORDER_SIZE))+(BORDER_SIZE/2)+offsetX,(state.getPosY()*(TILE_SIZE+BORDER_SIZE))+(BORDER_SIZE/2)+offsetY);
+        GL11.glVertex2f((state.getPosX()*(TILE_SIZE+BORDER_SIZE))+TILE_SIZE+(BORDER_SIZE/2)+offsetX,(state.getPosY()*(TILE_SIZE+BORDER_SIZE))+(BORDER_SIZE/2)+offsetY);
+        GL11.glVertex2f((state.getPosX()*(TILE_SIZE+BORDER_SIZE))+TILE_SIZE+(BORDER_SIZE/2)+offsetX,(state.getPosY()*(TILE_SIZE+BORDER_SIZE))+TILE_SIZE+(BORDER_SIZE/2)+offsetY);
+        GL11.glVertex2f((state.getPosX()*(TILE_SIZE+BORDER_SIZE))+(BORDER_SIZE/2)+offsetX,(state.getPosY()*(TILE_SIZE+BORDER_SIZE))+TILE_SIZE+(BORDER_SIZE/2)+offsetY);
         GL11.glEnd();
 
         // Render units
@@ -82,10 +95,10 @@ public class RenderBoard implements Render {
                 break;
         }
         GL11.glBegin(GL11.GL_QUADS);
-        GL11.glVertex2f((posX*(TILE_SIZE+BORDER_SIZE))+(BORDER_SIZE/2),(posY*(TILE_SIZE+BORDER_SIZE))+(BORDER_SIZE/2)+TILE_SIZE-(TILE_SIZE*level));
-        GL11.glVertex2f((posX*(TILE_SIZE+BORDER_SIZE))+TILE_SIZE+(BORDER_SIZE/2),(posY*(TILE_SIZE+BORDER_SIZE))+(BORDER_SIZE/2)+TILE_SIZE-(TILE_SIZE*level));
-        GL11.glVertex2f((posX * (TILE_SIZE + BORDER_SIZE)) + TILE_SIZE + (BORDER_SIZE / 2), (posY * (TILE_SIZE + BORDER_SIZE)) - TILE_SIZE / 5 + (BORDER_SIZE / 2) + TILE_SIZE-((TILE_SIZE-(2*TILE_SIZE/5))*level));
-        GL11.glVertex2f((posX*(TILE_SIZE+BORDER_SIZE))+(BORDER_SIZE/2),(posY*(TILE_SIZE+BORDER_SIZE))-TILE_SIZE/5+(BORDER_SIZE/2)+TILE_SIZE-((TILE_SIZE-(2*TILE_SIZE/5))*level));
+        GL11.glVertex2f((posX*(TILE_SIZE+BORDER_SIZE))+(BORDER_SIZE/2)+offsetX,(posY*(TILE_SIZE+BORDER_SIZE))+(BORDER_SIZE/2)+TILE_SIZE-(TILE_SIZE*level)+offsetY);
+        GL11.glVertex2f((posX*(TILE_SIZE+BORDER_SIZE))+TILE_SIZE+(BORDER_SIZE/2)+offsetX,(posY*(TILE_SIZE+BORDER_SIZE))+(BORDER_SIZE/2)+TILE_SIZE-(TILE_SIZE*level)+offsetY);
+        GL11.glVertex2f((posX * (TILE_SIZE + BORDER_SIZE)) + TILE_SIZE + (BORDER_SIZE / 2)+offsetX, (posY * (TILE_SIZE + BORDER_SIZE)) - TILE_SIZE / 5 + (BORDER_SIZE / 2) + TILE_SIZE-((TILE_SIZE-(2*TILE_SIZE/5))*level)+offsetY);
+        GL11.glVertex2f((posX*(TILE_SIZE+BORDER_SIZE))+(BORDER_SIZE/2)+offsetX,(posY*(TILE_SIZE+BORDER_SIZE))-TILE_SIZE/5+(BORDER_SIZE/2)+TILE_SIZE-((TILE_SIZE-(2*TILE_SIZE/5))*level)+offsetY);
         GL11.glEnd();
     }
 }

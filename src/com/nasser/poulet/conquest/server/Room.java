@@ -35,6 +35,7 @@ public class Room {
 
     public void addClient(Connection connection){
         user.add(connection);
+
     }
 
     public boolean isClientOf(Connection connection){
@@ -52,5 +53,9 @@ public class Room {
 
     private void sendToClient(Server server, Connection connection, String message){
         server.sendToTCP(connection.getID(), new Network.ChatMessage(message, idNum));
+    }
+
+    private void sendStats(){
+
     }
 }

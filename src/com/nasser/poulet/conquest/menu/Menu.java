@@ -32,6 +32,7 @@ public class Menu extends DefaultHandler{
     private Button button;
     private Input input;
     private Input selectedInput = null;
+    private GameView gameView;
 
     private boolean keyboard = false;   // Require keyboard listening
 
@@ -57,7 +58,15 @@ public class Menu extends DefaultHandler{
         }
     }
 
-    public void render() {
+    public void render(){
+        renderer(true);
+    }
+
+    public void renderNoDisplay(){
+        renderer(false);
+    }
+
+    public void renderer(boolean display) {
         // Reset action
         action = "";
 
@@ -126,7 +135,8 @@ public class Menu extends DefaultHandler{
             event.call(); // Call wait event update
 
         // Redraw
-        Display.update();
+        if(display)
+            Display.update();
     }
 
     public void updateText(String text, String name) {
@@ -136,6 +146,16 @@ public class Menu extends DefaultHandler{
                     uiElement.setText(text);
             }
         }
+    }
+
+    public UIElement getElement(String name) {
+        for (UIElement uiElement : uiElements) {
+            if(uiElement.getName() != null){
+                if (uiElement.getName().equals(name))
+                    return uiElement;
+            }
+        }
+        return null;
     }
 
     public String getText(String name) {
@@ -186,6 +206,10 @@ public class Menu extends DefaultHandler{
             button = input;
             element = button;
             element.setType("input");
+        } else if (qName.equals("gameView")) {
+            gameView = new GameView();
+            element = gameView;
+            element.setType("gameView");
         } else {
             buffer = new StringBuffer();
         }
@@ -199,6 +223,9 @@ public class Menu extends DefaultHandler{
             uiElements.add(element);
             element = null;
         } else if (qName.equals("button")) {
+            uiElements.add(element);
+            element = null;
+        } else if (qName.equals("gameView")) {
             uiElements.add(element);
             element = null;
         } else if (qName.equals("input")) {
@@ -221,10 +248,16 @@ public class Menu extends DefaultHandler{
             element.setPosY(Integer.parseInt(buffer.toString()));
             buffer = null;
         } else if (qName.equals("width")) {
-            button.setWidth(Integer.parseInt(buffer.toString()));
+            if(button!=null)
+                button.setWidth(Integer.parseInt(buffer.toString()));
+            else if(gameView!=null)
+                gameView.setWidth(Integer.parseInt(buffer.toString()));
             buffer = null;
         } else if (qName.equals("height")) {
-            button.setHeight(Integer.parseInt(buffer.toString()));
+            if(button!=null)
+                button.setHeight(Integer.parseInt(buffer.toString()));
+            else if(gameView!=null)
+                gameView.setHeight(Integer.parseInt(buffer.toString()));
             buffer = null;
         } else if (qName.equals("action")) {
             button.setAction(buffer.toString());

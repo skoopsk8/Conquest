@@ -1,0 +1,35 @@
+<menu>
+    <properties>
+        <keyboard>true</keyboard>
+    </properties>
+    <objects>
+    	<background id="0">
+			<image>data/img/bg.png</image>
+		</background>
+        <gameView>
+            <name>gameView</name>
+            <posX>6</posX>
+            <posY>3</posY>
+            <width>18</width>
+            <height>15</height>
+        </gameView>
+        <button>
+            <name>power1</name>
+            <text>Power 1</text>
+            <posX>6</posX>
+            <posY>18</posY>
+            <width>9</width>
+            <height>1</height>
+            <action>power1</action>
+        </button>
+        <button>
+            <name>power2</name>
+            <text>Power 2</text>
+            <posX>15</posX>
+            <posY>18</posY>
+            <width>9</width>
+            <height>1</height>
+            <action>power2</action>
+        </button>
+    </objects>
+</menu>

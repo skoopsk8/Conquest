@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.nasser.poulet.conquest.controller.Timer;
+import com.nasser.poulet.conquest.menu.GameView;
 import com.nasser.poulet.conquest.menu.Menu;
 import com.nasser.poulet.conquest.network.Network;
 import com.nasser.poulet.conquest.player.*;
@@ -109,24 +110,28 @@ public class Conquest {
         do {
             playMenu.render();
             if(playMenu.action.equals("blue")){
+                mainBoard = null;
+                mainBoard = new Board(29, 20, true);
                 players[0] = new Human(Loyalty.BLUE,mainBoard);
                 players[1] = new IA(Loyalty.GREEN,mainBoard);
                 players[2] = new IA(Loyalty.YELLOW,mainBoard);
             }
             else if(playMenu.action.equals("green")){
+                mainBoard = null;
+                mainBoard = new Board(29, 20, true);
                 players[0] = new Human(Loyalty.GREEN,mainBoard);
                 players[1] = new IA(Loyalty.BLUE,mainBoard);
                 players[2] = new IA(Loyalty.YELLOW,mainBoard);
             }
             else if(playMenu.action.equals("yellow")){
+                mainBoard = null;
+                mainBoard = new Board(29, 20, true);
                 players[0] = new Human(Loyalty.YELLOW,mainBoard);
                 players[1] = new IA(Loyalty.GREEN,mainBoard);
                 players[2] = new IA(Loyalty.BLUE,mainBoard);
             }
         }while (playMenu.action.equals(""));
         if(!playMenu.action.equals("quit")){
-            mainBoard = null;
-            mainBoard = new Board(20, 15, true);
             this.startGame(players);
         }
     }
@@ -298,6 +303,7 @@ public class Conquest {
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GL11.glShadeModel(GL11.GL_FLAT);
     }
 
     private Menu startMenu( String filename ){
@@ -391,8 +397,10 @@ public class Conquest {
     }
 
     private void startGame( Player[] players ){
+        final Menu gameMenu = new Menu("game");
+
         GL11.glDisable(GL11.GL_BLEND);
-        RenderBoard renderer = new RenderBoard();
+        RenderBoard renderer = new RenderBoard(gameMenu.getElement("gameView").getPosX(),gameMenu.getElement("gameView").getPosY(), ((GameView)gameMenu.getElement("gameView")).getWidth(),((GameView)gameMenu.getElement("gameView")).getHeight());
         Human human = null;
         IA remote1 = null;
         IA remote2 = null;
@@ -417,16 +425,22 @@ public class Conquest {
         // Have to stay just before the while
         Board.numberOfUnit[0]=Board.numberOfUnit[1]=Board.numberOfUnit[2]=0;
         turn.startTurn();
+        GL11.glClearColor (0.0f, 0.0f, 0.0f, 0.0f);
         while( this.endGame(mainBoard, turn.getTurnNumber()) && !Display.isCloseRequested()){
             // Clear display
-            GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-            GL11.glClearColor (0.0f, 0.0f, 0.0f, 0.0f);
             GL11.glClear (GL11.GL_COLOR_BUFFER_BIT);
 
+            // GL safe zone for the menu
+            GL11.glEnable(GL11.GL_BLEND);
+                gameMenu.renderNoDisplay();  // Render the surrounding menu
+            GL11.glDisable(GL11.GL_BLEND);
+
             inputAction = this.pollInput();
-            if(inputAction == Action.MOUSE)
-                human.click(Mouse.getX(), (-Mouse.getY() + 600));
-            else if(inputAction == Action.ECHAP)
+
+            if(gameMenu.action.equals("gameView"))
+                human.click(Mouse.getX()-gameMenu.getElement("gameView").getPosX()*(Display.getWidth()/30), (Mouse.getY()-gameMenu.getElement("gameView").getPosY()*(Display.getHeight()/20)));
+
+            if(inputAction == Action.ECHAP)
                 human.abort();
             turn.update();
             if(turn.getTurnNumber() != currentTurn) {
@@ -437,12 +451,14 @@ public class Conquest {
             }
             
             renderer.render(mainBoard);
+
             Display.update();
         }
 
         System.out.println("The winner is " + this.getWinner(mainBoard));
 
         turn.stop();
+        GL11.glEnable(GL11.GL_BLEND);
     }
 
     private int triggerTurn = -1;
