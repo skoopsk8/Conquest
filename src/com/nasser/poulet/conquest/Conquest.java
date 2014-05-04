@@ -451,6 +451,8 @@ public class Conquest {
                 remote2.update();
             	currentTurn = turn.getTurnNumber();
             }
+
+            gameMenu.updateVariable(0, Integer.toString(currentTurn), "year");
             
             renderer.render(mainBoard);
 

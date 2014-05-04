@@ -64,7 +64,7 @@ public class Server {
                 }
 
                 if(object instanceof Network.RegisterClient){
-                    roomList.get(0).addClient(connection);
+                    roomList.get(0).addClient(connection, server);
                 }
             }
         });

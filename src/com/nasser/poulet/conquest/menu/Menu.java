@@ -34,6 +34,7 @@ public class Menu extends DefaultHandler{
     private Input selectedInput = null;
     private GameView gameView;
     private TextArea textarea;
+    private UpdatableLabel updatableLabel;
 
     private boolean keyboard = false;   // Require keyboard listening
 
@@ -140,6 +141,16 @@ public class Menu extends DefaultHandler{
             Display.update();
     }
 
+    public void updateVariable(int id, String string, String name){
+        for (UIElement uiElement : uiElements) {
+            if(uiElement.getName() != null){
+                if (uiElement.getName().equals(name))
+                    if(uiElement.getType().equals("updatableLabel"))
+                        ((UpdatableLabel)uiElement).updateVariable(id, string);
+            }
+        }
+    }
+
     public void updateText(String text, String name) {
         for (UIElement uiElement : uiElements) {
             if(uiElement.getName() != null){
@@ -201,6 +212,9 @@ public class Menu extends DefaultHandler{
         } else if (qName.equals("label")) {
             element = new Label();
             element.setType("label");
+        }  else if (qName.equals("updatableLabel")) {
+            element = new UpdatableLabel();
+            element.setType("updatableLabel");
         } else if (qName.equals("button")) {
             button = new Button();
             element = button;
@@ -229,6 +243,9 @@ public class Menu extends DefaultHandler{
             uiElements.add(element);
             element = null;
         } else if (qName.equals("background")) {
+            uiElements.add(element);
+            element = null;
+        }  else if (qName.equals("updatableLabel")) {
             uiElements.add(element);
             element = null;
         } else if (qName.equals("button")) {

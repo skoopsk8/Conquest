@@ -6,7 +6,9 @@ import com.nasser.poulet.conquest.network.Network;
 import com.nasser.poulet.conquest.server.chat.Chat;
 import com.nasser.poulet.conquest.server.chat.ChatMessage;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -27,15 +29,18 @@ public class Room {
         System.out.println("New message from " + connection.getID());
         messageList.add(new ChatMessage(object.getMessage()));
 
+        Date t1 = new Date();
+        SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+
         if(!messageList.get(messageList.size()-1).isCommand())
-            sendToAllClient(server, messageList.get(messageList.size()-1).getMessage());
+            sendToAllClient(server, "["+df.format(t1)+"]"+ messageList.get(messageList.size()-1).getMessage());
         else
-            sendToClient(server, connection, messageList.get(messageList.size() - 1).getAnswer());
+            sendToClient(server, connection, "[Server]"+messageList.get(messageList.size() - 1).getAnswer());
     }
 
-    public void addClient(Connection connection){
+    public void addClient(Connection connection, Server server){
+        sendToAllClient(server, "[Server] A new client joined your room");
         user.add(connection);
-
     }
 
     public boolean isClientOf(Connection connection){

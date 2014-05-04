@@ -31,5 +31,18 @@
             <height>1</height>
             <action>power2</action>
         </button>
+
+        <updatableLabel>
+            <name>year</name>
+            <text>Year: $0</text>
+            <posX>2</posX>
+            <posY>4</posY>
+            <font>
+                <fontName>Arial</fontName>
+                <size>auto2</size>
+                <color>red</color>
+                <strengh>BOLD</strengh>
+            </font>
+        </updatableLabel>
     </objects>
 </menu>
