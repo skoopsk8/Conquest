@@ -245,10 +245,7 @@ public class Menu extends DefaultHandler{
             uiElements.add(element);
             element = null;
             textarea = null;
-        } else if (qName.equals("content")) {
-            ((TextArea)element).setContent(buffer.toString());
-            element = null;
-        } else if (qName.equals("lines")) {
+        }  else if (qName.equals("lines")) {
             ((TextArea)element).setLines(Integer.getInteger(buffer.toString()));
             element = null;
         } else if (qName.equals("name")) {
