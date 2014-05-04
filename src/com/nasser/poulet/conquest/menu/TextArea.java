@@ -21,6 +21,9 @@ public class TextArea extends UIElementImage {
 		}
 		lines = 5;
 		content = new String[lines];
+		for(int i = 0; i < lines; i++) {
+			content[i] = "";
+		}
 	}
 	
 	public TextArea(int lines) {
@@ -32,6 +35,9 @@ public class TextArea extends UIElementImage {
 		}
 		this.lines = lines;
 		content = new String[lines];
+		for(int i = 0; i < lines; i++) {
+			content[i] = "";
+		}
 	}
 	
 	public int getLines() {
@@ -63,7 +69,8 @@ public class TextArea extends UIElementImage {
 		img3.draw(posX*ratioX + ((this.width*ratioX/32)*32)-32, posY*ratioY,32,this.height*ratioY);*/
 		
 		for(int i = 0; i < this.lines; i++){
-			Font.getFont(font+":"+size).drawString(posX*ratioX + ((this.getWidth()*ratioX)-Font.getFont(font+":"+size).getWidth(content[i]))/2, posY*ratioY + 10 + 20 * i, content[i], Color.white);
+			if(content[i] != "")
+				Font.getFont(font+":"+size).drawString(posX*ratioX + ((this.getWidth()*ratioX)-Font.getFont(font+":"+size).getWidth(content[i]))/2, posY*ratioY + 10 + 20 * i, content[i], Color.white);
 		}
 	}
 	
