@@ -391,6 +391,7 @@ public class Conquest {
     }
 
     private void startGame( Player[] players ){
+        GL11.glDisable(GL11.GL_BLEND);
         RenderBoard renderer = new RenderBoard();
         Human human = null;
         IA remote1 = null;

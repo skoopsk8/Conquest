@@ -1,8 +1,6 @@
 package com.nasser.poulet.conquest.model;
 
 import com.nasser.poulet.conquest.controller.Turn;
-import com.nasser.poulet.conquest.view.ImageOperation;
-import org.lwjgl.opengl.Display;
 
 import java.util.ArrayList;
 
@@ -14,10 +12,9 @@ public class Board {
     // Board representation
     private State[][] stateArray;    // For easy pathfinding and generation
     private ArrayList<State> stateArrayList[] = new ArrayList[3];    // For easy gamelogic
-    private float[][] groundMap, farmMap, forestMap;
 
     private int boardWidth, boardHeight;
-    
+
     public static int[] numberOfUnit = {0, 0, 0};
 
     public Board( int width, int height, boolean generate ){
@@ -34,35 +31,16 @@ public class Board {
 
         if(generate){
             // Generate Board
-            //generateBoard(boardWidth, boardHeight);
-            groundMap = Perlin.generateMap(800,600,1f);
-            farmMap = Perlin.generateMap(800,600,1f);
-            forestMap = Perlin.generateMap(800,600,1f);
-
-            groundMap = ImageOperation.threshold(groundMap, 0.0001f);
-            farmMap = ImageOperation.multiply(groundMap, farmMap);
-            forestMap = ImageOperation.multiply(groundMap, forestMap);
+            generateBoard(boardWidth, boardHeight);
 
             // Generate Player start
-            //generateStartState();
+            generateStartState();
         }
     }
 
     private void generateBoard( int width, int height ){
-        //int[][] map = Perlin.generateMap(width,height,0.5f);
-        //for(int i=0;i<width;i++) for (int j = 0; j < height; j++) stateArray[i][j] = new State(i, j, Loyalty.values()[map[i][j]]);
-    }
-
-    public float[][] getGroundMap() {
-        return groundMap;
-    }
-
-    public float[][] getFarmMap() {
-        return farmMap;
-    }
-
-    public float[][] getForestMap() {
-        return forestMap;
+        int[][] map = Perlin.generateMap(width,height,0.5f);
+        for(int i=0;i<width;i++) for (int j = 0; j < height; j++) stateArray[i][j] = new State(i, j, Loyalty.values()[map[i][j]]);
     }
 
     private void generateStartState(){
@@ -112,22 +90,14 @@ public class Board {
     }
 
     public State getState( int posX, int posY) {
-        if(posX<0 || posX >=boardWidth || posY<0 || posY >=boardHeight)
-            return null;
         return stateArray[posX][posY];
     }
 
-    public int getStateLoyalty( int posX, int posY) {
-        if(posX<0 || posX >=boardWidth || posY<0 || posY >=boardHeight)
-            return 0;
-        return stateArray[posX][posY].getLoyalty().ordinal();
+    public ArrayList<State>[] getStateArrayList() {
+        return stateArrayList;
     }
 
-    public ArrayList<State>[] getStateArrayList() {
-		return stateArrayList;
-	}
-
-	public int[][] explodeBoard(){
+    public int[][] explodeBoard(){
         int[][] returnValue = new int[boardWidth][boardHeight];
 
         for(int i=0;i<boardWidth;i++) for (int j = 0; j < boardHeight; j++) returnValue[i][j] = stateArray[i][j].getLoyalty().ordinal();

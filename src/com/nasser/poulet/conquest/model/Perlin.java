@@ -14,7 +14,7 @@ public class Perlin {
 
 
     /** Generate a noise source based upon the midpoint displacement fractal.
-     * 
+     *
      * @param rand The random number generator
      * @param roughness a roughness parameter
      * @param width the width of the grid  17
@@ -103,77 +103,35 @@ public class Perlin {
         }
         return ret;
     }
-    
-    public static float[][] generateMap(int width, int height, float roughness) {
-    	boolean[][] bool_map;
-    	int[][] int_map = new int[width][height];
-    	float[][] float_map = new float[width][height];
+
+    public static int[][] generateMap(int width, int height, float roughness) {
+        boolean[][] bool_map;
+        int[][] int_map = new int[width][height];
         Perlin n = new Perlin(null, roughness, width, height);
         int cpt = 0;
         boolean finished = false;
-        
+
         do {
             n.initialise();
-            // bool_map = n.toBooleans();
-            float_map = n.grid_.clone();
-           
-            float min = float_map[0][0];
-            for(int i = 0; i < width; i++) {
-            	for(int j = 0; j < height; j++) {
-            		if(float_map[i][j] < min) min = float_map[i][j];
-            	}
-            }
-     
-            min = -min;
-            for(int i = 0; i < width; i++) {
-            	for(int j = 0; j < height; j++) {
-            		float_map[i][j] = (float_map[i][j]+min);
-            	}
-            }
-            
-            float max = float_map[0][0];
-            for(int i = 0; i < width; i++) {
-            	for(int j = 0; j < height; j++) {
-            		if(float_map[i][j] > max) max = float_map[i][j];
-            	}
-            }
-            
-            for(int i = 0; i < width; i++) {
-            	for(int j = 0; j < height; j++) {
-            		float_map[i][j] = (float_map[i][j]/max);
-            	}
-            }
-            
-            System.out.println("Entre 0 et 1");
-            for(int i = 0; i < width; i++) {
-            	for(int j = 0; j < height; j++) {
-            		System.out.print(float_map[i][j]);
-            	}
-            	System.out.println();
-            }
+            bool_map = n.toBooleans();
             cpt = 0;
-            
-            /* ICI LE SEUILLAGE */
-              for(int i = 0; i < width; i++) {
-             	for(int j = 0; j < height; j++) {
-            		if(float_map[i][j] > 0.5) {
-             			int_map[i][j] = 1;
-             			cpt++;
-             		}
-             		else if(float_map[i][j] > 0.4) {
-             			int_map[i][j] = 0;
-             			cpt++;
-             		}
-             		else {
-             			int_map[i][j] = -1;
-             		}
-             	}
-             }
-             if (cpt > (width*height/2)) {
-            	 finished = true;
-             }
+
+            for(int i = 0; i < width; i++) {
+                for(int j = 0; j < height; j++) {
+                    if(bool_map[i][j]) {
+                        int_map[i][j] = 1;
+                        cpt++;
+                    }
+                    else {
+                        int_map[i][j] = 0;
+                    }
+                }
+            }
+            if (cpt > (width*height/2)) {
+                finished = true;
+            }
         }while (!finished);
-       
-		return n.grid_;
+
+        return int_map;
     }
 }

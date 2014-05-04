@@ -49,5 +49,8 @@ public class ChatMessage {
         if(command.equals("help")){
             answer = "Help coming soon!";
         }
+        else if(command.equals("join")){
+            answer = "Change channel";
+        }
     }
 }

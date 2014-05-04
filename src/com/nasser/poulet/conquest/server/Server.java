@@ -15,9 +15,9 @@ import java.util.List;
 
 /*
 TODO :
- * Lobby
+ V Lobby
  * Game Server Register
- * Chat
+ V Chat
  * Chat multi room
  * Host multigame
 
