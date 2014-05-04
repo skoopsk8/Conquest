@@ -53,10 +53,10 @@
         </button>
         <textarea>
             <name>TextArea1</name>
-            <posX>150</posX>
-            <posY>150</posY>
-            <width>550</width>
-            <height>250</height>
+            <posX>1</posX>
+            <posY>1</posY>
+            <width>7</width>
+            <height>4</height>
         </textarea>
     </objects>
 </menu>

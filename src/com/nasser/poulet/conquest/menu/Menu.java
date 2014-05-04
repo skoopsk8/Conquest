@@ -231,16 +231,20 @@ public class Menu extends DefaultHandler{
         } else if (qName.equals("button")) {
             uiElements.add(element);
             element = null;
+            button = null;
         } else if (qName.equals("gameView")) {
             uiElements.add(element);
             element = null;
+            gameView = null;
         } else if (qName.equals("input")) {
             uiElements.add(element);
             selectedInput = input;
             element = null;
+            input = null;
         } else if (qName.equals("textarea")) {
             uiElements.add(element);
             element = null;
+            textarea = null;
         } else if (qName.equals("content")) {
             ((TextArea)element).setContent(buffer.toString());
             element = null;
