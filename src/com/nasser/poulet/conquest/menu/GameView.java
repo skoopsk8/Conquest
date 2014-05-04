@@ -44,7 +44,10 @@ public class GameView extends UIElement {
 
     @Override
     public String click(int posX, int posY) {
-        return "gameView";
+        if(inside(posX, posY))
+            return "gameView";
+        else
+            return "";
     }
 
     @Override
@@ -60,5 +63,16 @@ public class GameView extends UIElement {
     @Override
     public void reload() {
 
+    }
+
+    public boolean inside( int posX, int posY ){
+        int ratioX = Display.getWidth()/30;
+        int ratioY = Display.getHeight()/20;
+        if(posX>=this.posX*ratioX && posX<=this.posX*ratioX+this.width*ratioX){
+            if(posY>=this.posY*ratioY && posY<=this.posY*ratioY+this.height*ratioY){
+                return true;
+            }
+        }
+        return false;
     }
 }

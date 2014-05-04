@@ -438,7 +438,7 @@ public class Conquest {
             inputAction = this.pollInput();
 
             if(gameMenu.action.equals("gameView"))
-                human.click(Mouse.getX()-gameMenu.getElement("gameView").getPosX()*(Display.getWidth()/30), (Mouse.getY()-gameMenu.getElement("gameView").getPosY()*(Display.getHeight()/20)));
+                human.click(Mouse.getX()-renderer.getOffsetX(), -(Mouse.getY()-Display.getHeight())-renderer.getOffsetY());
 
             if(inputAction == Action.ECHAP)
                 human.abort();

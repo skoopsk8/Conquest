@@ -15,8 +15,6 @@ public class BoardController {
     public State select(int posX, int posY) {
         return board.getState(posX, posY);
     }
-    
-    
 
     public Board getBoard() {
 		return board;

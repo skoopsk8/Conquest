@@ -12,6 +12,7 @@ import org.lwjgl.opengl.GL11;
 public class RenderBoard implements Render {
     private int TILE_SIZE = 31;
     private int BORDER_SIZE = 8;
+    private boolean firstRender = true;
 
     private int offsetX, offsetY, width, height;
 
@@ -25,14 +26,28 @@ public class RenderBoard implements Render {
     public void render(){
     }
 
+    public int getOffsetX() {
+        return offsetX;
+    }
+
+    public int getOffsetY() {
+        return offsetY;
+    }
+
     public void render( Board board ) {
         // Clear the display
         //GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
         // Adjust state size
-        if(width>height){
-            TILE_SIZE = width/board.getBoardWidth()-((width/board.getBoardWidth())/4);
-            BORDER_SIZE = (width/board.getBoardWidth())/4;
+        if(firstRender){
+            firstRender = false;
+            if(width>height){
+                TILE_SIZE = width/board.getBoardWidth()-((width/board.getBoardWidth())/4);
+                BORDER_SIZE = (width/board.getBoardWidth())/4;
+
+                this.offsetX = this.offsetX + ((this.width-(board.getBoardWidth()*(TILE_SIZE+BORDER_SIZE)))/2);
+                this.offsetY = this.offsetY + ((this.height-(board.getBoardHeight()*(TILE_SIZE+BORDER_SIZE)))/2);
+            }
         }
 
         // Render the Board
