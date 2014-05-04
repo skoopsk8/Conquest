@@ -144,7 +144,10 @@ public class Menu extends DefaultHandler{
         for (UIElement uiElement : uiElements) {
             if(uiElement.getName() != null){
                 if (uiElement.getName().equals(name))
-                    uiElement.setText(text);
+                    if(uiElement.getType().equals("textarea"))
+                        ((TextArea)uiElement).addText(text);
+                    else
+                        uiElement.setText(text);
             }
         }
     }

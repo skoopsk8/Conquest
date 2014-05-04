@@ -160,6 +160,8 @@ public class Conquest {
 
         Image.destroy();
 
+        System.out.println(Display.getWidth() + " " + Display.getHeight());
+
         // Change server Browser IP
         serverBrowserIp = settingsMenu.getText("Browser");
 

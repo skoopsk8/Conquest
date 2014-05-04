@@ -69,7 +69,7 @@ public class TextArea extends UIElementImage {
 		img3.draw(posX*ratioX + ((this.width*ratioX/32)*32)-32, posY*ratioY,32,this.height*ratioY);*/
 		
 		for(int i = 0; i < this.lines; i++){
-			if(content[i] != "")
+			if(!content[i].equals(""))
 				Font.getFont(font+":"+size).drawString(posX*ratioX + ((this.getWidth()*ratioX)-Font.getFont(font+":"+size).getWidth(content[i]))/2, posY*ratioY + 10 + 20 * i, content[i], Color.white);
 		}
 	}

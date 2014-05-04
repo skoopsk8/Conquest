@@ -51,12 +51,5 @@
             <height>1</height>
             <action>quit</action>
         </button>
-        <textarea>
-            <name>TextArea1</name>
-            <posX>1</posX>
-            <posY>1</posY>
-            <width>7</width>
-            <height>4</height>
-        </textarea>
     </objects>
 </menu>
