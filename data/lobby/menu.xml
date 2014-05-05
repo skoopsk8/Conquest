@@ -42,7 +42,7 @@
         <label>
             <name>chat_label</name>
             <text>Chat</text>
-            <posX>19</posX>
+            <posX>21</posX>
             <posY>4</posY>
             <font>
                 <fontName>Arial</fontName>
@@ -56,16 +56,16 @@
             <name>chat</name>
             <posX>14</posX>
             <posY>6</posY>
-            <width>10</width>
-            <height>5</height>
+            <width>15</width>
+            <height>10</height>
         </textarea>
 
         <input>
             <name>input_chat</name>
             <text>Message ...</text>
             <posX>14</posX>
-            <posY>11</posY>
-            <width>10</width>
+            <posY>16</posY>
+            <width>15</width>
             <height>1</height>
             <action>chat</action>
         </input>
@@ -74,8 +74,8 @@
             <name>button_chat</name>
             <text>Send</text>
             <posX>14</posX>
-            <posY>12</posY>
-            <width>10</width>
+            <posY>17</posY>
+            <width>15</width>
             <height>1</height>
             <action>send_chat</action>
         </button>

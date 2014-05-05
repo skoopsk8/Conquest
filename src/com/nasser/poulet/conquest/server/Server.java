@@ -60,8 +60,10 @@ public class Server {
                 }
 
                 if (object instanceof Network.sendCredentials) {
-                    if(((Network.sendCredentials) object).getUsername().equals("Lord_Nazdar") && ((Network.sendCredentials) object).getPassword().equals(Crypt.encrypt("aze123")))
+                    if(((Network.sendCredentials) object).getUsername().equals("Lord_Nazdar") && ((Network.sendCredentials) object).getPassword().equals(Crypt.encrypt("aze123"))){
                         server.sendToTCP(connection.getID(), new Network.CredentialsValidation(true));
+                        ((GameConnection)connection).name = ((Network.sendCredentials) object).getUsername();
+                    }
                     else
                         server.sendToTCP(connection.getID(), new Network.CredentialsValidation(false));
                 }
@@ -88,11 +90,14 @@ public class Server {
         if(command.getCommand().equals("join")){    // join another chat room
             if(connectionRoom.quit(connection))
                 roomList.removeRoom(connectionRoom);
-            roomList.add(new Room(command.getMessage(),1));
+            roomList.add(new Room(command.getMessage(), 1));
             roomList.addClient(server, connection, command.getMessage());
         }
         else if(command.getCommand().equals("list")){   // list all the current chat room
             server.sendToTCP(connection.getID(), new Network.ChatMessage(roomList.getRoomList(),connectionRoom.getIdNum()));
+        }
+        else if(command.getCommand().equals("who")){    // list all the players
+            server.sendToTCP(connection.getID(), new Network.ChatMessage(connectionRoom.getClientList(),connectionRoom.getIdNum()));
         }
     }
 

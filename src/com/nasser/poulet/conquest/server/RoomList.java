@@ -63,4 +63,8 @@ public class RoomList {
 
         return builder.toString();
     }
+
+    public String getClientList(Connection connection){
+        return isClientOf(connection).getClientList();
+    }
 }

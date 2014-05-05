@@ -5,6 +5,7 @@ import com.esotericsoftware.kryonet.Server;
 import com.nasser.poulet.conquest.network.Network;
 import com.nasser.poulet.conquest.server.chat.Chat;
 import com.nasser.poulet.conquest.server.chat.ChatMessage;
+import org.newdawn.slick.Game;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -38,11 +39,11 @@ public class Room {
         SimpleDateFormat df = new SimpleDateFormat("HH:mm");
 
         if(!messageList.get(messageList.size()-1).isCommand()){
-            sendToAllClient(server, "["+df.format(t1)+" - "+roomName+"]"+ messageList.get(messageList.size()-1).getMessage());
+            sendToAllClient(server, "["+df.format(t1)+" - "+roomName+"] "+ ((com.nasser.poulet.conquest.server.Server.GameConnection)connection).name +": "+ messageList.get(messageList.size()-1).getMessage());
             return null;
         }
         else{
-            sendToClient(server, connection, "[Server]"+messageList.get(messageList.size() - 1).getAnswer());
+            sendToClient(server, connection, "[Server] "+messageList.get(messageList.size() - 1).getAnswer());
             return messageList.get(messageList.size()-1);
         }
     }
@@ -83,5 +84,18 @@ public class Room {
         if(user.size()==0)
             return true;
         return false;
+    }
+
+    public String getClientList(){
+        StringBuilder builder = new StringBuilder();
+
+        for (Connection connection : user) {
+            if (builder.length() > 0) {
+                builder.append(", ");
+            }
+            builder.append(((com.nasser.poulet.conquest.server.Server.GameConnection)connection).name);
+        }
+
+        return builder.toString();
     }
 }

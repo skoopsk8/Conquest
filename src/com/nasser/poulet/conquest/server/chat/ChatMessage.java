@@ -25,7 +25,10 @@ public class ChatMessage {
             isCommand = true;
             String[] temp = (original.substring(1)).split(" ");
             this.command = temp[0];
-            this.message = original.substring(2+this.command.length());
+            if(2+this.command.length()<original.length())
+                this.message = original.substring(2+this.command.length());
+            else
+                this.message = "";
             generateCommandAnswer();
         }
         else{
@@ -53,7 +56,13 @@ public class ChatMessage {
             answer = "Change channel";
         }
         else if(command.equals("list")){
-            answer = "Listing the current channels";
+            answer = "Listing the current channels: ";
+        }
+        else if(command.equals("who")){
+            answer = "Listing the current users in channel: ";
+        }
+        else{
+            answer = "";
         }
     }
 }
