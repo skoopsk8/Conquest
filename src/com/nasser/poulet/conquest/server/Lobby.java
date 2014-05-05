@@ -7,7 +7,13 @@ import com.esotericsoftware.kryonet.*;
  */
 public class Lobby extends Room {
     public Lobby() {
-        super("Lobby", 0);
+        super("lobby", 0);
         System.out.println("Lobby successfully created !");
+    }
+
+    @Override
+    public boolean quit(Connection connection){  // bool for auto destruction
+        user.remove(connection);
+        return false;
     }
 }

@@ -4,6 +4,7 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.nasser.poulet.conquest.network.Crypt;
 import com.nasser.poulet.conquest.network.Network;
+import com.nasser.poulet.conquest.server.chat.ChatMessage;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ TODO :
 */
 public class Server {
     private Lobby lobby;
-    private List<Room> roomList = new ArrayList<Room>();
+    private RoomList roomList = new RoomList();
     private com.esotericsoftware.kryonet.Server server;
 
     public Server(String[] args){
@@ -49,9 +50,11 @@ public class Server {
         server.addListener(new Listener() {
             public void received (Connection connection, Object object) {
                 if (object instanceof Network.ChatMessage) {
-                    for(Room room:roomList){
-                        if(room.isClientOf(connection)){
-                            room.receivedMessage((Network.ChatMessage)object, server, connection);
+                    Room connectionRoom = roomList.isClientOf(connection);
+                    if(connection != null){
+                        ChatMessage command = connectionRoom.receivedMessage((Network.ChatMessage)object, server, connection);
+                        if(command != null){
+                            parseCommand(command, connectionRoom, connection, server);
                         }
                     }
                 }
@@ -64,7 +67,7 @@ public class Server {
                 }
 
                 if(object instanceof Network.RegisterClient){
-                    roomList.get(0).addClient(connection, server);
+                    roomList.addClient(server, connection, "lobby");
                 }
             }
         });
@@ -79,6 +82,18 @@ public class Server {
 
         server.start();
         System.out.println("Server up & running");
+    }
+
+    private void parseCommand(ChatMessage command, Room connectionRoom, Connection connection, com.esotericsoftware.kryonet.Server server){
+        if(command.getCommand().equals("join")){    // join another chat room
+            if(connectionRoom.quit(connection))
+                roomList.removeRoom(connectionRoom);
+            roomList.add(new Room(command.getMessage(),1));
+            roomList.addClient(server, connection, command.getMessage());
+        }
+        else if(command.getCommand().equals("list")){   // list all the current chat room
+            server.sendToTCP(connection.getID(), new Network.ChatMessage(roomList.getRoomList(),connectionRoom.getIdNum()));
+        }
     }
 
     public static void main(String[] args){

@@ -52,5 +52,8 @@ public class ChatMessage {
         else if(command.equals("join")){
             answer = "Change channel";
         }
+        else if(command.equals("list")){
+            answer = "Listing the current channels";
+        }
     }
 }
