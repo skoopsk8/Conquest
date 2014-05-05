@@ -20,7 +20,7 @@ public class Input extends Button {
 	    		// On appuie sur Retour
 	    		break;
 	         default:
-	        	 boolean isCorrect = Character.isAlphabetic(keyChar) || Character.isDigit(keyChar) || keyChar == ':' || keyChar == '/' || keyChar == ',' || keyChar == '!' || keyChar == '\'' || keyChar == '.' || keyChar == '_';
+	        	 boolean isCorrect = Character.isAlphabetic(keyChar) || Character.isDigit(keyChar) || keyChar == ':' || keyChar == '/' || keyChar == ',' || keyChar == '!' || keyChar == '?' || keyChar == '\'' || keyChar == '.' || keyChar == '_';
 	        	 if(isCorrect)
 	        		 text+=keyChar;
     	}
