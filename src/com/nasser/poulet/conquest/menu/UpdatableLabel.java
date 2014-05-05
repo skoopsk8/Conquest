@@ -1,10 +1,4 @@
 package com.nasser.poulet.conquest.menu;
-
-import com.sun.deploy.util.StringUtils;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  * Created by Thomas on 5/4/14.
  */
