@@ -1,7 +1,7 @@
 <menu>
     <objects>
     	<background>
-			<image>data/img/bg.png</image>
+			<image>data/img/splash.jpg</image>
 		</background>
         <label>
             <name>Title</name>

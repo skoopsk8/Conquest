@@ -3,14 +3,18 @@
         <wait>2500</wait>
     </properties>
     <objects>
+        <background>
+            <name>Background</name>
+            <image>data/img/splash.jpg</image>
+        </background>
         <label id="0">
             <name>Title</name>
             <text>Conquest</text>
-            <posX>14</posX>
+            <posX>15</posX>
             <posY>9</posY>
             <font>
                 <fontName>Arial</fontName>
-                <size>50</size>
+                <size>auto</size>
                 <color>white</color>
                 <strengh>BOLD</strengh>
             </font>
