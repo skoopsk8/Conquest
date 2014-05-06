@@ -20,7 +20,7 @@ public class Crypt {
     }
 
     public static String encrypt(String value){
-        String salted = value + salt;
+        String salted = value;
 
         digester.update(salted.getBytes());
         byte[] hash = digester.digest();
