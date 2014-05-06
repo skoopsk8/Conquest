@@ -98,4 +98,8 @@ public class Room {
 
         return builder.toString();
     }
+
+    public void removeClient(Connection connection){
+        user.remove(connection);
+    }
 }

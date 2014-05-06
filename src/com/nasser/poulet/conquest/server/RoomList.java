@@ -67,4 +67,8 @@ public class RoomList {
     public String getClientList(Connection connection){
         return isClientOf(connection).getClientList();
     }
+
+    public void checkActiveClient(){
+
+    }
 }

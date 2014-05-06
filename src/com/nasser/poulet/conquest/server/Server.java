@@ -74,6 +74,7 @@ public class Server {
 
                 if(object instanceof Network.RegisterClient){
                     roomList.addClient(server, connection, "lobby");
+                    ((GameConnection) connection).setCurrentRoom(roomList.getRoom("lobby"));
                 }
             }
         });
@@ -95,7 +96,9 @@ public class Server {
             if(connectionRoom.quit(connection))
                 roomList.removeRoom(connectionRoom);
             roomList.add(new Room(command.getMessage(), 1));
+            ((GameConnection) connection).getCurrentRoom().removeClient(connection);
             roomList.addClient(server, connection, command.getMessage());
+            ((GameConnection) connection).setCurrentRoom(roomList.getRoom(command.getMessage()));
         }
         else if(command.getCommand().equals("list")){   // list all the current chat room
             server.sendToTCP(connection.getID(), new Network.ChatMessage(roomList.getRoomList(),connectionRoom.getIdNum()));
@@ -111,5 +114,27 @@ public class Server {
 
     static class GameConnection extends Connection {
         public String name;
+        private Room currentRoom;
+
+        public Room getCurrentRoom() {
+            return currentRoom;
+        }
+
+        @Override
+        public void close(){
+            if(currentRoom!=null){
+                System.out.println("The client "+name+" disconnected");
+                currentRoom.removeClient(this);
+            }
+            super.close();
+        }
+
+        public void setCurrentRoom(Room currentRoom) {
+            this.currentRoom = currentRoom;
+        }
+    }
+
+    public void checkActiveClient(){
+        roomList.checkActiveClient();
     }
 }

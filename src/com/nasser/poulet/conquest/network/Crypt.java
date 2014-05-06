@@ -7,7 +7,6 @@ import java.security.NoSuchAlgorithmException;
  * Created by Thomas on 5/3/14.
  */
 public class Crypt {
-    private static String salt="roflcopterlol";
     private static MessageDigest digester;
 
     static {
