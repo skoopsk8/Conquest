@@ -12,7 +12,7 @@ public class Crypt {
 
     static {
         try {
-            digester = MessageDigest.getInstance("MD5");
+            digester = MessageDigest.getInstance("SHA-512");
         }
         catch (NoSuchAlgorithmException e) {
             e.printStackTrace();

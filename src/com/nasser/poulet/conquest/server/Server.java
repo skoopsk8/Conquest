@@ -60,12 +60,16 @@ public class Server {
                 }
 
                 if (object instanceof Network.sendCredentials) {
-                    if(((Network.sendCredentials) object).getUsername().equals("Lord_Nazdar") && ((Network.sendCredentials) object).getPassword().equals(Crypt.encrypt("aze123"))){
-                        server.sendToTCP(connection.getID(), new Network.CredentialsValidation(true));
-                        ((GameConnection)connection).name = ((Network.sendCredentials) object).getUsername();
+                    try {
+                        if(HTTP.sendPost("userLogin", "username="+((Network.sendCredentials) object).getUsername()+"&password="+((Network.sendCredentials) object).getPassword()).equals("true")){
+                            server.sendToTCP(connection.getID(), new Network.CredentialsValidation(true));
+                            ((GameConnection)connection).name = ((Network.sendCredentials) object).getUsername();
+                        }
+                        else
+                            server.sendToTCP(connection.getID(), new Network.CredentialsValidation(false));
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                    else
-                        server.sendToTCP(connection.getID(), new Network.CredentialsValidation(false));
                 }
 
                 if(object instanceof Network.RegisterClient){
