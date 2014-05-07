@@ -28,7 +28,7 @@ public class TextArea extends UIElementImage {
 	public void setWidth(int width) {
 		this.width = width;
 		
-		String line = "Azerty";
+		String line = "a";
 		int ratioX = Display.getWidth()/30;
 		
 		this.car = (this.width * ratioX) /  Font.getFont(font+":"+size).getWidth(line);
@@ -89,25 +89,35 @@ public class TextArea extends UIElementImage {
 		img3.setRotation(270);
 		img3.draw(posX*ratioX + ((this.width*ratioX/32)*32)-32, posY*ratioY,32,this.height*ratioY);*/
 		
+	  
 		for(int i = 0; i < this.lines; i++){
-			if(!content[i].equals(""))
-				Font.getFont(font+":"+size).drawString(posX*ratioX, posY*ratioY + 10 + Font.getFont(font+":"+size).getHeight(content[i]) * i, content[i], Color.white);
+			if(!content[i].equals("")) {
+				Font.getFont(font+":"+size).drawString(posX*ratioX, posY*ratioY + 10 + Font.getFont(font+":"+size).getHeight(content[i]) * i, content[i], Color.white);	
+			}
 		}
 	}
 	
 	public void addText(String text) {
-		/*if(text.length() > this.car) {
-			char[] temp = new char[this.car];
-			text.getChars(0, 39, temp, 0);
-			String word = new String(temp);
-			addText(word);
-			
-		}
-		else {*/
+		if (text.length() < this.car) {
 			for(int i = 1; i < lines; i++) {
 				content[i - 1] = content[i];
 			}
 			content[lines-1] = text;
-		//}
+		}
+		else {
+			int extra = 0;
+			while(extra * car < text.length()) {
+				System.out.println(extra * car + " " + text.length());
+				for(int i = 1; i < lines; i++) {
+					content[i - 1] = content[i];
+				}
+				if(extra*car + car > text.length())
+					content[lines-1] = text.substring(extra*car, text.length());
+				else 
+					content[lines-1] = text.substring(extra*car, extra*car + car);
+				
+				extra++;
+			}
+		}
 	}
 }
