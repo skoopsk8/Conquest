@@ -24,7 +24,17 @@ public class Button extends UIElementImage {
     	super.render();
         int ratioX = Display.getWidth()/30;
         int ratioY = Display.getHeight()/20;
-        Font.getFont(font+":"+size).drawString(posX*ratioX + ((this.getWidth()*ratioX)-Font.getFont(font+":"+size).getWidth(text))/2, posY*ratioY + 10, text, color);
+
+		String line = "a";
+		
+		int car = (this.width * ratioX) /  Font.getFont(font+":"+size).getWidth(line);
+		
+        if(text.length() < car) {
+        	Font.getFont(font+":"+size).drawString(posX*ratioX + ((this.getWidth()*ratioX)-Font.getFont(font+":"+size).getWidth(text))/2, posY*ratioY + 10, text, color);
+        }
+        else {
+        	Font.getFont(font+":"+size).drawString(posX*ratioX + ((this.getWidth()*ratioX)-Font.getFont(font+":"+size).getWidth(text.substring(text.length() - car)))/2, posY*ratioY + 10, text.substring(text.length() - car), color);
+        }
     }
 
     public String click( int posX, int posY){
