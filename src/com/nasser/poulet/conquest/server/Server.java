@@ -2,6 +2,7 @@ package com.nasser.poulet.conquest.server;
 
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+import com.nasser.poulet.conquest.model.Game;
 import com.nasser.poulet.conquest.network.Crypt;
 import com.nasser.poulet.conquest.network.Network;
 import com.nasser.poulet.conquest.server.chat.ChatMessage;
@@ -26,6 +27,7 @@ TODO :
 public class Server {
     private Lobby lobby;
     private RoomList roomList = new RoomList();
+    private GameContainer gameList = new GameContainer();
     private com.esotericsoftware.kryonet.Server server;
 
     public Server(String[] args){
@@ -76,6 +78,10 @@ public class Server {
                     roomList.addClient(server, connection, "lobby");
                     ((GameConnection) connection).setCurrentRoom(roomList.getRoom("lobby"));
                 }
+
+                if(object instanceof Network.game_client_action){
+                    ((GameConnection) connection).getGame().getMessageFromClient(object, connection);
+                }
             }
         });
 
@@ -89,6 +95,8 @@ public class Server {
 
         server.start();
         System.out.println("Server up & running");
+
+        gameList.runGames();
     }
 
     private void parseCommand(ChatMessage command, Room connectionRoom, Connection connection, com.esotericsoftware.kryonet.Server server){
@@ -106,32 +114,19 @@ public class Server {
         else if(command.getCommand().equals("who")){    // list all the players
             server.sendToTCP(connection.getID(), new Network.ChatMessage(connectionRoom.getClientList(),connectionRoom.getIdNum()));
         }
+        else if(command.getCommand().equals("create")){
+            server.sendToTCP(connection.getID(), new Network.ChatMessage(gameList.createNewGame(server, connection), connectionRoom.getIdNum()));
+        }
+        else if(command.getCommand().equals("joingame")){
+            server.sendToTCP(connection.getID(), new Network.ChatMessage(gameList.addPlayerToGame(connection, command.getMessage()),connectionRoom.getIdNum()));
+        }
+        else if(command.getCommand().equals("setready")){
+            ((GameConnection)connection).getGame().setPlayerReady(connection);
+        }
     }
 
     public static void main(String[] args){
         new Server(args);
-    }
-
-    static class GameConnection extends Connection {
-        public String name;
-        private Room currentRoom;
-
-        public Room getCurrentRoom() {
-            return currentRoom;
-        }
-
-        @Override
-        public void close(){
-            if(currentRoom!=null){
-                System.out.println("The client "+name+" disconnected");
-                currentRoom.removeClient(this);
-            }
-            super.close();
-        }
-
-        public void setCurrentRoom(Room currentRoom) {
-            this.currentRoom = currentRoom;
-        }
     }
 
     public void checkActiveClient(){

@@ -12,6 +12,7 @@ public class Board {
     // Board representation
     private State[][] stateArray;    // For easy pathfinding and generation
     private ArrayList<State> stateArrayList[] = new ArrayList[3];    // For easy gamelogic
+    public boolean lock = false;
 
     private int boardWidth, boardHeight;
 
@@ -38,8 +39,15 @@ public class Board {
         }
     }
 
+    public Board(){
+         // Init Array List
+        stateArrayList[0] = new ArrayList<State>(); // Blue
+        stateArrayList[1] = new ArrayList<State>(); // Yellow
+        stateArrayList[2] = new ArrayList<State>(); // Green
+    }
+
     private void generateBoard( int width, int height ){
-        int[][] map = Perlin.generateMap(width,height,0.5f);
+        int[][] map = Perlin.generateMap(width, height, 0.5f);
         for(int i=0;i<width;i++) for (int j = 0; j < height; j++) stateArray[i][j] = new State(i, j, Loyalty.values()[map[i][j]]);
     }
 
@@ -104,6 +112,24 @@ public class Board {
 
         return returnValue;
     }
+
+    public int[][] explodeUnits(){
+        int[][] returnValue = new int[boardWidth][boardHeight];
+
+        for(int i=0;i<boardWidth;i++){
+            for (int j = 0; j < boardHeight; j++){
+                returnValue[i][j] = 0;
+                if(stateArray[i][j].getUnit(0) != null){
+                    returnValue[i][j] = stateArray[i][j].getUnit(0).getLoyalty().ordinal();
+                    if(stateArray[i][j].getUnit(1) != null)
+                        returnValue[i][j] *= 3;
+                }
+            }
+        }
+
+        return returnValue;
+    }
+
     public int[][] explodeProductivity(){
         int[][] returnValue = new int[boardWidth][boardHeight];
 
@@ -112,7 +138,33 @@ public class Board {
         return returnValue;
     }
 
+    public void formatUnit(int width, int height, int[][] unit){
+        while(lock){}
+        this.boardWidth = width;
+        this.boardHeight = height;
+
+        for(int i=0;i<width;i++){
+            for (int j = 0; j < height; j++){
+                if(unit[i][j] != 0){
+
+                }
+                if(unit[i][j] == 2 || unit[i][j] == 3 || unit[i][j] == 4){
+                    stateArray[i][j].addUnit(new Unit(Loyalty.values()[unit[i][j]]));
+                }
+                else if(unit[i][j] == 6 || unit[i][j] == 9 || unit[i][j] == 12){
+                    stateArray[i][j].addUnit(new Unit(Loyalty.values()[unit[i][j]/3]));
+                    stateArray[i][j].addUnit(new Unit(Loyalty.values()[unit[i][j]/3]));
+                }
+            }
+        }
+    }
+
     public void format(int width, int height, int[][] board, int[][] prod){
+        lock = true;
+        this.boardWidth = width;
+        this.boardHeight = height;
+        stateArray = new State[this.boardWidth][this.boardHeight];
+
         for(int i=0;i<width;i++) for (int j = 0; j < height; j++){
             stateArray[i][j] = new State(i, j, Loyalty.values()[board[i][j]]);
             if(board[i][j]>=2){
@@ -120,6 +172,7 @@ public class Board {
             }
             stateArray[i][j].setProductivity(prod[i][j]);
         }
+        lock=false;
     }
 
     public int numberOfEmpty(){

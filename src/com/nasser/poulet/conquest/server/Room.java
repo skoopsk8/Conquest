@@ -39,7 +39,7 @@ public class Room {
         SimpleDateFormat df = new SimpleDateFormat("HH:mm");
 
         if(!messageList.get(messageList.size()-1).isCommand()){
-            sendToAllClient(server, "["+df.format(t1)+" - "+roomName+"] "+ ((com.nasser.poulet.conquest.server.Server.GameConnection)connection).name +": "+ messageList.get(messageList.size()-1).getMessage());
+            sendToAllClient(server, "["+df.format(t1)+" - "+roomName+"] "+ ((GameConnection)connection).name +": "+ messageList.get(messageList.size()-1).getMessage());
             return null;
         }
         else{
@@ -93,7 +93,7 @@ public class Room {
             if (builder.length() > 0) {
                 builder.append(", ");
             }
-            builder.append(((com.nasser.poulet.conquest.server.Server.GameConnection)connection).name);
+            builder.append(((GameConnection)connection).name);
         }
 
         return builder.toString();

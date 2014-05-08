@@ -61,6 +61,15 @@ public class ChatMessage {
         else if(command.equals("who")){
             answer = "Listing the current users in channel: ";
         }
+        else if(command.equals("create")){
+            answer = "Creating a game with the ID: ";
+        }
+        else if(command.equals("joingame")){
+            answer = "Trying to join the game... ";
+        }
+        else if(command.equals("setready")){
+            answer = "You are now ready waiting for other players... ";
+        }
         else{
             answer = "";
         }

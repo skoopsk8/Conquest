@@ -224,6 +224,8 @@ public class Conquest {
         }while (!multiplayerMenu.action.equals("cancel"));
     }
 
+    public Object startGameData;
+
     private void lobbyMenu(){
         final Menu lobbyMenu = new Menu("lobby");
 
@@ -234,6 +236,10 @@ public class Conquest {
                 if (object instanceof Network.ChatMessage) {
                     lobbyMenu.updateText(((Network.ChatMessage) object).getMessage(),"chat");
                 }
+                if (object instanceof Network.game_server_startGame) {
+                    lobbyMenu.action = "start_multiplayer";
+                    startGameData = object;
+                }
             }
         });
 
@@ -241,8 +247,66 @@ public class Conquest {
             if(lobbyMenu.action.equals("send_chat")){
                 client.sendChat(lobbyMenu.getText("input_chat"));
             }
+            else if(lobbyMenu.action.equals("start_multiplayer")){
+                startRemoteGame((Network.game_server_startGame) startGameData);
+            }
             lobbyMenu.render();
         }while (!lobbyMenu.action.equals("disconnect"));
+    }
+    Board multiplayerBoard = null;
+    int turnMultiplayer = 0;
+
+    private void startRemoteGame(Network.game_server_startGame object){
+
+        final Menu gameMenu = new Menu("game");
+        multiplayerBoard = new Board();
+        multiplayerBoard.format(object.width, object.height, object.board, object.productivity);
+
+        GL11.glDisable(GL11.GL_BLEND);
+        RenderBoard renderer = new RenderBoard(gameMenu.getElement("gameView").getPosX(),gameMenu.getElement("gameView").getPosY(), ((GameView)gameMenu.getElement("gameView")).getWidth(),((GameView)gameMenu.getElement("gameView")).getHeight());
+
+        Human human = new Human(Loyalty.BLUE, multiplayerBoard);
+
+        client.getClient().addListener(new Listener() {
+            public void received (Connection connection, Object object) {
+                if (object instanceof Network.game_server_sendBoardSync) {
+                    multiplayerBoard.format(((Network.game_server_sendBoardSync)object).width, ((Network.game_server_sendBoardSync)object).height, ((Network.game_server_sendBoardSync)object).board, ((Network.game_server_sendBoardSync)object).productivity);
+                    turnMultiplayer = ((Network.game_server_sendBoardSync) object).turn;
+                }
+                if (object instanceof Network.game_server_sendBoardSyncUnit) {
+                    multiplayerBoard.formatUnit(((Network.game_server_sendBoardSyncUnit) object).width, ((Network.game_server_sendBoardSyncUnit) object).height, ((Network.game_server_sendBoardSyncUnit) object).units);
+                }
+            }
+        });
+
+        GL11.glClearColor (0.0f, 0.0f, 0.0f, 0.0f);
+        while(!Display.isCloseRequested()){
+            // Clear display
+            if(!multiplayerBoard.lock)
+                GL11.glClear (GL11.GL_COLOR_BUFFER_BIT);
+
+            // GL safe zone for the menu
+            GL11.glEnable(GL11.GL_BLEND);
+            gameMenu.renderNoDisplay();  // Render the surrounding menu
+            GL11.glDisable(GL11.GL_BLEND);
+
+            if(gameMenu.action.equals("gameView")){
+                if(human.click(Mouse.getX()-renderer.getOffsetX(), -(Mouse.getY()-Display.getHeight())-renderer.getOffsetY())){
+                    client.sendClick(human.fromPosX, human.fromPosY, human.toPosX, human.toPosY);
+                    human.abort();
+                }
+            }
+
+            gameMenu.updateVariable(0, Integer.toString(turnMultiplayer), "year");
+
+            renderer.render(multiplayerBoard);
+
+            Display.update();
+        }
+
+        System.out.println("The winner is " + this.getWinner(mainBoard));
+
+        GL11.glEnable(GL11.GL_BLEND);
     }
 
     private void initializeDisplay(){
@@ -274,6 +338,9 @@ public class Conquest {
 
         // Change the draw ration
         this.initializeOpenGL(Display.getWidth(),Display.getHeight());    // Launch OpenGL
+
+        // Enable Keyboard Repeat
+        Keyboard.enableRepeatEvents(true);
     }
 
     public Action pollInput(){
@@ -388,10 +455,10 @@ public class Conquest {
         System.out.println(client.getClient().getID());
         players[client.getClient().getID()-1] = new Multiplayer(Loyalty.values()[client.getClient().getID()+1], mainBoard, client.getClient());
         for(int i=0; i<3; i++){
-            if(players[i] == null)
-                players[i] = new MultiplayerRemote(Loyalty.values()[i], mainBoard, client.getClient());
+           // if(players[i] == null)
+               // players[i] = new MultiplayerRemote(Loyalty.values()[i], mainBoard, client.getClient());
         }
-        mainBoard.format(width, height, board, prod);
+       // mainBoard.format(width, height, board, prod, );
         this.startGame(players);
 
         client.close();

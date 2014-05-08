@@ -11,10 +11,18 @@ import com.nasser.poulet.conquest.network.Network;
  * Created by Thomas on 1/2/14.
  */
 public class MultiplayerRemote extends IA {
-    Client client;
-    public MultiplayerRemote(Loyalty loyalty, Board board, Client client) {
+    private boolean ready = false;
+
+    public boolean isReady() {
+        return ready;
+    }
+
+    public void setReady(boolean ready) {
+        this.ready = ready;
+    }
+
+    public MultiplayerRemote(Loyalty loyalty, Board board) {
         super(loyalty, board);
-        this.client = client;
 
     }
 

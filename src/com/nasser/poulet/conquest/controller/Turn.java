@@ -34,8 +34,8 @@ public class Turn{
     }
 
     public long update(){
-        if(!pause){
-            if (Timer.duration(this.turnSnapshot, this.currentSnapshot)>=TURN_DURATION) this.startTurn();  // If more than 1s has elapsed
+        //if(!pause){
+            /*if (Timer.duration(this.turnSnapshot, this.currentSnapshot)>=TURN_DURATION) */this.startTurn();  // If more than 1s has elapsed
 
             Timer.updateSnapshot(this.currentSnapshot);
 
@@ -47,7 +47,7 @@ public class Turn{
                        i--;
                    }
                }
-           }
+          // }
         }
             return Timer.duration(this.turnSnapshot, this.currentSnapshot);
     }

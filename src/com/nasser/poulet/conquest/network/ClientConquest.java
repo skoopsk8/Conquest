@@ -66,4 +66,8 @@ public class ClientConquest{
         System.out.println("Send message " + message);
         client.sendTCP(new Network.ChatMessage(message,0));
     }
+
+    public void sendClick(int fromPosX, int fromPosY, int toPosX, int toPosY){
+        client.sendTCP(new Network.game_client_action(fromPosX, fromPosY, toPosX, toPosY));
+    }
 }

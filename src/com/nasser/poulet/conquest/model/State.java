@@ -141,8 +141,10 @@ public class State {
         this.setEventUnitCallback(Turn.addEvent(new Event(-1, productivity, this, new Callback<State>() {
             public void methodCallback(State state) {
             	if(Board.numberOfUnit[state.getLoyalty().ordinal() - 2] < 10) {
-            		if(state.addUnit(new Unit(state.getLoyalty())))
+            		if(state.addUnit(new Unit(state.getLoyalty()))){
      	        	   Board.numberOfUnit[state.getLoyalty().ordinal() - 2]++;
+                        System.out.println("Spawned Unit");
+                    }
             	}
             }
         })));

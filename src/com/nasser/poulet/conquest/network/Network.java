@@ -2,6 +2,7 @@ package com.nasser.poulet.conquest.network;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.EndPoint;
+import com.nasser.poulet.conquest.model.Loyalty;
 
 /**
  * Created by Thomas on 1/2/14.
@@ -27,6 +28,18 @@ public class Network {
         kryo.register(CredentialsValidation.class);
         kryo.register(sendCredentials.class);
         kryo.register(RegisterClient.class);
+
+        // Register game info
+        kryo.register(game_client_moveRequest.class);
+        kryo.register(game_server_validateMoveRequest.class);
+        kryo.register(game_client_moveEnd.class);
+        kryo.register(game_server_validateMoveEndSendAction.class);
+        kryo.register(game_server_captureEnd.class);
+        kryo.register(game_client_action.class);
+        kryo.register(game_server_sendBoardSync.class);
+        kryo.register(game_server_startGame.class);
+        kryo.register(game_server_sendBoardSyncUnit.class);
+
     }
 
     static public class SelectMessage{
@@ -247,5 +260,97 @@ public class Network {
 
     static public class RegisterClient{
 
+    }
+
+
+    // Game related message
+
+    // Board Validation
+    static public class game_server_requestBoardSync{}
+
+    static public class game_server_sendBoard{}
+
+
+    // Real Network biatch
+    static public class game_client_action{
+        public int fromPosX, fromPosY, toPosX, toPosY;
+
+        public game_client_action(){}
+        public game_client_action(int fromPosX, int fromPosY, int toPosX, int toPosY){
+            this.fromPosX = fromPosX;
+            this.fromPosY = fromPosY;
+            this.toPosX = toPosX;
+            this.toPosY = toPosY;
+        }
+    }
+
+    static public class game_server_sendBoardSync{
+        public int[][] board, productivity;
+        public int width, height;
+        public int turn;
+    }
+
+    static public class game_server_sendBoardSyncUnit{
+        public int[][] units;
+        public int width, height;
+    }
+
+    static public class game_server_startGame{
+        public int[][] board, productivity;
+        public int width, height;
+        public int turn;
+    }
+
+
+
+    // Move
+    static public class game_client_moveRequest{
+        public int fromPosX, fromPosY, toPosX, toPosY;
+        public int unit;
+
+        public String gameIdent;
+    }
+
+    static public class game_server_validateMoveRequest{
+        public int fromPosX, fromPosY, toPosX, toPosY;
+        public int unit;
+        public int ident;
+        public boolean validate;
+
+        public String gameIdent;
+
+        public void copyInfo(game_client_moveRequest message){
+            this.fromPosX = message.fromPosX;
+            this.fromPosY = message.fromPosY;
+            this.toPosX = message.toPosX;
+            this.toPosY = message.toPosY;
+            this.unit = message.unit;
+        }
+    }
+
+    // End move
+    static public class game_client_moveEnd{
+        public int posX, posY;
+        public int unit;
+        public String ident;
+
+        public String gameIdent;
+    }
+
+    static public class game_server_validateMoveEndSendAction{
+        public int posX, posY;
+        public int unit;
+        public boolean validate;
+        public String action;
+
+        public String gameIdent;
+    }
+
+    // Capture
+    static public class game_server_captureEnd{
+        public int posX, posY;
+        public Loyalty newLoyalty;
+
+        public String gameIdent;
     }
 }
