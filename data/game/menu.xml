@@ -36,7 +36,7 @@
             <name>chat</name>
             <posX>20</posX>
             <posY>2</posY>
-            <width>10</width>
+            <width>9</width>
             <height>14</height>
         </textarea>
 
@@ -45,7 +45,7 @@
             <text>Message ...</text>
             <posX>20</posX>
             <posY>16</posY>
-            <width>10</width>
+            <width>9</width>
             <height>1</height>
             <action>chat</action>
         </input>
@@ -55,7 +55,7 @@
             <text>Send</text>
             <posX>20</posX>
             <posY>17</posY>
-            <width>10</width>
+            <width>9</width>
             <height>1</height>
             <action>send_chat</action>
         </button>
@@ -64,7 +64,7 @@
             <name>year</name>
             <text>Year: $0</text>
             <posX>2</posX>
-            <posY>3</posY>
+            <posY>1</posY>
             <font>
                 <fontName>Arial</fontName>
                 <size>auto2</size>
