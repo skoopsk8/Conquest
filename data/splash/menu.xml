@@ -7,7 +7,7 @@
             <name>Background</name>
             <image>data/img/splash.jpg</image>
         </background>
-        <label id="0">
+        <label>
             <name>Title</name>
             <text>Conquest</text>
             <posX>15</posX>
@@ -19,5 +19,41 @@
                 <strengh>BOLD</strengh>
             </font>
         </label>
+        <label>
+            <name>sub</name>
+            <text>Tyr engine</text>
+            <posX>15</posX>
+            <posY>10</posY>
+            <font>
+                <fontName>Arial</fontName>
+                <size>auto2</size>
+                <color>white</color>
+                <strengh>BOLD</strengh>
+            </font>
+        </label>
+        <label>
+            <name>name</name>
+            <text>Samy Nasser - Thomas Poulet</text>
+            <posX>15</posX>
+            <posY>12</posY>
+            <font>
+                <fontName>Arial</fontName>
+                <size>auto2</size>
+                <color>white</color>
+                <strengh>BOLD</strengh>
+            </font>
+        </label>
+        <updatableLabel>
+            <name>version</name>
+            <text>V: $0</text>
+            <posX>2</posX>
+            <posY>19</posY>
+            <font>
+                <fontName>Arial</fontName>
+                <size>auto2</size>
+                <color>white</color>
+                <strengh>BOLD</strengh>
+            </font>
+        </updatableLabel>
     </objects>
 </menu>

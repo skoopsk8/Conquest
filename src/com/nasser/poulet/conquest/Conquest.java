@@ -33,6 +33,8 @@ import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.ImageIOImageData;
 
 public class Conquest {
+    static public String versionNumber = "pre 0.1 alpha";
+
     private boolean fullscreen;
     private boolean noClick = true;
 
@@ -85,6 +87,7 @@ public class Conquest {
         // Splash Screen
         if(!noSplash){
             Menu splash = this.startMenu("splash");
+            splash.updateVariable(0,versionNumber, "version");
             while(splash.action!="continue"){splash.render();}
         }
 
