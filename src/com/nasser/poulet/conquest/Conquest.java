@@ -301,6 +301,9 @@ public class Conquest {
                 if (object instanceof Network.game_server_sendBoardSyncUnit) {
                     multiplayerBoard.formatUnit(((Network.game_server_sendBoardSyncUnit) object).width, ((Network.game_server_sendBoardSyncUnit) object).height, ((Network.game_server_sendBoardSyncUnit) object).units);
                 }
+                if (object instanceof Network.ChatMessage) {
+                    gameMenu.updateText(((Network.ChatMessage) object).getMessage(),"chat");
+                }
             }
         });
 
@@ -320,6 +323,10 @@ public class Conquest {
                     client.sendClick(human.fromPosX, human.fromPosY, human.toPosX, human.toPosY);
                     human.abort();
                 }
+            }
+            if(gameMenu.action.equals("send_chat")){
+                client.sendChat(gameMenu.getText("input_chat"));
+                
             }
 
             gameMenu.updateVariable(0, Integer.toString(turnMultiplayer), "year");

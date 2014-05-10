@@ -107,7 +107,6 @@ public class TextArea extends UIElementImage {
 		else {
 			int extra = 0;
 			while(extra * car < text.length()) {
-				System.out.println(extra * car + " " + text.length());
 				for(int i = 1; i < lines; i++) {
 					content[i - 1] = content[i];
 				}
