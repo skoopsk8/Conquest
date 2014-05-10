@@ -293,16 +293,16 @@ public class Conquest {
         Human human = new Human(Loyalty.values()[object.Loyalty], multiplayerBoard);
 
         client.getClient().addListener(new Listener() {
-            public void received (Connection connection, Object object) {
+            public void received(Connection connection, Object object) {
                 if (object instanceof Network.game_server_sendBoardSync) {
-                    multiplayerBoard.format(((Network.game_server_sendBoardSync)object).width, ((Network.game_server_sendBoardSync)object).height, ((Network.game_server_sendBoardSync)object).board, ((Network.game_server_sendBoardSync)object).productivity);
+                    multiplayerBoard.format(((Network.game_server_sendBoardSync) object).width, ((Network.game_server_sendBoardSync) object).height, ((Network.game_server_sendBoardSync) object).board, ((Network.game_server_sendBoardSync) object).productivity);
                     turnMultiplayer = ((Network.game_server_sendBoardSync) object).turn;
                 }
                 if (object instanceof Network.game_server_sendBoardSyncUnit) {
                     multiplayerBoard.formatUnit(((Network.game_server_sendBoardSyncUnit) object).width, ((Network.game_server_sendBoardSyncUnit) object).height, ((Network.game_server_sendBoardSyncUnit) object).units);
                 }
                 if (object instanceof Network.ChatMessage) {
-                    gameMenu.updateText(((Network.ChatMessage) object).getMessage(),"chat");
+                    gameMenu.updateText(((Network.ChatMessage) object).getMessage(), "chat");
                 }
             }
         });

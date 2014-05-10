@@ -32,14 +32,7 @@ public class Server {
     public static String apikey = "";
 
     public Server(String[] args){
-    	// Reset all connections in db
-    	try {
-			HTTP.sendPost("reset_connections", "api_key=" + Server.apikey);
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-    	
+
         System.out.println("Parsing arguments ...");
         int i=0;
         for (String s: args) {
@@ -49,6 +42,13 @@ public class Server {
         }
 
         System.out.println("Starting ...");
+
+        // Reset all connections in db
+        try {
+            HTTP.sendPost("reset_connections", "api_key=" + Server.apikey);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
 
         // Create the basic rooms -Lobby
         lobby = new Lobby();
