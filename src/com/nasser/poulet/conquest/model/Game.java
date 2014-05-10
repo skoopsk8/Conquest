@@ -21,6 +21,7 @@ public class Game {
     }
 
     private Map<Connection, Player> players = new HashMap<Connection, Player>();
+    private int playerNumber = 0;
     private boolean active;
     private com.esotericsoftware.kryonet.Server server;
     private String ident;
@@ -38,10 +39,11 @@ public class Game {
     }
 
     public int addPlayer(Connection connection){
-        players.put(connection, new MultiplayerRemote(Loyalty.values()[players.values().size()+2], board));
+        players.put(connection, new MultiplayerRemote(Loyalty.values()[playerNumber+2], board));
         ((GameConnection)connection).setGame(this);
+        playerNumber++;
 
-        return players.size()-1;
+        return playerNumber;
     }
 
     private boolean isEveryBodyReady(){
@@ -75,12 +77,10 @@ public class Game {
         startGame.board = board.explodeBoard();
         startGame.productivity = board.explodeProductivity();
 
-        int i=0;
         for(Map.Entry<Connection, Player> player : players.entrySet()){
-            startGame.Loyalty = i+2;
+            startGame.Loyalty = player.getValue().getLoyalty().ordinal();
 
             sendToClient(player.getKey(), startGame);
-            i++;
         }
 
         active = true;

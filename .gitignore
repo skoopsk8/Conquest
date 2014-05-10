@@ -16,3 +16,5 @@ native/
 .classpath
 .project
 .cproject
+
+out/

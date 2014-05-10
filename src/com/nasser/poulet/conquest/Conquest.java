@@ -51,8 +51,8 @@ public class Conquest {
 
     Menu[] menus = new Menu[4]; // Menu preloader
 
-    //private String serverBrowserIp = "5.135.190.151";
-    private String serverBrowserIp = "127.0.0.1";
+    private String serverBrowserIp = "5.135.190.151";
+    //private String serverBrowserIp = "127.0.0.1";
 
     public static void main(String[] args){
         new Conquest(args);
