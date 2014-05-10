@@ -265,7 +265,7 @@ public class Conquest {
         GL11.glDisable(GL11.GL_BLEND);
         RenderBoard renderer = new RenderBoard(gameMenu.getElement("gameView").getPosX(),gameMenu.getElement("gameView").getPosY(), ((GameView)gameMenu.getElement("gameView")).getWidth(),((GameView)gameMenu.getElement("gameView")).getHeight());
 
-        Human human = new Human(Loyalty.BLUE, multiplayerBoard);
+        Human human = new Human(Loyalty.values()[object.Loyalty], multiplayerBoard);
 
         client.getClient().addListener(new Listener() {
             public void received (Connection connection, Object object) {

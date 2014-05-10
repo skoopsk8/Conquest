@@ -271,7 +271,7 @@ public class Network {
     static public class game_server_sendBoard{}
 
 
-    // Real Network biatch
+    // That's some serious network shit!
     static public class game_client_action{
         public int fromPosX, fromPosY, toPosX, toPosY;
 
@@ -299,6 +299,7 @@ public class Network {
         public int[][] board, productivity;
         public int width, height;
         public int turn;
+        public int Loyalty;
     }
 
 

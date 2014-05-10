@@ -75,7 +75,13 @@ public class Game {
         startGame.board = board.explodeBoard();
         startGame.productivity = board.explodeProductivity();
 
-        sendToAllClient(startGame);
+        int i=0;
+        for(Map.Entry<Connection, Player> player : players.entrySet()){
+            startGame.Loyalty = i+2;
+
+            sendToClient(player.getKey(), startGame);
+            i++;
+        }
 
         active = true;
 
@@ -108,12 +114,8 @@ public class Game {
 
     public void getMessageFromClient(Object object, Connection connection){
         if(object instanceof Network.game_client_action){  // The client wants to move a unit
-            System.out.println("Move a unit from: "+((Network.game_client_action) object).fromPosX + ";"+((Network.game_client_action) object).fromPosY);
-            System.out.println("Move a unit to: "+((Network.game_client_action) object).toPosX + ";"+((Network.game_client_action) object).toPosY);
-            if(players.get(connection).select(((Network.game_client_action) object).fromPosX, ((Network.game_client_action) object).fromPosY)){   // The player can move this unit
+            if(players.get(connection).select(((Network.game_client_action) object).fromPosX, ((Network.game_client_action) object).fromPosY))  // The player can move this unit
                 players.get(connection).action(((Network.game_client_action) object).toPosX, ((Network.game_client_action) object).toPosY);
-                System.out.println("--------- Move this unit");
-            }
         }
     }
 
