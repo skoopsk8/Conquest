@@ -38,7 +38,7 @@ public class Game {
     }
 
     public int addPlayer(Connection connection){
-        players.put(connection, new MultiplayerRemote(Loyalty.values()[players.size()+2], board));
+        players.put(connection, new MultiplayerRemote(Loyalty.values()[players.values().size()+2], board));
         ((GameConnection)connection).setGame(this);
 
         return players.size()-1;

@@ -61,6 +61,10 @@ public class RenderBoard implements Render {
         }
     }
 
+    public int getTILE_SIZE() {
+        return TILE_SIZE + BORDER_SIZE;
+    }
+
     private void renderState( State state ){
         switch (state.getLoyalty()){
             case NONE:

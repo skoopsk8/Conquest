@@ -19,9 +19,9 @@ public class Human extends Player {
 
     }
 
-    public boolean click( int posX, int posY ){
-        posX = (int)Math.floor(posX/40);
-        posY = (int)Math.floor(posY/40);
+    public boolean click( int posX, int posY, int tileSize ){
+        posX = (int)Math.floor(posX/tileSize);
+        posY = (int)Math.floor(posY/tileSize);
         System.out.println(posX +" "+ posY);
 
         if(this.selected == null){   // No previous selection

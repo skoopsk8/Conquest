@@ -29,8 +29,17 @@ public class Server {
     private RoomList roomList = new RoomList();
     private GameContainer gameList = new GameContainer();
     private com.esotericsoftware.kryonet.Server server;
+    private String apikey = "";
 
     public Server(String[] args){
+        System.out.println("Parsing arguments ...");
+        int i=0;
+        for (String s: args) {
+            if(s.equals("-apikey"))
+                this.apikey = args[i+1];
+            i++;
+        }
+
         System.out.println("Starting ...");
 
         // Create the basic rooms -Lobby
@@ -63,7 +72,9 @@ public class Server {
 
                 if (object instanceof Network.sendCredentials) {
                     try {
-                        if(HTTP.sendPost("userLogin", "username="+((Network.sendCredentials) object).getUsername()+"&password="+((Network.sendCredentials) object).getPassword()).equals("true")){
+                        System.out.println(apikey);
+                        //System.out.println(HTTP.sendPost("userLogin", "api_key="+apikey+"&username="+((Network.sendCredentials) object).getUsername()+"&password="+((Network.sendCredentials) object).getPassword()));
+                        if(HTTP.sendPost("userLogin", "api_key="+apikey+"&username="+((Network.sendCredentials) object).getUsername()+"&password="+((Network.sendCredentials) object).getPassword()).equals("true")){
                             server.sendToTCP(connection.getID(), new Network.CredentialsValidation(true));
                             ((GameConnection)connection).name = ((Network.sendCredentials) object).getUsername();
                         }

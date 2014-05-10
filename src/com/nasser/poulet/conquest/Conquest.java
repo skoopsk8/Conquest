@@ -291,7 +291,7 @@ public class Conquest {
             GL11.glDisable(GL11.GL_BLEND);
 
             if(gameMenu.action.equals("gameView")){
-                if(human.click(Mouse.getX()-renderer.getOffsetX(), -(Mouse.getY()-Display.getHeight())-renderer.getOffsetY())){
+                if(human.click(Mouse.getX()-renderer.getOffsetX(), -(Mouse.getY()-Display.getHeight())-renderer.getOffsetY(), renderer.getTILE_SIZE())){
                     client.sendClick(human.fromPosX, human.fromPosY, human.toPosX, human.toPosY);
                     human.abort();
                 }
@@ -507,7 +507,7 @@ public class Conquest {
             inputAction = this.pollInput();
 
             if(gameMenu.action.equals("gameView"))
-                human.click(Mouse.getX()-renderer.getOffsetX(), -(Mouse.getY()-Display.getHeight())-renderer.getOffsetY());
+                //human.click(Mouse.getX()-renderer.getOffsetX(), -(Mouse.getY()-Display.getHeight())-renderer.getOffsetY());
 
             if(inputAction == Action.ECHAP)
                 human.abort();
@@ -565,4 +565,6 @@ public class Conquest {
     private void initClient( String address ){
         //client = new ClientConquest(address);
     }
+
+
 }

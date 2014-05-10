@@ -42,7 +42,7 @@ public class Multiplayer extends Human {
     }
 
     @Override
-    public boolean click( int posX, int posY ){
+    public boolean click( int posX, int posY, int x ){
         posX = (int)Math.floor(posX/40);
         posY = (int)Math.floor(posY/40);
         if(this.selected == null){   // No previous selection
