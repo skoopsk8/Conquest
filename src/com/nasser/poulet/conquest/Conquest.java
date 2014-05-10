@@ -21,6 +21,7 @@ import com.nasser.poulet.conquest.controller.Turn;
 import com.nasser.poulet.conquest.model.*;
 import com.nasser.poulet.conquest.network.ClientConquest;
 import com.nasser.poulet.conquest.network.ServerConquest;
+import com.nasser.poulet.conquest.server.HTTP;
 import com.nasser.poulet.conquest.view.Image;
 import com.nasser.poulet.conquest.view.RenderBoard;
 
@@ -93,6 +94,26 @@ public class Conquest {
 
         // Menu
         Menu mainMenu = menus[0];
+        String[] text = null;
+        try {
+            text = HTTP.getPage("https://raw.githubusercontent.com/skoopsk8/Conquest/master/changelog");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        for(String line: text){
+            mainMenu.updateText(line,"changelog");
+        }
+
+       text = null;
+        try {
+            text = HTTP.getPage("https://raw.githubusercontent.com/skoopsk8/Conquest/master/news");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        for(String line: text){
+            mainMenu.updateText(line,"news");
+        }
+
         do {
             if (mainMenu.action.equals("play"))
                 playMenu();
@@ -110,6 +131,7 @@ public class Conquest {
 
     private void playMenu(){
         Menu playMenu = menus[1];
+
         do {
             playMenu.render();
             if(playMenu.action.equals("blue")){

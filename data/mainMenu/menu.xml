@@ -51,5 +51,21 @@
             <height>1</height>
             <action>quit</action>
         </button>
+
+        <textarea>
+            <name>changelog</name>
+            <posX>22</posX>
+            <posY>5</posY>
+            <width>7</width>
+            <height>13</height>
+        </textarea>
+
+        <textarea>
+            <name>news</name>
+            <posX>1</posX>
+            <posY>5</posY>
+            <width>7</width>
+            <height>13</height>
+        </textarea>
     </objects>
 </menu>

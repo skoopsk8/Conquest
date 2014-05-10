@@ -1,10 +1,12 @@
 package com.nasser.poulet.conquest.server;
 
+import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 /**
  * Created by Thomas on 5/5/14.
@@ -30,11 +32,6 @@ public class HTTP {
         wr.flush();
         wr.close();
 
-        int responseCode = con.getResponseCode();
-        /*System.out.println("\nSending 'POST' request to URL : " + url);
-        System.out.println("Post parameters : " + parameters);
-        System.out.println("Response Code : " + responseCode);*/
-
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));
         String inputLine;
@@ -47,6 +44,45 @@ public class HTTP {
 
         //print result
         return response.toString();
+
+    }
+
+    public static String[] getPage(String pageUrl) throws Exception {
+
+        System.out.println("Call get");
+
+        URL obj = new URL(pageUrl);
+        HttpsURLConnection con = (HttpsURLConnection ) obj.openConnection();
+
+        //add reuqest header
+        con.setRequestMethod("POST");
+        con.setRequestProperty("User-Agent", "Mozilla/5.0");
+        con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+
+        // Send post request
+        con.setDoOutput(true);
+        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+        wr.flush();
+        wr.close();
+
+
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(con.getInputStream()));
+        String inputLine;
+        //StringBuffer response = new StringBuffer();
+
+        ArrayList<String> response = new ArrayList<String>();
+
+        while ((inputLine = in.readLine()) != null) {
+            response.add(inputLine);
+        }
+        in.close();
+
+        String[] returnValue = new String[response.size()];
+        returnValue = response.toArray(returnValue);
+
+        //print result
+        return returnValue;
 
     }
 }
