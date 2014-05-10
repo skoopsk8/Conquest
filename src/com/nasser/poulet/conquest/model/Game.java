@@ -128,4 +128,12 @@ public class Game {
         server.sendToTCP(connection.getID(), message);
     }
 
+    public boolean playerLeft(){    // return if there is any player left in the game
+        for(Map.Entry<Connection, Player> player : players.entrySet()){
+            if(player.getKey().isConnected())
+                return true;
+        }
+        return false;
+    }
+
 }

@@ -48,9 +48,14 @@ public class GameContainer {
         ses.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
+
                 for (Map.Entry<String, Game> entry : games.entrySet()){
-                    if(entry.getValue().isActive())
-                        entry.getValue().nextTick();
+                    if(entry.getValue().playerLeft()){
+                        if(entry.getValue().isActive())
+                            entry.getValue().nextTick();
+                    }
+                    else
+                       games.remove(entry.getKey());
                 }
             }
         }, 0, 1500, TimeUnit.MILLISECONDS);
