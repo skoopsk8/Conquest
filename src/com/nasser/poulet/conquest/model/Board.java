@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class Board {
     // Board representation
-    private State[][] stateArray;    // For easy pathfinding and generation
+    public State[][] stateArray;    // For easy pathfinding and generation
     private ArrayList<State> stateArrayList[] = new ArrayList[3];    // For easy gamelogic
     public boolean lock = false;
 
@@ -145,10 +145,13 @@ public class Board {
 
         for(int i=0;i<width;i++){
             for (int j = 0; j < height; j++){
+                stateArray[i][j].removeUnit(0);
+                stateArray[i][j].removeUnit(1);
                 if(unit[i][j] != 0){
 
                 }
                 if(unit[i][j] == 2 || unit[i][j] == 3 || unit[i][j] == 4){
+
                     stateArray[i][j].addUnit(new Unit(Loyalty.values()[unit[i][j]]));
                 }
                 else if(unit[i][j] == 6 || unit[i][j] == 9 || unit[i][j] == 12){
@@ -163,7 +166,7 @@ public class Board {
         lock = true;
         this.boardWidth = width;
         this.boardHeight = height;
-        stateArray = new State[this.boardWidth][this.boardHeight];
+
 
         for(int i=0;i<width;i++) for (int j = 0; j < height; j++){
             stateArray[i][j] = new State(i, j, Loyalty.values()[board[i][j]]);

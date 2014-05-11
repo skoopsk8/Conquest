@@ -285,7 +285,9 @@ public class Conquest {
 
         final Menu gameMenu = new Menu("game");
         multiplayerBoard = new Board();
+        multiplayerBoard.stateArray = new State[object.width][object.height];
         multiplayerBoard.format(object.width, object.height, object.board, object.productivity);
+
 
         GL11.glDisable(GL11.GL_BLEND);
         RenderBoard renderer = new RenderBoard(gameMenu.getElement("gameView").getPosX(),gameMenu.getElement("gameView").getPosY(), ((GameView)gameMenu.getElement("gameView")).getWidth(),((GameView)gameMenu.getElement("gameView")).getHeight());

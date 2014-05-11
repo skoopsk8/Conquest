@@ -51,12 +51,10 @@ public class RenderBoard implements Render {
         }
 
         // Render the Board
-        if(!board.lock){
-            for(int i=0;i<board.getBoardWidth();i++) {
-                for (int j = 0; j < board.getBoardHeight(); j++) {
-                    if(!board.lock)
-                        renderState(board.getState(i, j));
-                }
+        for(int i=0;i<board.getBoardWidth();i++) {
+            for (int j = 0; j < board.getBoardHeight(); j++) {
+                if(!board.lock)
+                    renderState(board.getState(i, j));
             }
         }
     }
