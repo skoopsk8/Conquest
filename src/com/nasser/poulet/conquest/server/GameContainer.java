@@ -58,6 +58,6 @@ public class GameContainer {
                        games.remove(entry.getKey());
                 }
             }
-        }, 0, 1500, TimeUnit.MILLISECONDS);
+        }, 0, 500, TimeUnit.MILLISECONDS);
     }
 }

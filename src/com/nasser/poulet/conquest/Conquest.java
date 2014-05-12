@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+import com.nasser.poulet.conquest.controller.BoardController;
 import com.nasser.poulet.conquest.controller.Timer;
 import com.nasser.poulet.conquest.menu.GameView;
 import com.nasser.poulet.conquest.menu.Menu;
@@ -34,7 +35,7 @@ import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.ImageIOImageData;
 
 public class Conquest {
-    static public String versionNumber = "pre 0.1 alpha";
+    static public String versionNumber = "pre 0.2 alpha";
 
     private boolean fullscreen;
     private boolean noClick = true;
@@ -130,7 +131,7 @@ public class Conquest {
     }
 
     private void playMenu(){
-        Menu playMenu = menus[1];
+        /*Menu playMenu = menus[1];
 
         do {
             playMenu.render();
@@ -158,7 +159,7 @@ public class Conquest {
         }while (playMenu.action.equals(""));
         if(!playMenu.action.equals("quit")){
             this.startGame(players);
-        }
+        }*/
     }
 
     private void settingsMenu(){
@@ -278,15 +279,15 @@ public class Conquest {
             lobbyMenu.render();
         }while (!lobbyMenu.action.equals("disconnect"));
     }
-    Board multiplayerBoard = null;
+    BoardController multiplayerBoard = null;
     int turnMultiplayer = 0;
 
     private void startRemoteGame(Network.game_server_startGame object){
 
         final Menu gameMenu = new Menu("game");
-        multiplayerBoard = new Board();
-        multiplayerBoard.stateArray = new State[object.width][object.height];
-        multiplayerBoard.format(object.width, object.height, object.board, object.productivity);
+        multiplayerBoard = new BoardController(new Board());
+        multiplayerBoard.getBoard().stateArray = new State[object.width][object.height];
+        multiplayerBoard.getBoard().format(object.width, object.height, object.board, object.productivity);
 
 
         GL11.glDisable(GL11.GL_BLEND);
@@ -297,11 +298,11 @@ public class Conquest {
         client.getClient().addListener(new Listener() {
             public void received(Connection connection, Object object) {
                 if (object instanceof Network.game_server_sendBoardSync) {
-                    multiplayerBoard.format(((Network.game_server_sendBoardSync) object).width, ((Network.game_server_sendBoardSync) object).height, ((Network.game_server_sendBoardSync) object).board, ((Network.game_server_sendBoardSync) object).productivity);
+                    multiplayerBoard.getBoard().format(((Network.game_server_sendBoardSync) object).width, ((Network.game_server_sendBoardSync) object).height, ((Network.game_server_sendBoardSync) object).board, ((Network.game_server_sendBoardSync) object).productivity);
                     turnMultiplayer = ((Network.game_server_sendBoardSync) object).turn;
                 }
                 if (object instanceof Network.game_server_sendBoardSyncUnit) {
-                    multiplayerBoard.formatUnit(((Network.game_server_sendBoardSyncUnit) object).width, ((Network.game_server_sendBoardSyncUnit) object).height, ((Network.game_server_sendBoardSyncUnit) object).units);
+                    multiplayerBoard.getBoard().formatUnit(((Network.game_server_sendBoardSyncUnit) object).width, ((Network.game_server_sendBoardSyncUnit) object).height, ((Network.game_server_sendBoardSyncUnit) object).units);
                 }
                 if (object instanceof Network.ChatMessage) {
                     gameMenu.updateText(((Network.ChatMessage) object).getMessage(), "chat");
@@ -312,8 +313,7 @@ public class Conquest {
         GL11.glClearColor (0.0f, 0.0f, 0.0f, 0.0f);
         while(!Display.isCloseRequested()){
             // Clear display
-            if(!multiplayerBoard.lock)
-                GL11.glClear (GL11.GL_COLOR_BUFFER_BIT);
+            GL11.glClear (GL11.GL_COLOR_BUFFER_BIT);
 
             // GL safe zone for the menu
             GL11.glEnable(GL11.GL_BLEND);
@@ -333,7 +333,7 @@ public class Conquest {
 
             gameMenu.updateVariable(0, Integer.toString(turnMultiplayer), "year");
 
-            renderer.render(multiplayerBoard);
+            renderer.render(multiplayerBoard.getBoard());
 
             Display.update();
         }
@@ -487,7 +487,7 @@ public class Conquest {
 
 
         System.out.println(client.getClient().getID());
-        players[client.getClient().getID()-1] = new Multiplayer(Loyalty.values()[client.getClient().getID()+1], mainBoard, client.getClient());
+        //players[client.getClient().getID()-1] = new Multiplayer(Loyalty.values()[client.getClient().getID()+1], mainBoard, client.getClient());
         for(int i=0; i<3; i++){
            // if(players[i] == null)
                // players[i] = new MultiplayerRemote(Loyalty.values()[i], mainBoard, client.getClient());
@@ -526,7 +526,7 @@ public class Conquest {
         Action inputAction;
 
         // Have to stay just before the while
-        Board.numberOfUnit[0]=Board.numberOfUnit[1]=Board.numberOfUnit[2]=0;
+        //board.numberOfUnit[0]=board.numberOfUnit[1]=board.numberOfUnit[2]=0;
         turn.startTurn();
         GL11.glClearColor (0.0f, 0.0f, 0.0f, 0.0f);
         while( this.endGame(mainBoard, turn.getTurnNumber()) && !Display.isCloseRequested()){

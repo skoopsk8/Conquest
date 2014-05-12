@@ -14,9 +14,21 @@ public class Board {
     private ArrayList<State> stateArrayList[] = new ArrayList[3];    // For easy gamelogic
     public boolean lock = false;
 
+    public ArrayList<EventTurnBased> eventTurnBaseds = new ArrayList<EventTurnBased>();
+
     private int boardWidth, boardHeight;
 
-    public static int[] numberOfUnit = {0, 0, 0};
+    public int[] numberOfUnit = {0, 0, 0};
+
+    public void updateEvents(){
+        for(int i=0; i < eventTurnBaseds.size(); i++){
+            if(eventTurnBaseds.get(i).call()){
+                System.out.println("remove Event "+i);
+                eventTurnBaseds.remove(i);
+                i--;
+            }
+        }
+    }
 
     public Board( int width, int height, boolean generate ){
         this.boardWidth = width;
@@ -56,25 +68,24 @@ public class Board {
 
         // Let's add player start
         this.addState(Loyalty.BLUE, playerPos[0][0], playerPos[0][1]);
+        //generateUnitSpawnCallback(stateArray[playerPos[0][0]][playerPos[0][1]]);
         this.addState(Loyalty.YELLOW, playerPos[1][0], playerPos[1][1]);
+        //generateUnitSpawnCallback(stateArray[playerPos[1][0]][playerPos[1][1]]);
         this.addState(Loyalty.GREEN, playerPos[2][0], playerPos[2][1]);
-    }
-
-    public void generateUnitSpawnCallback( State state ){
-        state.generateUnitSpawnCallback();
+        //generateUnitSpawnCallback(stateArray[playerPos[2][0]][playerPos[2][1]]);
     }
 
     public State addState( Loyalty loyalty, int posX, int posY ){
         stateArray[posX][posY] = new State(posX, posY, loyalty);
         stateArrayList[loyalty.ordinal()-2].add(stateArray[posX][posY]);
-        generateUnitSpawnCallback(stateArray[posX][posY]);
+        //generateUnitSpawnCallback(stateArray[posX][posY]);
         return stateArray[posX][posY];
     }
 
     public State addState( Loyalty loyalty, int posX, int posY, int productivity){
         stateArray[posX][posY] = new State(posX, posY, loyalty, productivity);
         stateArrayList[loyalty.ordinal()-2].add(stateArray[posX][posY]);
-        generateUnitSpawnCallback(stateArray[posX][posY]);
+        //generateUnitSpawnCallback(stateArray[posX][posY]);
         return stateArray[posX][posY];
     }
 

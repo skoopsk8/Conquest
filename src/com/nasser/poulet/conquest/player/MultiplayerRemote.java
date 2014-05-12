@@ -3,6 +3,7 @@ package com.nasser.poulet.conquest.player;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+import com.nasser.poulet.conquest.controller.BoardController;
 import com.nasser.poulet.conquest.model.Board;
 import com.nasser.poulet.conquest.model.Loyalty;
 import com.nasser.poulet.conquest.network.Network;
@@ -21,7 +22,7 @@ public class MultiplayerRemote extends IA {
         this.ready = ready;
     }
 
-    public MultiplayerRemote(Loyalty loyalty, Board board) {
+    public MultiplayerRemote(Loyalty loyalty, BoardController board) {
         super(loyalty, board);
 
     }

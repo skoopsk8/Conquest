@@ -19,9 +19,9 @@ public abstract class Player {
     protected State selected;
     protected ArrayList<ArrayList<State>> moves = new ArrayList<ArrayList<State>>();
 
-	public Player( Loyalty loyalty, Board board ){
+	public Player( Loyalty loyalty, BoardController board ){
         this.loyalty = loyalty;
-        this.boardController = new BoardController(board);
+        this.boardController = board;
     }
 
     public abstract void start();

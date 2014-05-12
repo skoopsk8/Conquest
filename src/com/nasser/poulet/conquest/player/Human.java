@@ -1,5 +1,6 @@
 package com.nasser.poulet.conquest.player;
 
+import com.nasser.poulet.conquest.controller.BoardController;
 import com.nasser.poulet.conquest.model.Board;
 import com.nasser.poulet.conquest.model.Loyalty;
 import com.nasser.poulet.conquest.player.Player;
@@ -10,7 +11,7 @@ import com.nasser.poulet.conquest.player.Player;
 public class Human extends Player {
     public int fromPosX, fromPosY, toPosX, toPosY;
 
-    public Human(Loyalty loyalty, Board board ) {
+    public Human(Loyalty loyalty, BoardController board ) {
         super(loyalty, board);
     }
 

@@ -1,12 +1,14 @@
 package com.nasser.poulet.conquest.model;
 
 import com.esotericsoftware.kryonet.Connection;
+import com.nasser.poulet.conquest.controller.BoardController;
 import com.nasser.poulet.conquest.controller.Turn;
 import com.nasser.poulet.conquest.network.Network;
 import com.nasser.poulet.conquest.player.MultiplayerRemote;
 import com.nasser.poulet.conquest.player.Player;
 import com.nasser.poulet.conquest.server.GameConnection;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,7 +16,7 @@ import java.util.Map;
  * Created by Thomas on 5/6/14.
  */
 public class Game {
-    private Board board;
+    private BoardController board;
 
     public boolean isActive() {
         return active;
@@ -26,14 +28,12 @@ public class Game {
     private com.esotericsoftware.kryonet.Server server;
     private String ident;
     private int turnNumber;
-    private Turn turn = new Turn();
 
     public Game(Connection connection, com.esotericsoftware.kryonet.Server server, String ident){
         this.server = server;
         this.ident = ident;
 
-        board = null;
-        board = new Board(29, 20, true);
+        board = new BoardController(new Board(29, 20, true));
 
         addPlayer(connection);
     }
@@ -60,7 +60,7 @@ public class Game {
             active = true;
 
             int index = 0;
-            Board.numberOfUnit[0]=Board.numberOfUnit[1]=Board.numberOfUnit[2]=0;
+            board.getBoard().numberOfUnit[0]=board.getBoard().numberOfUnit[1]=board.getBoard().numberOfUnit[2]=0;
 
             startGame();
         }
@@ -72,10 +72,10 @@ public class Game {
 
         Network.game_server_startGame startGame = new Network.game_server_startGame();
 
-        startGame.width = board.getBoardWidth();
-        startGame.height = board.getBoardHeight();
-        startGame.board = board.explodeBoard();
-        startGame.productivity = board.explodeProductivity();
+        startGame.width = board.getBoard().getBoardWidth();
+        startGame.height = board.getBoard().getBoardHeight();
+        startGame.board = board.getBoard().explodeBoard();
+        startGame.productivity = board.getBoard().explodeProductivity();
 
         for(Map.Entry<Connection, Player> player : players.entrySet()){
             startGame.Loyalty = player.getValue().getLoyalty().ordinal();
@@ -85,14 +85,16 @@ public class Game {
 
         active = true;
 
-        turn.startTurn();
     }
 
     public void nextTick(){
         // New tick in the game
+        //System.out.println("Starting turn number "+ turnNumber);
         turnNumber++;
         //turn.startTurn();
-        turn.update();
+        //turn.update();
+
+        board.getBoard().updateEvents();
 
         for(Map.Entry<Connection, Player> player : players.entrySet()){
             player.getValue().update();
@@ -101,11 +103,11 @@ public class Game {
         Network.game_server_sendBoardSync boardSync = new Network.game_server_sendBoardSync();
         Network.game_server_sendBoardSyncUnit boardSyncUnit = new Network.game_server_sendBoardSyncUnit();
 
-        boardSync.width = boardSyncUnit.width = board.getBoardWidth();
-        boardSync.height = boardSyncUnit.height = board.getBoardHeight();
-        boardSync.board = board.explodeBoard();
-        boardSync.productivity = board.explodeProductivity();
-        boardSyncUnit.units = board.explodeUnits();
+        boardSync.width = boardSyncUnit.width = board.getBoard().getBoardWidth();
+        boardSync.height = boardSyncUnit.height = board.getBoard().getBoardHeight();
+        boardSync.board = board.getBoard().explodeBoard();
+        boardSync.productivity = board.getBoard().explodeProductivity();
+        boardSyncUnit.units = board.getBoard().explodeUnits();
         boardSync.turn = turnNumber;
 
         sendToAllClient(boardSync);

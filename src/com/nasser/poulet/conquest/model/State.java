@@ -11,6 +11,7 @@ public class State {
     private Loyalty loyalty, provLoyalty;
     private boolean inCapture;
     private Event eventUnitCallback;
+    private EventTurnBased eventTurnBased;
     private Unit[] units = new Unit[2];
 
     public State( int x, int y, Loyalty loyalty){
@@ -29,6 +30,14 @@ public class State {
         eventUnitCallback = null;
 
         this.productivity = productivity;
+    }
+
+    public EventTurnBased getEventTurnBased() {
+        return eventTurnBased;
+    }
+
+    public void setEventTurnBased(EventTurnBased eventTurnBased) {
+        this.eventTurnBased = eventTurnBased;
     }
 
     @Override
@@ -136,9 +145,9 @@ public class State {
         return this.units[1]==null;
     }
 
-    public void generateUnitSpawnCallback(){
-        if(eventUnitCallback!=null) Turn.removeEvent(eventUnitCallback);   // Clear actual Callback
-        this.setEventUnitCallback(Turn.addEvent(new Event(-1, productivity, this, new Callback<State>() {
+    /*public EventTurnBased generateUnitSpawnCallback(){
+       if(eventUnitCallback!=null) Turn.removeEvent(eventUnitCallback);   // Clear actual Callback
+       return new EventTurnBased(-1, productivity, this, new Callback<State>() {
             public void methodCallback(State state) {
             	if(Board.numberOfUnit[state.getLoyalty().ordinal() - 2] < 10) {
             		if(state.addUnit(new Unit(state.getLoyalty()))){
@@ -147,6 +156,6 @@ public class State {
                     }
             	}
             }
-        })));
-    }
+        });
+    }*/
 }

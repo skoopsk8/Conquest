@@ -8,8 +8,19 @@ import com.nasser.poulet.conquest.model.*;
 public class BoardController {
     private Board board;
 
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
     public BoardController( Board board ){
         this.board = board;
+
+        //TODO : Client protection
+        if(board.getStateArrayList()[0].size()>0){
+            generateUnitSpawnCallback(board.getStateArrayList()[0].get(0));
+            generateUnitSpawnCallback(board.getStateArrayList()[1].get(0));
+            generateUnitSpawnCallback(board.getStateArrayList()[2].get(0));
+        }
     }
 
     public State select(int posX, int posY) {
@@ -55,19 +66,38 @@ public class BoardController {
     private void capture( Unit unit, State state ){
         state.setProvLoyalty(unit.getLoyalty());
         state.setInCapture(true);
-        Turn.addEvent(new com.nasser.poulet.conquest.model.Event(1, state.getProductivity() , state, new Callback<State>(){
+
+        // Capture callback
+        board.eventTurnBaseds.add(new EventTurnBased(1, 4 , state, new Callback<State>(){
             public void methodCallback(State state) {
-            if(state.isInCapture()){
-                state.setInCapture(false);
-                if(state.getLoyalty() != state.getProvLoyalty() && state.getLoyalty() != Loyalty.EMPTY && state.getLoyalty() != Loyalty.NONE) {
-                	board.getStateArrayList()[state.getLoyalty().ordinal() - 2].remove(state);
+                if(state.isInCapture()){
+                    state.setInCapture(false);
+                    if(state.getLoyalty() != state.getProvLoyalty() && state.getLoyalty() != Loyalty.EMPTY && state.getLoyalty() != Loyalty.NONE) {
+                        board.getStateArrayList()[state.getLoyalty().ordinal() - 2].remove(state);
+                    }
+                    state.setLoyalty(state.getProvLoyalty());
+                    board.getStateArrayList()[state.getLoyalty().ordinal() - 2].add(state);
+                    generateUnitSpawnCallback(state);
                 }
-                state.setLoyalty(state.getProvLoyalty());
-                board.getStateArrayList()[state.getLoyalty().ordinal() - 2].add(state);
-                state.generateUnitSpawnCallback();
-            }
             }
         }));
+    }
+
+    public void generateUnitSpawnCallback( State state ){
+        //state.generateUnitSpawnCallback();
+        EventTurnBased temp = new EventTurnBased(-1, 3, state, new Callback<State>() {
+            public void methodCallback(State state) {
+                System.out.println("Unit spawn callback in "+state.getPosX()+";"+state.getPosY());
+                if(board.numberOfUnit[state.getLoyalty().ordinal() - 2] < 10) {
+                    if(state.addUnit(new Unit(state.getLoyalty()))){
+                        board.numberOfUnit[state.getLoyalty().ordinal() - 2]++;
+                        System.out.println("Spawned Unit");
+                    }
+                }
+            }
+        });
+        state.setEventTurnBased(temp);
+        board.eventTurnBaseds.add(temp);
     }
 
     private void combat( Unit unit, State state){
@@ -76,12 +106,12 @@ public class BoardController {
         // Neutral
         if(state.getLoyalty() == Loyalty.EMPTY){
             if(board.getCivilizationPower(unit.getLoyalty())>board.getCivilizationPower(state.getUnit().getLoyalty())) {
-                Board.numberOfUnit[state.getUnit(0).getLoyalty().ordinal() - 2]--;
+                board.numberOfUnit[state.getUnit(0).getLoyalty().ordinal() - 2]--;
             	state.removeUnit(0);
             }
 
             else {
-                Board.numberOfUnit[state.getUnit(1).getLoyalty().ordinal() - 2]--;
+                board.numberOfUnit[state.getUnit(1).getLoyalty().ordinal() - 2]--;
             	state.removeUnit(1);
             }
               
@@ -90,11 +120,11 @@ public class BoardController {
         // Attack
         else{
             if(board.getCivilizationPower(unit.getLoyalty())>board.getCivilizationPower(state.getUnit().getLoyalty())*1.2) {
-                Board.numberOfUnit[state.getUnit(0).getLoyalty().ordinal() - 2]--;
+                board.numberOfUnit[state.getUnit(0).getLoyalty().ordinal() - 2]--;
                 state.removeUnit(0);
             }
             else {
-                Board.numberOfUnit[state.getUnit(1).getLoyalty().ordinal() - 2]--;
+                board.numberOfUnit[state.getUnit(1).getLoyalty().ordinal() - 2]--;
                 state.removeUnit(1);
             }
         }
