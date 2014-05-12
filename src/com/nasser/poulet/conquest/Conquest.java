@@ -271,6 +271,7 @@ public class Conquest {
         do {
             if(lobbyMenu.action.equals("send_chat")){
                 client.sendChat(lobbyMenu.getText("input_chat"));
+                lobbyMenu.getElement("input_chat").setText("");
             }
             else if(lobbyMenu.action.equals("start_multiplayer")){
                 startRemoteGame((Network.game_server_startGame) startGameData);
@@ -328,7 +329,7 @@ public class Conquest {
             }
             if(gameMenu.action.equals("send_chat")){
                 client.sendChat(gameMenu.getText("input_chat"));
-                
+                gameMenu.getElement("input_chat").setText("");
             }
 
             gameMenu.updateVariable(0, Integer.toString(turnMultiplayer), "year");
