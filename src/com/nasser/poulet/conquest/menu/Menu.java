@@ -224,6 +224,11 @@ public class Menu extends DefaultHandler{
             button = input;
             element = button;
             element.setType("input");
+        }  else if (qName.equals("password")) {
+            input = new Password();
+            button = input;
+            element = button;
+            element.setType("password");
         } else if (qName.equals("textarea")) {
             textarea = new TextArea();
             element = textarea;
@@ -257,6 +262,11 @@ public class Menu extends DefaultHandler{
             element = null;
             gameView = null;
         } else if (qName.equals("input")) {
+            uiElements.add(element);
+            selectedInput = input;
+            element = null;
+            input = null;
+        } else if (qName.equals("password")) {
             uiElements.add(element);
             selectedInput = input;
             element = null;

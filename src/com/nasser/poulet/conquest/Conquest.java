@@ -97,21 +97,21 @@ public class Conquest {
         String[] text = null;
         try {
             text = HTTP.getPage("https://raw.githubusercontent.com/skoopsk8/Conquest/master/changelog");
+            for(String line: text){
+                mainMenu.updateText(line,"changelog");
+            }
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        for(String line: text){
-            mainMenu.updateText(line,"changelog");
         }
 
-       text = null;
+        text = null;
         try {
             text = HTTP.getPage("https://raw.githubusercontent.com/skoopsk8/Conquest/master/news");
+            for(String line: text){
+                mainMenu.updateText(line,"news");
+            }
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        for(String line: text){
-            mainMenu.updateText(line,"news");
         }
 
         do {

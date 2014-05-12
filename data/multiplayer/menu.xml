@@ -29,15 +29,15 @@
             <action>username</action>
         </input>
 
-        <input>
+        <password>
             <name>Password</name>
-            <text>Password</text>
+            <text>*****</text>
             <posX>16</posX>
             <posY>9</posY>
             <width>10</width>
             <height>1</height>
             <action>password</action>
-        </input>
+        </password>
 
         <label>
             <name>Current_Label</name>
