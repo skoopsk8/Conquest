@@ -35,7 +35,7 @@ import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.ImageIOImageData;
 
 public class Conquest {
-    static public String versionNumber = "pre 0.2 alpha";
+    static public String versionNumber = "0.2 alpha";
 
     private boolean fullscreen;
     private boolean noClick = true;
@@ -51,6 +51,9 @@ public class Conquest {
     Player[] players = new Player[3];
 
     Menu[] menus = new Menu[4]; // Menu preloader
+
+    int argWidth = 0;
+    int argHeight = 0;
 
     private String serverBrowserIp = "5.135.190.151";
     //private String serverBrowserIp = "127.0.0.1";
@@ -72,6 +75,10 @@ public class Conquest {
                 noSplash = true;
             else if(s.equals("-port"))
                 Network.port = Integer.parseInt(args[i+1]);
+            else if(s.equals("-resolution")){
+                argWidth = Integer.parseInt(args[i+1]);
+                argHeight = Integer.parseInt(args[i+2]);
+            }
 
              i++;
         }
@@ -332,7 +339,8 @@ public class Conquest {
                 gameMenu.getElement("input_chat").setText("");
             }
 
-            gameMenu.updateVariable(0, Integer.toString(turnMultiplayer), "year");
+            gameMenu.updateVariable(0, Seasons.values()[turnMultiplayer%4].toString(), "year");
+            gameMenu.updateVariable(1, Integer.toString(turnMultiplayer/4), "year");
 
             renderer.render(multiplayerBoard.getBoard());
 
@@ -348,7 +356,10 @@ public class Conquest {
         try {
             System.out.println("Launching ...");
             modes = Display.getAvailableDisplayModes();
-            Display.setDisplayMode(modes[activeMode]);
+            if(argWidth != 0 && argHeight!=0)
+                Display.setDisplayMode(new DisplayMode(argWidth,argHeight));
+            else
+                Display.setDisplayMode(modes[activeMode]);
             if(this.fullscreen){
                 System.out.println("Fullscreen");
                 Display.setFullscreen(true);

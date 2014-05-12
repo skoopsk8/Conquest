@@ -62,7 +62,7 @@
 
         <updatableLabel>
             <name>year</name>
-            <text>Year: $0</text>
+            <text>$0 $1</text>
             <posX>2</posX>
             <posY>1</posY>
             <font>
