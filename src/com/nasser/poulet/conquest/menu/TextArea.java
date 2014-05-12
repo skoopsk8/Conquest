@@ -98,26 +98,24 @@ public class TextArea extends UIElementImage {
 	}
 	
 	public void addText(String text) {
-		if (text.length() > 23) {
-			if (text.length() < this.car) {
+		if (text.length() < this.car) {
+			for(int i = 1; i < lines; i++) {
+				content[i - 1] = content[i];
+			}
+			content[lines-1] = text;
+		}
+		else {
+			int extra = 0;
+			while(extra * car < text.length()) {
 				for(int i = 1; i < lines; i++) {
 					content[i - 1] = content[i];
 				}
-				content[lines-1] = text;
-			}
-			else {
-				int extra = 0;
-				while(extra * car < text.length()) {
-					for(int i = 1; i < lines; i++) {
-						content[i - 1] = content[i];
-					}
-					if(extra*car + car > text.length())
-						content[lines-1] = text.substring(extra*car, text.length());
-					else 
-						content[lines-1] = text.substring(extra*car, extra*car + car);
-					
-					extra++;
-				}
+				if(extra*car + car > text.length())
+					content[lines-1] = text.substring(extra*car, text.length());
+				else 
+					content[lines-1] = text.substring(extra*car, extra*car + car);
+				
+				extra++;
 			}
 		}
 	}
