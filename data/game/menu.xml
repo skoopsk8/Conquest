@@ -42,7 +42,7 @@
 
         <input>
             <name>input_chat</name>
-            <text>Message ...</text>
+            <text>Have fun !</text>
             <posX>20</posX>
             <posY>16</posY>
             <width>9</width>
