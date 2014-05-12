@@ -24,7 +24,7 @@ Extract the game and launch the .bat.
 
 That's it!
 
-## System requirments
+## System requirements
 Sadly, we are currently only supporting windows plateform. However we are working on mac and linux versions.
 
 ## Host your own server
