@@ -98,21 +98,21 @@ public class Conquest {
         String[] text = null;
         try {
             text = HTTP.getPage("https://raw.githubusercontent.com/skoopsk8/Conquest/master/changelog");
+            for(String line: text){
+                mainMenu.updateText(line,"changelog");
+            }
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        for(String line: text){
-            mainMenu.updateText(line,"changelog");
         }
 
-       text = null;
+        text = null;
         try {
             text = HTTP.getPage("https://raw.githubusercontent.com/skoopsk8/Conquest/master/news");
+            for(String line: text){
+                mainMenu.updateText(line,"news");
+            }
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        for(String line: text){
-            mainMenu.updateText(line,"news");
         }
 
         do {
@@ -272,6 +272,7 @@ public class Conquest {
         do {
             if(lobbyMenu.action.equals("send_chat")){
                 client.sendChat(lobbyMenu.getText("input_chat"));
+                lobbyMenu.getElement("input_chat").setText("");
             }
             else if(lobbyMenu.action.equals("start_multiplayer")){
                 startRemoteGame((Network.game_server_startGame) startGameData);
@@ -328,7 +329,7 @@ public class Conquest {
             }
             if(gameMenu.action.equals("send_chat")){
                 client.sendChat(gameMenu.getText("input_chat"));
-                
+                gameMenu.getElement("input_chat").setText("");
             }
 
             gameMenu.updateVariable(0, Integer.toString(turnMultiplayer), "year");

@@ -11,7 +11,7 @@ import java.awt.*;
  */
 public class Button extends UIElementImage {
     private String action;
-    private Color color = Color.white;
+    protected Color color = Color.white;
     
     public Button() {
     	super("data/img/button-left.png", "data/img/button-center.png", "data/img/button-right.png");

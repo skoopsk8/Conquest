@@ -17,7 +17,7 @@ public class Input extends Button {
 	    	case 211:
 	    		text = "";
 	    	case 28:
-	    		// On appuie sur Retour
+	    		
 	    		break;
 	         default:
 	        	 boolean isCorrect = Character.isAlphabetic(keyChar) || Character.isDigit(keyChar) || keyChar == ':' || keyChar == '/' || keyChar == ',' || keyChar == '!' || keyChar == '?' || keyChar == '\'' || keyChar == '.' || keyChar == '_';
