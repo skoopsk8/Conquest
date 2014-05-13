@@ -209,8 +209,12 @@ public class Conquest {
 
         // Menu render loop
         do {
-            if(connectionMenu.action.equals("connect")){
-                // Contact the server browser
+            if(connectionMenu.action.equals("connect") || connectionMenu.getText("Username").endsWith(String.valueOf(Keyboard.KEY_INSERT)) || connectionMenu.getText("Password").endsWith(String.valueOf(Keyboard.KEY_INSERT))){
+            	if(connectionMenu.getText("Username").endsWith(String.valueOf(Keyboard.KEY_INSERT)))
+            		connectionMenu.updateText(connectionMenu.getText("Username").replaceAll(String.valueOf(Keyboard.KEY_INSERT), ""), "Username");
+            	else if(connectionMenu.getText("Password").endsWith(String.valueOf(Keyboard.KEY_INSERT)))
+            		connectionMenu.updateText(connectionMenu.getText("Password").replaceAll(String.valueOf(Keyboard.KEY_INSERT), ""), "Password");
+            	// Contact the server browser
                 try {
                     client = new ClientConquest(serverBrowserIp);
 
@@ -277,8 +281,9 @@ public class Conquest {
         // Render menu loop
         do {
             // Send chat message
-            if(lobbyMenu.action.equals("send_chat")){
-                client.sendChat(lobbyMenu.getText("input_chat"));
+        	if(lobbyMenu.action.equals("send_chat") || lobbyMenu.getText("input_chat").endsWith(String.valueOf(Keyboard.KEY_INSERT))){
+        		lobbyMenu.updateText(lobbyMenu.getText("input_chat").trim().replaceAll(String.valueOf(Keyboard.KEY_INSERT), ""), "input_chat");
+        		client.sendChat(lobbyMenu.getText("input_chat").trim());
                 lobbyMenu.getElement("input_chat").setText("");
             }
 
@@ -346,8 +351,9 @@ public class Conquest {
                     human.abort();  // Clear select
                 }
             }
-            else if(gameMenu.action.equals("send_chat")){   // Send chat
-                client.sendChat(gameMenu.getText("input_chat"));
+            else if(gameMenu.action.equals("send_chat") || gameMenu.getText("input_chat").endsWith(String.valueOf(Keyboard.KEY_INSERT))){   // Send chat
+            	gameMenu.updateText(gameMenu.getText("input_chat").trim().replaceAll(String.valueOf(Keyboard.KEY_INSERT), ""), "input_chat");
+                client.sendChat(gameMenu.getText("input_chat").trim());
                 gameMenu.getElement("input_chat").setText("");
             }
 
