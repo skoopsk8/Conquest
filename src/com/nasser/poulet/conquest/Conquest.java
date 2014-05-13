@@ -3,8 +3,11 @@ package com.nasser.poulet.conquest;
  * Created by Lord on 10/12/13.
  */
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
 import java.util.Hashtable;
 
@@ -35,7 +38,7 @@ import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.ImageIOImageData;
 
 public class Conquest {
-    static public String versionNumber = "0.2 alpha";
+    static public String versionNumber = "pre 0.3 alpha";
 
     private boolean fullscreen;
     private boolean noClick = true;
@@ -56,7 +59,6 @@ public class Conquest {
     int argHeight = 0;
 
     private String serverBrowserIp = "5.135.190.151";
-    //private String serverBrowserIp = "127.0.0.1";
 
     public static void main(String[] args){
         new Conquest(args);
@@ -124,9 +126,9 @@ public class Conquest {
 
         do {
             if (mainMenu.action.equals("play"))
-                playMenu();
-            else if (mainMenu.action.equals("multiplayer"))
                 multiplayerMenu();
+            else if(mainMenu.action.equals("website"))
+                launchWebsite();
             else if (mainMenu.action.equals("settings"))
                 settingsMenu();
 
@@ -135,6 +137,29 @@ public class Conquest {
 
         // Display destroy & free
         Display.destroy();
+    }
+
+    private void launchWebsite(){
+        String url = "http://conquest.nagyzzer.com/";
+
+        if (Desktop.isDesktopSupported()) {
+            // Windows
+            try {
+                Desktop.getDesktop().browse(new URI(url));
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+        } else {
+            // Ubuntu
+            Runtime runtime = Runtime.getRuntime();
+            try {
+                runtime.exec("/usr/bin/firefox -new-window " + url);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void playMenu(){
