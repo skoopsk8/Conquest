@@ -22,7 +22,7 @@
             <posY>5</posY>
             <width>10</width>
             <height>1</height>
-            <action>multiplayer</action>
+            <action>play</action>
         </button>
         <button>
             <name>Button2</name>
