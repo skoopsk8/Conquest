@@ -16,13 +16,14 @@ public class Input extends Button {
 	    		break;
 	    	case 211:
 	    		text = "";
-	    	case 28:
-	    		
-	    		break;
 	         default:
-	        	 boolean isCorrect = Character.isAlphabetic(keyChar) || Character.isDigit(keyChar) || keyChar == ':' || keyChar == '/' || keyChar == ',' || keyChar == '!' || keyChar == '?' || keyChar == '\'' || keyChar == '.' || keyChar == '_' || keyChar == '^';
-	        	 if(isCorrect)
+	        	 boolean isCorrect = Character.isAlphabetic(keyChar) || Character.isDigit(keyChar) || keyEvent == 28 ||keyChar == ':' || keyChar == '/' || keyChar == ',' || keyChar == '!' || keyChar == '?' || keyChar == '\'' || keyChar == '.' || keyChar == '_' || keyChar == '^';
+	        	 if(isCorrect){
 	        		 text+=keyChar;
+	        		 if(keyEvent == 28)
+	        			 text+=String.valueOf(keyEvent);
+	        	 }
+	        	 
     	}
     }
     public String click( int posX, int posY){
