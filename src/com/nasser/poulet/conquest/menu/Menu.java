@@ -128,7 +128,9 @@ public class Menu extends DefaultHandler{
             while (Keyboard.next()) {
                 if (Keyboard.getEventKeyState()) {   // Only pressed keys
                     if (selectedInput != null)
-                        selectedInput.keyboard(Keyboard.getEventCharacter(), Keyboard.getEventKey());
+                        if(selectedInput.keyboard(Keyboard.getEventCharacter(), Keyboard.getEventKey()) == Keyboard.KEY_ESCAPE) {
+                        	action = "quit";
+                        }
                 }
             }
         }

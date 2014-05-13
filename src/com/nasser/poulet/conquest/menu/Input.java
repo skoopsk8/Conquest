@@ -6,7 +6,7 @@ import org.lwjgl.input.Keyboard;
  * Created by Thomas on 12/31/13.
  */
 public class Input extends Button {
-    public void keyboard( char keyChar, int keyEvent ){    	
+    public int keyboard( char keyChar, int keyEvent ){    	
     	switch(keyEvent) {
 	    	case Keyboard.KEY_BACK:
 	            if (text.length() > 0) {
@@ -32,6 +32,7 @@ public class Input extends Button {
 	        	 }
 	        	 
     	}
+		return keyEvent;
     }
     public String click( int posX, int posY){
         if(super.inside(posX, posY)){

@@ -208,12 +208,14 @@ public class Conquest {
         final boolean[] response = {false};
 
         // Menu render loop
-        do {
+        do {     		
             if(connectionMenu.action.equals("connect") || connectionMenu.getText("Username").endsWith(String.valueOf(Keyboard.KEY_INSERT)) || connectionMenu.getText("Password").endsWith(String.valueOf(Keyboard.KEY_INSERT))){
             	if(connectionMenu.getText("Username").endsWith(String.valueOf(Keyboard.KEY_INSERT)))
             		connectionMenu.updateText(connectionMenu.getText("Username").replaceAll(String.valueOf(Keyboard.KEY_INSERT), ""), "Username");
             	else if(connectionMenu.getText("Password").endsWith(String.valueOf(Keyboard.KEY_INSERT)))
             		connectionMenu.updateText(connectionMenu.getText("Password").replaceAll(String.valueOf(Keyboard.KEY_INSERT), ""), "Password");
+            	
+            	
             	// Contact the server browser
                 try {
                     client = new ClientConquest(serverBrowserIp);
