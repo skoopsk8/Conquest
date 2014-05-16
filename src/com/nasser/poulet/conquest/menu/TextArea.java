@@ -10,19 +10,17 @@ public class TextArea extends UIElementImage {
 	private String[] content;
 	private String font = "Arial";
     private String size = Integer.toString(Display.getHeight() / 20 - 20);
-    private Image[] corner = new Image[4];
 
 	public TextArea() {
-		super("data/img/void.png", "data/img/void.png", "data/img/TextAreaBorder.png");
-		for(int i = 0; i < 4; i++) {
-			this.corner[i] = com.nasser.poulet.conquest.view.Image.getImage("data/img/TextAreaBorder.png");
-			this.corner[i].setCenterOfRotation(this.corner[i].getWidth() / 2, this.corner[i].getHeight() / 2);
-			this.corner[i].setRotation(i*90);
-		}
+		super("data/img/void.png", "data/img/void.png", "data/img/bg.png");
 		lines = 0;
 		car = 0;
 	}
 
+    @Override
+    public boolean hover(int posX, int posY) {
+        return true;
+    }
 	
 	@Override
 	public void setWidth(int width) {
@@ -49,12 +47,7 @@ public class TextArea extends UIElementImage {
 	}
 	
 	public TextArea(int lines) {
-		super("data/img/void.png", "data/img/void.png", "data/img/TextAreaBorder.png");
-		for(int i = 0; i < 4; i++) {
-			this.corner[i] = com.nasser.poulet.conquest.view.Image.getImage("data/img/TextAreaBorder.png");
-			this.corner[i].setCenterOfRotation(this.corner[i].getWidth() / 2, this.corner[i].getHeight() / 2);
-			this.corner[i].setRotation(i*90);
-		}
+		super("data/img/void.png", "data/img/void.png", "data/img/bg.png");
 		this.lines = lines;
 		content = new String[lines];
 		for(int i = 0; i < lines; i++) {
@@ -75,21 +68,15 @@ public class TextArea extends UIElementImage {
 	public void render() {
 		int ratioX = Display.getWidth()/30;
         int ratioY = Display.getHeight()/20;
+
+        img3.draw(posX*ratioX, posY*ratioY, this.width*ratioX,this.height*ratioY);
+
 		img1.draw(posX*ratioX,posY*ratioY - 1, this.width*ratioX, 1);
 		img1.draw(posX*ratioX,posY*ratioY + this.height*ratioY, this.width*ratioX, 1);
 		
 	    img2.draw(posX*ratioX, posY*ratioY, 1,this.height*ratioY);
 	    img2.draw(posX*ratioX + this.width*ratioX, posY*ratioY, 1,this.height*ratioY);
-	    
-	    /* BORDS RONDS NE FONCTIONNE PAS pour l'instant a cause de rotation
-	    this.corner[0].draw(posX*ratioX, posY*ratioY - 5);
-	    this.corner[1].draw(posX*ratioX + ((this.width*ratioX/32)*32)-32, posY*ratioY);/*
-		img3.setRotation(180);
-		img3.draw(posX*ratioX + ((this.width*ratioX/32)*32)-32, posY*ratioY,32,this.height*ratioY);
-		img3.setRotation(270);
-		img3.draw(posX*ratioX + ((this.width*ratioX/32)*32)-32, posY*ratioY,32,this.height*ratioY);*/
-		
-	  
+
 		for(int i = 0; i < this.lines; i++){
 			if(!content[i].equals("")) {
 				Font.getFont(font+":"+size).drawString(posX*ratioX, posY*ratioY + 10 + Font.getFont(font+":"+size).getHeight(content[i]) * i, content[i], Color.white);	
@@ -119,5 +106,11 @@ public class TextArea extends UIElementImage {
 			}
 		}
 	}
+
+    @Override
+    public void reload() {
+        size = Integer.toString(Display.getHeight() / 20 - 20);
+        super.reload();
+    }
 	
 }
