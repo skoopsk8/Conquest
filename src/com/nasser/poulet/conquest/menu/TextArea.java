@@ -26,10 +26,10 @@ public class TextArea extends UIElementImage {
 	public void setWidth(int width) {
 		this.width = width;
 		
-		String line = "a";
+		String line = "l";
 		int ratioX = Display.getWidth()/30;
 		
-		this.car = (this.width * ratioX) /  Font.getFont(font+":"+size).getWidth(line);
+		this.car = ((this.width * ratioX) /  Font.getFont(font+":"+size).getWidth(line)) / 2;
 	}
 	
 	@Override
