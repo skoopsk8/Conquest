@@ -5,7 +5,7 @@
     <objects>
     	<background>
             <name>Background</name>
-			<image>data/img/bg.png</image>
+			<image>data/img/settings.jpg</image>
 		</background>
         <label>
             <name>Title</name>

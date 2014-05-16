@@ -4,7 +4,7 @@
     </properties>
     <objects>
     	<background id="0">
-			<image>data/img/bg.png</image>
+			<image>data/img/multiplayer.jpg</image>
 		</background>
         <label>
             <name>Title</name>

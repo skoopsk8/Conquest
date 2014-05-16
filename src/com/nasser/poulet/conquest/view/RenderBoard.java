@@ -66,22 +66,22 @@ public class RenderBoard implements Render {
     private void renderState( State state ){
         switch (state.getLoyalty()){
             case NONE:
-                GL11.glColor4f(0.1f, 0.1f, 0.1f, 1.f);
+                GL11.glColor3f(0.1f, 0.1f, 0.1f);
                 break;
             case EMPTY:
-                GL11.glColor4f(0.3f, 0.3f, 0.3f, 1.f);
+                GL11.glColor3f(0.3f, 0.3f, 0.3f);
                 break;
             case BLUE:
-                GL11.glColor4f(0.1f, 0.1f, 0.5f, 1.f);
+                GL11.glColor3f(142/255.f, 68/255.f, 173/255.f);
                 break;
             case GREEN:
-                GL11.glColor4f(0.1f, 0.5f, 0.1f, 1.f);
+                GL11.glColor3f(0/255.f, 151/255.f, 64/255.f);
                 break;
             case YELLOW:
-                GL11.glColor4f(0.5f, 0.5f, 0.1f, 1.f);
+                GL11.glColor3f(231/255.f, 85/255.f, 34/255.f);
                 break;
             case BARBARIAN:
-                GL11.glColor4f(0.5f, 0.1f, 0.1f, 1.f);
+                GL11.glColor3f(0.752f, 0.223f, 0.168f);
                 break;
         }
 
@@ -102,16 +102,16 @@ public class RenderBoard implements Render {
     private void renderUnit( Unit unit, int posX, int posY, int level ){
         switch (unit.getLoyalty()){
             case BLUE:
-                GL11.glColor3f(0.068f, 0.568f, 0.836f);
+                GL11.glColor3f(217/255.f, 149/255.f, 245/255.f);
                 break;
             case GREEN:
-                GL11.glColor3f(0.384f, 0.88f, 0.072f);
+                GL11.glColor3f(133/255.f, 246/255.f, 152/255.f);
                 break;
             case YELLOW:
-                GL11.glColor3f(0.98f, 0.876f, 0.1f);
+                GL11.glColor3f(255/255.f, 174/255.f, 121/255.f);
                 break;
             case BARBARIAN:
-                GL11.glColor3f(0.7f, 0.1f, 0.1f);
+                GL11.glColor3f(0.905f, 0.298f, 0.235f);
                 break;
         }
         GL11.glBegin(GL11.GL_QUADS);
