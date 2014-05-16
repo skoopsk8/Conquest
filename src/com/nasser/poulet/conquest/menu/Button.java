@@ -30,10 +30,10 @@ public class Button extends UIElementImage {
 		int car = (this.width * ratioX) /  Font.getFont(font+":"+size).getWidth(line);
 		
         if(text.length() < car) {
-        	Font.getFont(font+":"+size).drawString(posX*ratioX + ((this.getWidth()*ratioX)-Font.getFont(font+":"+size).getWidth(text))/2, posY*ratioY + 10, text, color);
+        	Font.getFont(font+":"+size).drawString(posX*ratioX + ((this.getWidth()*ratioX)-Font.getFont(font+":"+size).getWidth(text))/2, posY*ratioY + 6, text, color);
         }
         else {
-        	Font.getFont(font+":"+size).drawString(posX*ratioX + ((this.getWidth()*ratioX)-Font.getFont(font+":"+size).getWidth(text.substring(text.length() - car)))/2, posY*ratioY + 10, text.substring(text.length() - car), color);
+        	Font.getFont(font+":"+size).drawString(posX*ratioX + ((this.getWidth()*ratioX)-Font.getFont(font+":"+size).getWidth(text.substring(text.length() - car)))/2, posY*ratioY + 6, text.substring(text.length() - car), color);
         }
     }
 

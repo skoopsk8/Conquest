@@ -37,7 +37,7 @@ import java.nio.ByteBuffer;
 
 public class Conquest {
     static public String versionNumber = "pre 0.3 alpha";   // Version number
-    private String serverBrowserIp = "conquest.nagyzzer.com";   // Default server browser
+    private String serverBrowserIp = "localhost";   // Default server browser
 
     private boolean fullscreen; // Fullscreen?
 

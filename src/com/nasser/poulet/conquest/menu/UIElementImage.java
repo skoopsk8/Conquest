@@ -70,7 +70,7 @@ public class UIElementImage extends UIElement {
             int ratioY = Display.getHeight()/20;
 			img1.draw(posX*ratioX,posY*ratioY,32,this.height*ratioY);
 		    img2.draw(posX*ratioX + 32, posY*ratioY,this.width*ratioX-64,this.height*ratioY);
-			img3.draw(posX*ratioX + ((this.width*ratioX/32)*32)-32, posY*ratioY,32,this.height*ratioY);
+			img3.draw(posX*ratioX + this.width*ratioX-32, posY*ratioY,32,this.height*ratioY);
 		}
 	}
 
@@ -93,19 +93,7 @@ public class UIElementImage extends UIElement {
     public boolean hover(int posX, int posY) {
         boolean returnValue = false;
         if(inside(posX, posY)){
-            img1.setAlpha(0.5f);
-            if(img2!=null){
-                img2.setAlpha(0.5f);
-                img3.setAlpha(0.5f);
-            }
             returnValue = true;
-        }
-        else{
-            img1.setAlpha(1f);
-            if(img2!=null){
-                img2.setAlpha(1f);
-                img3.setAlpha(1f);
-            }
         }
 
         render();
