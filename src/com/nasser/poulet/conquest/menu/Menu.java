@@ -128,9 +128,26 @@ public class Menu extends DefaultHandler{
             while (Keyboard.next()) {
                 if (Keyboard.getEventKeyState()) {   // Only pressed keys
                     if (selectedInput != null)
-                        if(selectedInput.keyboard(Keyboard.getEventCharacter(), Keyboard.getEventKey()) == Keyboard.KEY_ESCAPE) {
+                    	switch(selectedInput.keyboard(Keyboard.getEventCharacter(), Keyboard.getEventKey())) {
+                    	case Keyboard.KEY_ESCAPE:
                         	action = "quit";
-                        }
+                        break;
+                    /*	case Keyboard.KEY_TAB:
+                            for (int i = 0; i < uiElements.size() && action.equals(""); i++) {
+                            	if(uiElements.get(i).getType().equals("input") || uiElements.get(i).getType().equals("password")) {
+                            		if(!uiElements.get(sel).getName().equals(uiElements.get(i).getName())) {
+                            			action = "input_activate";
+                            			sel = i;
+                            		}
+                            	}
+                              
+                                // Activate Input
+                                if(action.equals("input_activate")){
+                                    selectedInput = (Input)uiElements.get(sel);
+                                }
+                            }
+                    		break;*/
+                    	}
                 }
             }
         }
