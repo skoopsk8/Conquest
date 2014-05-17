@@ -6,7 +6,7 @@ import org.newdawn.slick.Image;
 
 public class TextArea extends UIElementImage {
 	
-	private int lines, car;
+	private int lines;
 	private String[] content;
 	private String font = "Arial";
     private String size = Integer.toString(Display.getHeight() / 20 - 20);
@@ -14,7 +14,6 @@ public class TextArea extends UIElementImage {
 	public TextArea() {
 		super("data/img/void.png", "data/img/void.png", "data/img/bg.png");
 		lines = 0;
-		car = 0;
 	}
 
     @Override
@@ -25,11 +24,6 @@ public class TextArea extends UIElementImage {
 	@Override
 	public void setWidth(int width) {
 		this.width = width;
-		
-		String line = "l";
-		int ratioX = Display.getWidth()/30;
-		
-		this.car = ((this.width * ratioX) /  Font.getFont(font+":"+size).getWidth(line)) / 2;
 	}
 	
 	@Override
@@ -86,26 +80,28 @@ public class TextArea extends UIElementImage {
 	
 	public void addText(String text) {
 		int ratioX = Display.getWidth()/30;
-		//int car = ((this.width * ratioX) /  Font.getFont(font+":"+size).getWidth(text));
 		
-		if (text.length() < this.car) {
+		if(Font.getFont(font+":"+size).getWidth(text) < this.width*ratioX) {
 			for(int i = 1; i < lines; i++) {
 				content[i - 1] = content[i];
 			}
 			content[lines-1] = text;
 		}
 		else {
-			int extra = 0;
-			while(extra * car < text.length()) {
+			int start = 0;
+			
+			while(start<text.length()) {
+				int end = text.length();
+				while(Font.getFont(font+":"+size).getWidth(text.substring(start, end)) > this.width*ratioX) {
+					if (end>0) end--;
+					System.out.println("Start : " + start + " end : " + end + " textlength : " + text.length());
+				}
 				for(int i = 1; i < lines; i++) {
 					content[i - 1] = content[i];
 				}
-				if(extra*car + car > text.length())
-					content[lines-1] = text.substring(extra*car, text.length());
-				else 
-					content[lines-1] = text.substring(extra*car, extra*car + car);
-				
-				extra++;
+				content[lines-1] = text.substring(start, end);
+				start = end;
+				System.out.println("Start : " + start + " end : " + end + " textlength : " + text.length());
 			}
 		}
 	}
