@@ -94,14 +94,12 @@ public class TextArea extends UIElementImage {
 				int end = text.length();
 				while(Font.getFont(font+":"+size).getWidth(text.substring(start, end)) > this.width*ratioX) {
 					if (end>0) end--;
-					System.out.println("Start : " + start + " end : " + end + " textlength : " + text.length());
 				}
 				for(int i = 1; i < lines; i++) {
 					content[i - 1] = content[i];
 				}
 				content[lines-1] = text.substring(start, end);
 				start = end;
-				System.out.println("Start : " + start + " end : " + end + " textlength : " + text.length());
 			}
 		}
 	}
