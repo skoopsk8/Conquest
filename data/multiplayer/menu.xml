@@ -22,6 +22,7 @@
         <input>
             <name>Username</name>
             <text>Username</text>
+            <selected></selected>
             <posX>4</posX>
             <posY>9</posY>
             <width>10</width>

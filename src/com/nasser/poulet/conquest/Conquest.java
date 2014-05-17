@@ -178,6 +178,10 @@ public class Conquest {
             settingsMenu.render();
             if(settingsMenu.action.equals("cancel"))
                 return;
+            if(settingsMenu.getText("Browser").contains(String.valueOf(Keyboard.KEY_INSERT))) {
+        		settingsMenu.updateText(settingsMenu.getText("Browser").replaceAll(String.valueOf(Keyboard.KEY_INSERT), ""), "Browser");
+        		settingsMenu.action = "save";
+        	}
         }while (!(settingsMenu.action.equals("save") || settingsMenu.action.equals("quit")));
 
         // Change the resolution
@@ -292,6 +296,14 @@ public class Conquest {
             // Start multiplayer game
             else if(lobbyMenu.action.equals("start_multiplayer")){
                 startRemoteGame(startGameData[0]);
+            }
+        	
+            else if(lobbyMenu.action.equals("create")) {
+            	client.sendChat("/create");
+            }
+        	
+            else if(lobbyMenu.action.equals("join")) {
+            	client.sendChat("/joingame " + lobbyMenu.getText("friend"));
             }
 
             lobbyMenu.render();

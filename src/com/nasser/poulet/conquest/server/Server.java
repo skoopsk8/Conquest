@@ -137,6 +137,9 @@ public class Server {
         else if(command.getCommand().equals("joingame")){
             server.sendToTCP(connection.getID(), new Network.ChatMessage(gameList.addPlayerToGame(connection, command.getMessage()),connectionRoom.getIdNum()));
         }
+      /*  else if(command.getCommand().equals("jointest")){
+            server.sendToTCP(connection.getID(), new Network.ChatMessage(gameList.addPlayerToGameWith(connection, command.getMessage()),connectionRoom.getIdNum()));
+        }*/
         else if(command.getCommand().equals("setready")){
             ((GameConnection)connection).getGame().setPlayerReady(connection);
         }

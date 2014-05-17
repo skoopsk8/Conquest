@@ -59,6 +59,7 @@
         <input>
             <name>Browser</name>
             <text>xXx</text>
+            <selected></selected>
             <posX>9</posX>
             <posY>8</posY>
             <width>10</width>

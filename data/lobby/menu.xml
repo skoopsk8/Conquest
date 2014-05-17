@@ -29,11 +29,20 @@
             <action>create</action>
         </button>
 
+        <input>
+            <name>friend</name>
+            <text>Game ID</text>
+            <posX>2</posX>
+            <posY>7</posY>
+            <width>4</width>
+            <height>1</height>
+            <action>friend_input</action>
+        </input>
         <button>
             <name>join</name>
             <text>Join the server</text>
             <posX>2</posX>
-            <posY>6</posY>
+            <posY>8</posY>
             <width>4</width>
             <height>1</height>
             <action>join</action>
@@ -63,6 +72,7 @@
         <input>
             <name>input_chat</name>
             <text>Hello !</text>
+            <selected></selected>
             <posX>14</posX>
             <posY>16</posY>
             <width>15</width>

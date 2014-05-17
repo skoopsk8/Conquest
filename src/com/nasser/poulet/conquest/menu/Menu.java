@@ -126,20 +126,15 @@ public class Menu extends DefaultHandler{
         
         // Select first input
         if(onLoad) {
-	        int input_first = -1;
 	        for (int i = 0; i < uiElements.size() && action.equals(""); i++) {
 	        	if(uiElements.get(i).getType().equals("input")) {
-	        		if(selectedInput != uiElements.get(i)) {
-	        			action = "input_activate";
-	        			input_first = i;
+	        		if(((Input)uiElements.get(i)).isSelected()) {
+		        		if(selectedInput != uiElements.get(i)) {
+		        			selectedInput = (Input)uiElements.get(i);
+			                onLoad = false;
+		        		}
 	        		}
 	        	}
-	          
-	            // Activate Input
-	            if(action.equals("input_activate") && input_first != -1){
-	                selectedInput = (Input)uiElements.get(input_first);
-	                onLoad = false;
-	            }
 	        }
         }
 
@@ -312,6 +307,9 @@ public class Menu extends DefaultHandler{
             selectedInput = input;
             element = null;
             input = null;
+        } else if (qName.equals("selected")) {
+            ((Input)element).setSelected(true);
+            buffer = null;
         } else if (qName.equals("textarea")) {
             uiElements.add(element);
             element = null;

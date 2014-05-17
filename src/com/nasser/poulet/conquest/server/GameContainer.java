@@ -28,13 +28,34 @@ public class GameContainer {
     }
 
     public String addPlayerToGame(Connection connection, String ident){
-        if(!games.get(ident).isActive()){   // Check that it's a good ident ;)
-            games.get(ident).addPlayer(connection);
-            return "You are now connected to the game, GL HF";
+        if(games.containsKey(ident)) { // If the game exists
+        	if(!games.get(ident).isActive()){
+                games.get(ident).addPlayer(connection);
+                return "You are now connected to the game, GL HF";
+            }
+            else
+                return "Sorry, the game is currently active";
         }
-        else
-            return "Sorry, the game is currently active";
+        else {
+        	return "Sorry, this game doesn't exist";
+        }
     }
+    
+  /*  public String addPlayerToGameWith(Connection connection, String user){
+    	if(games.)
+    		games.get(ident)
+        if(games.containsKey(ident)) { // If the game exists
+        	if(!games.get(ident).isActive()){
+                games.get(ident).addPlayer(connection);
+                return "You are now connected to the game, GL HF";
+            }
+            else
+                return "Sorry, the game is currently active";
+        }
+        else {
+        	return "Sorry, this game doesn't exist";
+        }
+    }*/
 
     public void sendClickToGame(Connection connection, Object object){
         /*if(!games.get(((Network.game_client_action)object).gameIdent).isActive()){
