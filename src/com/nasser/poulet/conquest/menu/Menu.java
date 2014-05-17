@@ -44,6 +44,7 @@ public class Menu extends DefaultHandler{
     Event event = null;
 
     private boolean timerCreated = false;
+    private boolean onLoad = true;
 
     public Menu(String filename) {
         this.filename = filename;
@@ -119,35 +120,56 @@ public class Menu extends DefaultHandler{
             }
         }
 
-        // reset aciton
+        // reset action
         if(action.equals("input_activate"))
             action = "";
+        
+        // Select first input
+        if(onLoad) {
+	        int input_first = -1;
+	        for (int i = 0; i < uiElements.size() && action.equals(""); i++) {
+	        	if(uiElements.get(i).getType().equals("input")) {
+	        		if(selectedInput != uiElements.get(i)) {
+	        			action = "input_activate";
+	        			input_first = i;
+	        		}
+	        	}
+	          
+	            // Activate Input
+	            if(action.equals("input_activate") && input_first != -1){
+	                selectedInput = (Input)uiElements.get(input_first);
+	                onLoad = false;
+	            }
+	        }
+        }
 
         // Get keyboard input
         if (keyboard) {
             while (Keyboard.next()) {
                 if (Keyboard.getEventKeyState()) {   // Only pressed keys
-                    if (selectedInput != null)
+                    if (selectedInput != null) {
                     	switch(selectedInput.keyboard(Keyboard.getEventCharacter(), Keyboard.getEventKey())) {
                     	case Keyboard.KEY_ESCAPE:
                         	action = "quit";
                         break;
-                    /*	case Keyboard.KEY_TAB:
+                    	case Keyboard.KEY_TAB:
+                    		int sip = -1;
                             for (int i = 0; i < uiElements.size() && action.equals(""); i++) {
                             	if(uiElements.get(i).getType().equals("input") || uiElements.get(i).getType().equals("password")) {
-                            		if(!uiElements.get(sel).getName().equals(uiElements.get(i).getName())) {
+                            		if(selectedInput != uiElements.get(i)) {
                             			action = "input_activate";
-                            			sel = i;
+                            			sip = i;
                             		}
                             	}
                               
                                 // Activate Input
-                                if(action.equals("input_activate")){
-                                    selectedInput = (Input)uiElements.get(sel);
+                                if(action.equals("input_activate") && sip != -1){
+                                    selectedInput = (Input)uiElements.get(sip);
                                 }
                             }
-                    		break;*/
+                    		break;
                     	}
+                    }
                 }
             }
         }

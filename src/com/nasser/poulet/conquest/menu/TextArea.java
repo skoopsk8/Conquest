@@ -85,6 +85,9 @@ public class TextArea extends UIElementImage {
 	}
 	
 	public void addText(String text) {
+		int ratioX = Display.getWidth()/30;
+		//int car = ((this.width * ratioX) /  Font.getFont(font+":"+size).getWidth(text));
+		
 		if (text.length() < this.car) {
 			for(int i = 1; i < lines; i++) {
 				content[i - 1] = content[i];
