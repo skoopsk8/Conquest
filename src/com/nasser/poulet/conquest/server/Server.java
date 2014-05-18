@@ -150,6 +150,8 @@ public class Server {
         else if(command.getCommand().equals("setready")){
         	if(((GameConnection)connection).getGame() != null)
         		((GameConnection)connection).getGame().setPlayerReady(connection);
+        	else
+        		server.sendToTCP(connection.getID(), new Network.ChatMessage("You are not connected to a game", connectionRoom.getIdNum()));
         }
     }
 

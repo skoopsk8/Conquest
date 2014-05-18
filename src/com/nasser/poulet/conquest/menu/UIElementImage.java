@@ -78,6 +78,14 @@ public class UIElementImage extends UIElement {
 		return img1;
 	}
 
+	public Image getImg2() {
+		return img2;
+	}
+
+	public Image getImg3() {
+		return img3;
+	}
+
 	public void setImg1(String img1) {
         this.img1 = com.nasser.poulet.conquest.view.Image.getImage(img1);
         this.img1Name = img1;
