@@ -39,7 +39,7 @@ public class Game {
     }
 
     public int addPlayer(Connection connection){
-        sendToAllClient("A new player as joined the game: " + ((GameConnection)connection).name);
+        sendToAllClient(new Network.ChatMessage("A new player as joined the game: " + ((GameConnection)connection).name,0));
         players.put(connection, new MultiplayerRemote(Loyalty.values()[playerNumber+2], board));
         ((GameConnection)connection).setGame(this);
         playerNumber++;
@@ -59,6 +59,7 @@ public class Game {
     public void setPlayerReady(Connection connection){
     	// TODO: Check the user is in a game to setready (else server crash)
         ((MultiplayerRemote)players.get(connection)).setReady(true);
+        sendToAllClient(new Network.ChatMessage("The player " + ((GameConnection)connection).name + " is now ready.",0));
         if(isEveryBodyReady()){
             active = true;
 
