@@ -1,0 +1,35 @@
+<menu>
+    <properties>
+        <wait>2500</wait>
+    </properties>
+    <objects>
+        <background>
+            <name>Background</name>
+            <image>data/img/splash.jpg</image>
+        </background>
+        <label>
+            <name>Title</name>
+            <text>has won the game</text>
+            <posX>15</posX>
+            <posY>10</posY>
+            <font>
+                <fontName>Arial</fontName>
+                <size>auto</size>
+                <color>white</color>
+                <strengh>BOLD</strengh>
+            </font>
+        </label>
+        <label>
+            <name>winner</name>
+            <text>xXx</text>
+            <posX>15</posX>
+            <posY>9</posY>
+            <font>
+                <fontName>Arial</fontName>
+                <size>auto</size>
+                <color>white</color>
+                <strengh>BOLD</strengh>
+            </font>
+        </label>
+    </objects>
+</menu>

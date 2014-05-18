@@ -392,12 +392,15 @@ public class Conquest {
             Display.update();
         }while (!(gameMenu.action.equals("disconnect") || gameMenu.action.equals("quit")) && winnerLoyalty[0] == null);
 
-        if(winnerLoyalty[0] != null){
-            System.out.println(winnerLoyalty[0] + " has won the game !");
-        }
-
         // Restore OpenGL blend
         GL11.glEnable(GL11.GL_BLEND);
+
+        if(winnerLoyalty[0] != null){
+            Menu endGame = this.startMenu("endgame");
+            endGame.updateText(winnerLoyalty[0],"winner");
+            while(!endGame.action.equals("continue")){endGame.render();}
+        }
+
     }
 
     private void initializeDisplay(){
