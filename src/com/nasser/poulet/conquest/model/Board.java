@@ -191,7 +191,7 @@ public class Board {
 
     public int numberOfEmpty(){
         int returnValue = 0;
-        for(int i=0;i<boardWidth;i++) for (int j = 0; j < boardHeight; j++) if(stateArray[i][j].getLoyalty()==Loyalty.BLUE) returnValue++;
+        for(int i=0;i<boardWidth;i++) for (int j = 0; j < boardHeight; j++) if(stateArray[i][j].getLoyalty()==Loyalty.EMPTY) returnValue++;
 
         return returnValue;
     }

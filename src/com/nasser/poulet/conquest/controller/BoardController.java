@@ -43,7 +43,7 @@ public class BoardController {
 	}
 
     public void checkEndGame(){
-        if(board.numberOfEmpty()==10&& !endGameTimer){
+        if(board.numberOfEmpty()<=0&& !endGameTimer){
             generateEndgameCallback();
             endGameTimer = true;
         }
