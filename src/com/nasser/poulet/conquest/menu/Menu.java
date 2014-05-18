@@ -96,12 +96,13 @@ public class Menu extends DefaultHandler{
 
         // Render
         for (UIElement uiElement : uiElements) {
-        	uiElement.render();
+        	if(!uiElement.isHidden())
+        		uiElement.render();
         }
 
         // Hover action
         for (UIElement uiElement : uiElements) {
-            if (uiElement.getType() != "background")
+            if (uiElement.getType() != "background" && !uiElement.isHidden())
                 uiElement.hover(Mouse.getX(), (-Mouse.getY()) + Display.getHeight());
         }
 
@@ -310,7 +311,10 @@ public class Menu extends DefaultHandler{
         } else if (qName.equals("selected")) {
             ((Input)element).setSelected(true);
             buffer = null;
-        } else if (qName.equals("textarea")) {
+        } else if (qName.equals("hidden")) {
+            element.setHidden(true);
+            buffer = null;
+        }else if (qName.equals("textarea")) {
             uiElements.add(element);
             element = null;
             textarea = null;

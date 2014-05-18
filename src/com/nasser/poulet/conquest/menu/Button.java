@@ -12,8 +12,9 @@ import java.awt.*;
 public class Button extends UIElementImage {
     private String action;
     protected Color color = Color.white;
-    
-    public Button() {
+
+
+	public Button() {
     	super("data/img/button-left.png", "data/img/button-center.png", "data/img/button-right.png");
         font = "Arial";
         size = Integer.toString(Display.getHeight() / 20 - 20);

@@ -289,7 +289,7 @@ public class Conquest {
             // Send chat message
         	if(lobbyMenu.action.equals("send_chat") || lobbyMenu.getText("input_chat").endsWith(String.valueOf(Keyboard.KEY_INSERT))){
         		lobbyMenu.updateText(lobbyMenu.getText("input_chat").trim().replaceAll(String.valueOf(Keyboard.KEY_INSERT), ""), "input_chat");
-        		client.sendChat(lobbyMenu.getText("input_chat").trim());
+        		client.sendChat(lobbyMenu.getText("input_chat").replaceAll("^\\s+|\\s+$", ""));
                 lobbyMenu.getElement("input_chat").setText("");
             }
 
@@ -304,6 +304,10 @@ public class Conquest {
         	
             else if(lobbyMenu.action.equals("join")) {
             	client.sendChat("/joingame " + lobbyMenu.getText("friend"));
+            }
+        	
+            else if(lobbyMenu.action.equals("ready")) {
+            	client.sendChat("/setready");
             }
 
             lobbyMenu.render();

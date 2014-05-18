@@ -39,7 +39,6 @@ public class Network {
         kryo.register(game_server_sendBoardSync.class);
         kryo.register(game_server_startGame.class);
         kryo.register(game_server_sendBoardSyncUnit.class);
-
     }
 
     static public class SelectMessage{

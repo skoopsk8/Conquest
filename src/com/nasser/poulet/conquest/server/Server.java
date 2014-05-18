@@ -135,13 +135,21 @@ public class Server {
             server.sendToTCP(connection.getID(), new Network.ChatMessage(gameList.createNewGame(server, connection), connectionRoom.getIdNum()));
         }
         else if(command.getCommand().equals("joingame")){
-            server.sendToTCP(connection.getID(), new Network.ChatMessage(gameList.addPlayerToGame(connection, command.getMessage()),connectionRoom.getIdNum()));
+        	for(Connection user:  server.getConnections())
+        	{
+        		if(user.isConnected()) {
+        			if(((GameConnection)user).name.equals(command.getMessage())) {
+        				if(!(((GameConnection)user).getGame()).isActive()) {
+	        				(((GameConnection)user).getGame()).addPlayer(connection);
+	        				server.sendToTCP(connection.getID(), new Network.ChatMessage("Successfuly joined game, push ready to start ! GL&HF", connectionRoom.getIdNum()));
+        				}
+        			}
+        		}
+        	}
         }
-      /*  else if(command.getCommand().equals("jointest")){
-            server.sendToTCP(connection.getID(), new Network.ChatMessage(gameList.addPlayerToGameWith(connection, command.getMessage()),connectionRoom.getIdNum()));
-        }*/
         else if(command.getCommand().equals("setready")){
-            ((GameConnection)connection).getGame().setPlayerReady(connection);
+        	if(((GameConnection)connection).getGame() != null)
+        		((GameConnection)connection).getGame().setPlayerReady(connection);
         }
     }
 

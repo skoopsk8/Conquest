@@ -55,6 +55,7 @@ public class Game {
     }
 
     public void setPlayerReady(Connection connection){
+    	// TODO: Check the user is in a game to setready (else server crash)
         ((MultiplayerRemote)players.get(connection)).setReady(true);
         if(isEveryBodyReady()){
             active = true;

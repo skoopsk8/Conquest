@@ -63,8 +63,10 @@ public class ClientConquest{
     }
 
     public void sendChat(String message){
-        System.out.println("Send message " + message);
-        client.sendTCP(new Network.ChatMessage(message,0));
+    	if(!message.equals("")) {
+	        System.out.println("Send message " + message);
+	        client.sendTCP(new Network.ChatMessage(message,0));
+    	}
     }
 
     public void sendClick(int fromPosX, int fromPosY, int toPosX, int toPosY){

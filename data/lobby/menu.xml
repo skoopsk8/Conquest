@@ -31,7 +31,7 @@
 
         <input>
             <name>friend</name>
-            <text>Game ID</text>
+            <text>Friend's name</text>
             <posX>2</posX>
             <posY>7</posY>
             <width>4</width>
@@ -46,6 +46,17 @@
             <width>4</width>
             <height>1</height>
             <action>join</action>
+        </button>
+        
+        <button>
+            <name>ready</name>
+            <text>Ready</text>
+            <hidden></hidden>
+            <posX>2</posX>
+            <posY>11</posY>
+            <width>4</width>
+            <height>1</height>
+            <action>ready</action>
         </button>
 
         <label>

@@ -10,6 +10,15 @@ public abstract class UIElement {
     protected String font = "Arial";
     protected String size = "20";
     protected String type;
+    public boolean isHidden() {
+		return hidden;
+	}
+
+	public void setHidden(boolean hidden) {
+		this.hidden = hidden;
+	}
+
+	protected boolean hidden = false;
 
     public abstract void render();
 
