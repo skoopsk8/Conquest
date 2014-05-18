@@ -274,7 +274,7 @@ public class Network {
 
     // That's some serious network shit!
     static public class game_server_endgame{
-        public Loyalty loyalty;
+        public String loyalty;
     }
 
     static public class game_client_action{

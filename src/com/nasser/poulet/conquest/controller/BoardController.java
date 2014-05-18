@@ -43,7 +43,7 @@ public class BoardController {
 	}
 
     public void checkEndGame(){
-        if(board.numberOfEmpty()<=0 && !endGameTimer){
+        if(board.numberOfEmpty()<=0&& !endGameTimer){
             generateEndgameCallback();
             endGameTimer = true;
         }
@@ -102,10 +102,10 @@ public class BoardController {
     }
 
     public void generateEndgameCallback(){
-        EventTurnBased temp = new EventTurnBased(-1, 120, this, new Callback<State>() {
-            public void methodCallback(State state) {
-                System.out.println("This is the end");
-                winnerLoyalty = board.getwinner();
+        EventTurnBased temp = new EventTurnBased(1, 120, this, new Callback<BoardController>() {
+            public void methodCallback(BoardController boardController) {
+                winnerLoyalty = boardController.board.getwinner();
+                System.out.println(winnerLoyalty.toString());
             }
         });
         board.eventTurnBaseds.add(temp);
@@ -116,11 +116,9 @@ public class BoardController {
         //state.generateUnitSpawnCallback();
         EventTurnBased temp = new EventTurnBased(-1, 3, state, new Callback<State>() {
             public void methodCallback(State state) {
-                System.out.println("Unit spawn callback in "+state.getPosX()+";"+state.getPosY());
                 if(board.numberOfUnit[state.getLoyalty().ordinal() - 2] < 10) {
                     if(state.addUnit(new Unit(state.getLoyalty()))){
                         board.numberOfUnit[state.getLoyalty().ordinal() - 2]++;
-                        System.out.println("Spawned Unit");
                     }
                 }
             }
@@ -130,8 +128,6 @@ public class BoardController {
     }
 
     private void combat( Unit unit, State state){
-        System.out.println("Fight : " + board.getCivilizationPower(unit.getLoyalty()) + " vs " +board.getCivilizationPower(state.getUnit().getLoyalty()));
-
         // Neutral
         if(state.getLoyalty() == Loyalty.EMPTY){
             if(board.getCivilizationPower(unit.getLoyalty())>board.getCivilizationPower(state.getUnit().getLoyalty())) {

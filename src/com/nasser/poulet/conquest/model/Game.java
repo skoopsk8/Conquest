@@ -112,7 +112,7 @@ public class Game {
         if(board.isEndGameTimer()){
             if(board.getWinnerLoyalty()!=null){
                 Network.game_server_endgame endmessage = new Network.game_server_endgame();
-                endmessage.loyalty = board.getWinnerLoyalty();
+                endmessage.loyalty = board.getWinnerLoyalty().toString();
                 sendToAllClient(endmessage);
             }
         }

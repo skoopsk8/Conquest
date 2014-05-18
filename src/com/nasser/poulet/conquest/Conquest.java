@@ -321,7 +321,7 @@ public class Conquest {
         // Gameplay variables
         final int[] turnMultiplayer = {0};
         BoardController multiplayerBoard;
-        final Loyalty[] winnerLoyalty = {null};
+        final String[] winnerLoyalty = {null};
 
         // Build a new board based on the received information
         multiplayerBoard = new BoardController(new Board());
@@ -389,7 +389,7 @@ public class Conquest {
         }while (!(gameMenu.action.equals("disconnect") || gameMenu.action.equals("quit")) && winnerLoyalty[0] == null);
 
         if(winnerLoyalty[0] != null){
-            System.out.println(winnerLoyalty[0].toString() + " has won the game !");
+            System.out.println(winnerLoyalty[0] + " has won the game !");
         }
 
         // Restore OpenGL blend
