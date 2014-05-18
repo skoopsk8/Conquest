@@ -39,9 +39,11 @@ public class Game {
     }
 
     public int addPlayer(Connection connection){
+        sendToAllClient("A new player as joined the game: " + ((GameConnection)connection).name);
         players.put(connection, new MultiplayerRemote(Loyalty.values()[playerNumber+2], board));
         ((GameConnection)connection).setGame(this);
         playerNumber++;
+        sendToClient(connection,new Network.lobby_server_connected());
 
         return playerNumber;
     }

@@ -41,6 +41,7 @@ public class Network {
         kryo.register(game_server_sendBoardSyncUnit.class);
 
         kryo.register(game_server_endgame.class);
+        kryo.register(lobby_server_connected.class);
     }
 
     static public class SelectMessage{
@@ -273,6 +274,8 @@ public class Network {
 
 
     // That's some serious network shit!
+    static public class lobby_server_connected{}
+
     static public class game_server_endgame{
         public String loyalty;
     }

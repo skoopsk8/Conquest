@@ -24,7 +24,7 @@
             <text>Create a game</text>
             <posX>2</posX>
             <posY>4</posY>
-            <width>4</width>
+            <width>11</width>
             <height>1</height>
             <action>create</action>
         </button>
@@ -34,7 +34,7 @@
             <text>Friend's name</text>
             <posX>2</posX>
             <posY>7</posY>
-            <width>4</width>
+            <width>11</width>
             <height>1</height>
             <action>friend_input</action>
         </input>
@@ -43,7 +43,7 @@
             <text>Join the server</text>
             <posX>2</posX>
             <posY>8</posY>
-            <width>4</width>
+            <width>11</width>
             <height>1</height>
             <action>join</action>
         </button>
@@ -54,7 +54,7 @@
             <hidden></hidden>
             <posX>2</posX>
             <posY>11</posY>
-            <width>4</width>
+            <width>11</width>
             <height>1</height>
             <action>ready</action>
         </button>

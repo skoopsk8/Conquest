@@ -281,6 +281,9 @@ public class Conquest {
                     lobbyMenu.action = "start_multiplayer";
                     startGameData[0] = (Network.game_server_startGame)object;
                 }
+                if (object instanceof Network.lobby_server_connected) {
+                    lobbyMenu.getElement("ready").setHidden(false);
+                }
             }
         });
 
@@ -295,6 +298,7 @@ public class Conquest {
 
             // Start multiplayer game
             else if(lobbyMenu.action.equals("start_multiplayer")){
+                lobbyMenu.getElement("ready").setHidden(true);
                 startRemoteGame(startGameData[0]);
             }
         	
