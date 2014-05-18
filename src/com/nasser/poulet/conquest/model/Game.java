@@ -60,7 +60,6 @@ public class Game {
         if(isEveryBodyReady()){
             active = true;
 
-            int index = 0;
             board.getBoard().numberOfUnit[0]=board.getBoard().numberOfUnit[1]=board.getBoard().numberOfUnit[2]=0;
 
             startGame();
@@ -85,16 +84,10 @@ public class Game {
         }
 
         active = true;
-
     }
 
     public void nextTick(){
-        // New tick in the game
-        //System.out.println("Starting turn number "+ turnNumber);
         turnNumber++;
-        //turn.startTurn();
-        //turn.update();
-
         board.getBoard().updateEvents();
 
         for(Map.Entry<Connection, Player> player : players.entrySet()){
@@ -113,6 +106,16 @@ public class Game {
 
         sendToAllClient(boardSync);
         sendToAllClient(boardSyncUnit);
+
+        board.checkEndGame();
+
+        if(board.isEndGameTimer()){
+            if(board.getWinnerLoyalty()!=null){
+                Network.game_server_endgame endmessage = new Network.game_server_endgame();
+                endmessage.loyalty = board.getWinnerLoyalty();
+                sendToAllClient(endmessage);
+            }
+        }
     }
 
     public void getMessageFromClient(Object object, Connection connection){

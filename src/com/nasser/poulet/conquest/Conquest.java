@@ -321,6 +321,7 @@ public class Conquest {
         // Gameplay variables
         final int[] turnMultiplayer = {0};
         BoardController multiplayerBoard;
+        final Loyalty[] winnerLoyalty = {null};
 
         // Build a new board based on the received information
         multiplayerBoard = new BoardController(new Board());
@@ -347,6 +348,9 @@ public class Conquest {
                 }
                 if (object instanceof Network.ChatMessage) {
                     gameMenu.updateText(((Network.ChatMessage) object).getMessage(), "chat");
+                }
+                if (object instanceof Network.game_server_endgame) {
+                    winnerLoyalty[0] = ((Network.game_server_endgame) object).loyalty;
                 }
             }
         });
@@ -382,7 +386,11 @@ public class Conquest {
             renderer.render(multiplayerBoard.getBoard());
 
             Display.update();
-        }while (!(gameMenu.action.equals("disconnect") || gameMenu.action.equals("quit")));
+        }while (!(gameMenu.action.equals("disconnect") || gameMenu.action.equals("quit") || winnerLoyalty[0] == null));
+
+        if(winnerLoyalty[0] != null){
+            System.out.println(winnerLoyalty[0].toString() + " has won the game !");
+        }
 
         // Restore OpenGL blend
         GL11.glEnable(GL11.GL_BLEND);

@@ -8,6 +8,17 @@ import com.nasser.poulet.conquest.model.*;
 public class BoardController {
     private Board board;
 
+    private boolean endGameTimer = false;
+    private Loyalty winnerLoyalty = null;
+
+    public boolean isEndGameTimer() {
+        return endGameTimer;
+    }
+
+    public Loyalty getWinnerLoyalty() {
+        return winnerLoyalty;
+    }
+
     public void setBoard(Board board) {
         this.board = board;
     }
@@ -30,6 +41,13 @@ public class BoardController {
     public Board getBoard() {
 		return board;
 	}
+
+    public void checkEndGame(){
+        if(board.numberOfEmpty()<=0 && !endGameTimer){
+            generateEndgameCallback();
+            endGameTimer = true;
+        }
+    }
 
 	public boolean action( State selectedState, int posX, int posY ){
         if(board.getState(posX, posY).canHostUnit()){
@@ -82,6 +100,17 @@ public class BoardController {
             }
         }));
     }
+
+    public void generateEndgameCallback(){
+        EventTurnBased temp = new EventTurnBased(-1, 120, this, new Callback<State>() {
+            public void methodCallback(State state) {
+                System.out.println("This is the end");
+                winnerLoyalty = board.getwinner();
+            }
+        });
+        board.eventTurnBaseds.add(temp);
+    }
+
 
     public void generateUnitSpawnCallback( State state ){
         //state.generateUnitSpawnCallback();

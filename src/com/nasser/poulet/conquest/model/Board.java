@@ -196,14 +196,14 @@ public class Board {
         return returnValue;
     }
 
-    public String getwinner(){
+    public Loyalty getwinner(){
         if(stateArrayList[0].size()>stateArrayList[1].size() && stateArrayList[0].size()>stateArrayList[2].size())
-            return "blue";
+            return Loyalty.BLUE;
         if(stateArrayList[1].size()>stateArrayList[0].size() && stateArrayList[1].size()>stateArrayList[2].size())
-            return "green";
+            return Loyalty.GREEN;
         if(stateArrayList[2].size()>stateArrayList[1].size() && stateArrayList[2].size()>stateArrayList[0].size())
-            return "yellow";
+            return Loyalty.YELLOW;
         else
-            return "no winner";
+            return Loyalty.NONE;
     }
 }
