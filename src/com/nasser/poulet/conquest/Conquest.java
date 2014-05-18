@@ -386,7 +386,7 @@ public class Conquest {
             renderer.render(multiplayerBoard.getBoard());
 
             Display.update();
-        }while (!(gameMenu.action.equals("disconnect") || gameMenu.action.equals("quit") || winnerLoyalty[0] == null));
+        }while (!(gameMenu.action.equals("disconnect") || gameMenu.action.equals("quit")) && winnerLoyalty[0] == null);
 
         if(winnerLoyalty[0] != null){
             System.out.println(winnerLoyalty[0].toString() + " has won the game !");
